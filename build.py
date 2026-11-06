@@ -32,8 +32,8 @@ CONFIG = {
     "site_name": "ClearCalc",
     "tagline": "Free, private money calculators",
     # Your real domain, no trailing slash. Used for canonical URLs + sitemap.
-    "domain": "https://www.example.com",
-    "contact_email": "hello@example.com",
+    "domain": "https://clearcalc-ay2.pages.dev",
+    "contact_email": "papynsenga350@gmail.com",
     # Your AdSense publisher ID, e.g. "ca-pub-1234567890123456".
     # Leave empty until AdSense approves you: no ad code is output while empty.
     "adsense_client": "",
