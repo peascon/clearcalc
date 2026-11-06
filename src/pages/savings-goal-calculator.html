@@ -1,0 +1,75 @@
+<!--
+title: Savings Goal Calculator – How Much to Save Each Month | ClearCalc
+description: Find out how much you need to save each month to reach a savings goal by a target date, including what you already have and the interest your savings earn.
+path: /savings-goal-calculator/
+h1: Savings Goal Calculator
+nav: Savings goal
+order: 4
+script: savings.js
+blurb: Work backwards from a target: how much to save each month to reach it on time.
+-->
+<p class="lede">Saving for a house deposit, a car, school fees or an emergency fund? Enter your goal and deadline to see what to set aside each month.</p>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="goal">Savings goal</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="goal" inputmode="decimal" value="15000"></div>
+    </div>
+    <div class="field">
+      <label for="have">Already saved</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="have" inputmode="decimal" value="1000"></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="years">Time to reach it</label>
+        <div class="input-wrap"><input id="years" inputmode="decimal" value="3"><span class="unit">years</span></div>
+      </div>
+      <div class="field">
+        <label for="rate">Interest / return</label>
+        <div class="input-wrap"><input id="rate" inputmode="decimal" value="4"><span class="unit">%</span></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copy link to these results</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label">Save each month</div><div class="value" id="outMonthly">—</div></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Per week</div><div class="value" id="outWeekly">—</div></div>
+      <div class="stat"><div class="label">Per day</div><div class="value" id="outDaily">—</div></div>
+      <div class="stat"><div class="label">Total you deposit</div><div class="value" id="outDeposits">—</div></div>
+      <div class="stat"><div class="label">Interest earned</div><div class="value" id="outInterest">—</div></div>
+    </div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>How it's calculated</h2>
+<p>The calculator first works out how much your current savings will grow to by the deadline, then finds the monthly deposit that covers the rest, with each deposit earning interest from the month it's made:</p>
+<div class="formula">PMT = (Goal − Saved × (1 + i)<sup>n</sup>) × i ÷ ((1 + i)<sup>n</sup> − 1)</div>
+<p>Here <strong>i</strong> is the monthly interest rate and <strong>n</strong> the number of months. At 0% interest it's simply the remaining amount divided by the number of months.</p>
+
+<h2>Tips for reaching your goal faster</h2>
+<ul>
+  <li><strong>Automate it.</strong> Set up a standing order or mobile money transfer to savings on payday so the money moves before you can spend it.</li>
+  <li><strong>Use a separate account.</strong> Keeping goal money apart from everyday spending makes it much easier to leave alone.</li>
+  <li><strong>Earn interest on it.</strong> Even a modest rate on a savings account or fixed deposit reduces how much you need to put in yourself.</li>
+  <li><strong>Add windfalls.</strong> Bonuses, gifts and side-income go straight to the goal and shorten the timeline.</li>
+</ul>
+
+<h2>Frequently asked questions</h2>
+<details class="faq"><summary>How big should an emergency fund be?</summary><div>A common guideline is three to six months of essential living costs. If your income is irregular, such as freelance or commission work, aim for the higher end.</div></details>
+<details class="faq"><summary>What if the result says I've already reached my goal?</summary><div>That means your current savings will grow past the target by the deadline at the interest rate you entered, so no further deposits are needed.</div></details>
+<details class="faq"><summary>Should I include inflation?</summary><div>If your goal is a future purchase whose price will rise, such as tuition or a car, increase the goal amount by expected inflation to stay on target.</div></details>
+
+<div class="related"><h3>Related calculators</h3><ul>
+  <li><a href="/compound-interest-calculator/">Compound interest calculator</a> – see how regular saving grows over time</li>
+  <li><a href="/loan-calculator/">Loan calculator</a> – compare saving up against borrowing</li>
+</ul></div>
+</article>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Savings Goal Calculator – How Much to Save Each Month | ClearCalc</title>
+<meta name="description" content="Find out how much you need to save each month to reach a savings goal by a target date, including what you already have and the interest your savings earn.">
+<link rel="canonical" href="https://www.example.com/savings-goal-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Savings Goal Calculator – How Much to Save Each Month | ClearCalc">
+<meta property="og:description" content="Find out how much you need to save each month to reach a savings goal by a target date, including what you already have and the interest your savings earn.">
+<meta property="og:url" content="https://www.example.com/savings-goal-calculator/">
+<meta property="og:site_name" content="ClearCalc">
+<meta name="theme-color" content="#0f5e4b">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css">
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Savings Goal Calculator", "url": "https://www.example.com/savings-goal-calculator/", "applicationCategory": "FinanceApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Find out how much you need to save each month to reach a savings goal by a target date, including what you already have and the interest your savings earn."}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How big should an emergency fund be?", "acceptedAnswer": {"@type": "Answer", "text": "A common guideline is three to six months of essential living costs. If your income is irregular, such as freelance or commission work, aim for the higher end."}}, {"@type": "Question", "name": "What if the result says I've already reached my goal?", "acceptedAnswer": {"@type": "Answer", "text": "That means your current savings will grow past the target by the deadline at the interest rate you entered, so no further deposits are needed."}}, {"@type": "Question", "name": "Should I include inflation?", "acceptedAnswer": {"@type": "Answer", "text": "If your goal is a future purchase whose price will rise, such as tuition or a car, increase the goal amount by expected inflation to stay on target."}}]}</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="/"><img src="/assets/favicon.svg" alt="" width="28" height="28">ClearCalc</a>
+    <nav class="tools-nav" aria-label="Calculators"><a href="/loan-calculator/">Loan</a><a href="/mortgage-calculator/">Mortgage</a><a href="/compound-interest-calculator/">Compound interest</a><a href="/savings-goal-calculator/" aria-current="page">Savings goal</a><a href="/freelance-rate-calculator/">Freelance rate</a><a href="/salary-to-hourly-calculator/">Salary ↔ hourly</a></nav>
+    <label class="currency-pick">
+      <span class="sr-only">Currency</span>
+      <select id="currency" aria-label="Currency"></select>
+    </label>
+  </div>
+</header>
+<main class="wrap">
+<h1>Savings Goal Calculator</h1>
+<p class="lede">Saving for a house deposit, a car, school fees or an emergency fund? Enter your goal and deadline to see what to set aside each month.</p>
+
+
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="goal">Savings goal</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="goal" inputmode="decimal" value="15000"></div>
+    </div>
+    <div class="field">
+      <label for="have">Already saved</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="have" inputmode="decimal" value="1000"></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="years">Time to reach it</label>
+        <div class="input-wrap"><input id="years" inputmode="decimal" value="3"><span class="unit">years</span></div>
+      </div>
+      <div class="field">
+        <label for="rate">Interest / return</label>
+        <div class="input-wrap"><input id="rate" inputmode="decimal" value="4"><span class="unit">%</span></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copy link to these results</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label">Save each month</div><div class="value" id="outMonthly">—</div></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Per week</div><div class="value" id="outWeekly">—</div></div>
+      <div class="stat"><div class="label">Per day</div><div class="value" id="outDaily">—</div></div>
+      <div class="stat"><div class="label">Total you deposit</div><div class="value" id="outDeposits">—</div></div>
+      <div class="stat"><div class="label">Interest earned</div><div class="value" id="outInterest">—</div></div>
+    </div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+
+
+<article class="prose">
+<h2>How it's calculated</h2>
+<p>The calculator first works out how much your current savings will grow to by the deadline, then finds the monthly deposit that covers the rest, with each deposit earning interest from the month it's made:</p>
+<div class="formula">PMT = (Goal − Saved × (1 + i)<sup>n</sup>) × i ÷ ((1 + i)<sup>n</sup> − 1)</div>
+<p>Here <strong>i</strong> is the monthly interest rate and <strong>n</strong> the number of months. At 0% interest it's simply the remaining amount divided by the number of months.</p>
+
+<h2>Tips for reaching your goal faster</h2>
+<ul>
+  <li><strong>Automate it.</strong> Set up a standing order or mobile money transfer to savings on payday so the money moves before you can spend it.</li>
+  <li><strong>Use a separate account.</strong> Keeping goal money apart from everyday spending makes it much easier to leave alone.</li>
+  <li><strong>Earn interest on it.</strong> Even a modest rate on a savings account or fixed deposit reduces how much you need to put in yourself.</li>
+  <li><strong>Add windfalls.</strong> Bonuses, gifts and side-income go straight to the goal and shorten the timeline.</li>
+</ul>
+
+<h2>Frequently asked questions</h2>
+<details class="faq"><summary>How big should an emergency fund be?</summary><div>A common guideline is three to six months of essential living costs. If your income is irregular, such as freelance or commission work, aim for the higher end.</div></details>
+<details class="faq"><summary>What if the result says I've already reached my goal?</summary><div>That means your current savings will grow past the target by the deadline at the interest rate you entered, so no further deposits are needed.</div></details>
+<details class="faq"><summary>Should I include inflation?</summary><div>If your goal is a future purchase whose price will rise, such as tuition or a car, increase the goal amount by expected inflation to stay on target.</div></details>
+
+<div class="related"><h3>Related calculators</h3><ul>
+  <li><a href="/compound-interest-calculator/">Compound interest calculator</a> – see how regular saving grows over time</li>
+  <li><a href="/loan-calculator/">Loan calculator</a> – compare saving up against borrowing</li>
+</ul></div>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="/">ClearCalc</a>
+      <p>Free, private money calculators. Every calculation runs in your browser — nothing you type is sent anywhere.</p>
+    </div>
+    <div><h4>Calculators</h4><ul><li><a href="/loan-calculator/">Loan Calculator</a></li><li><a href="/mortgage-calculator/">Mortgage Calculator</a></li><li><a href="/compound-interest-calculator/">Compound Interest Calculator</a></li><li><a href="/savings-goal-calculator/">Savings Goal Calculator</a></li><li><a href="/freelance-rate-calculator/">Freelance Rate Calculator</a></li><li><a href="/salary-to-hourly-calculator/">Salary to Hourly Calculator</a></li></ul></div>
+    <div><h4>Site</h4><ul>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+      <li><a href="/privacy-policy/">Privacy policy</a></li>
+      <li><a href="/terms/">Terms of use</a></li>
+    </ul></div>
+  </div>
+  <div class="wrap fine">Results are estimates for information only and are not financial advice. © 2026 ClearCalc</div>
+</footer>
+<script src="/assets/app.js" defer></script>
+<script src="/assets/tools/savings.js" defer></script>
+</body>
+</html>

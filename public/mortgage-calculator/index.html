@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mortgage Calculator – Monthly Home Loan Payment with Taxes &amp; Insurance | ClearCalc</title>
+<meta name="description" content="Estimate your monthly mortgage payment including principal, interest, property tax, insurance and fees. See the loan amount, total interest and full cost breakdown.">
+<link rel="canonical" href="https://www.example.com/mortgage-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mortgage Calculator – Monthly Home Loan Payment with Taxes &amp; Insurance | ClearCalc">
+<meta property="og:description" content="Estimate your monthly mortgage payment including principal, interest, property tax, insurance and fees. See the loan amount, total interest and full cost breakdown.">
+<meta property="og:url" content="https://www.example.com/mortgage-calculator/">
+<meta property="og:site_name" content="ClearCalc">
+<meta name="theme-color" content="#0f5e4b">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css">
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Mortgage Calculator", "url": "https://www.example.com/mortgage-calculator/", "applicationCategory": "FinanceApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Estimate your monthly mortgage payment including principal, interest, property tax, insurance and fees. See the loan amount, total interest and full cost breakdown."}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Should I choose a 15-year or 30-year mortgage?", "acceptedAnswer": {"@type": "Answer", "text": "A 15-year term has a higher monthly payment but usually a lower rate and far less total interest. A 30-year term keeps payments lower and leaves more room in your budget. Switch the term above to compare the total interest for each."}}, {"@type": "Question", "name": "Does this include mortgage insurance (PMI)?", "acceptedAnswer": {"@type": "Answer", "text": "Not automatically. If your lender charges mortgage insurance, add the monthly amount to the fees field to include it."}}, {"@type": "Question", "name": "Does it work outside the United States?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Choose your currency at the top of the page. Set property tax to zero, or to your local equivalent, if it's charged differently where you live."}}]}</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="/"><img src="/assets/favicon.svg" alt="" width="28" height="28">ClearCalc</a>
+    <nav class="tools-nav" aria-label="Calculators"><a href="/loan-calculator/">Loan</a><a href="/mortgage-calculator/" aria-current="page">Mortgage</a><a href="/compound-interest-calculator/">Compound interest</a><a href="/savings-goal-calculator/">Savings goal</a><a href="/freelance-rate-calculator/">Freelance rate</a><a href="/salary-to-hourly-calculator/">Salary ↔ hourly</a></nav>
+    <label class="currency-pick">
+      <span class="sr-only">Currency</span>
+      <select id="currency" aria-label="Currency"></select>
+    </label>
+  </div>
+</header>
+<main class="wrap">
+<h1>Mortgage Calculator</h1>
+<p class="lede">Work out what a home will really cost each month, not just the loan payment, but property tax, insurance and fees as well.</p>
+
+
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="price">Home price</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="price" inputmode="decimal" value="300000"></div>
+    </div>
+    <div class="field">
+      <label for="down">Down payment</label>
+      <div class="input-wrap"><input id="down" inputmode="decimal" value="20"><span class="unit">% of price</span></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="rate">Interest rate</label>
+        <div class="input-wrap"><input id="rate" inputmode="decimal" value="6.5"><span class="unit">%</span></div>
+      </div>
+      <div class="field">
+        <label for="years">Term</label>
+        <div class="input-wrap"><select id="years"><option>30</option><option>25</option><option>20</option><option>15</option><option>10</option></select><span class="unit">years</span></div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="tax">Property tax <span class="hint">(per year)</span></label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="tax" inputmode="decimal" value="3000"></div>
+    </div>
+    <div class="field">
+      <label for="ins">Home insurance <span class="hint">(per year)</span></label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="ins" inputmode="decimal" value="1200"></div>
+    </div>
+    <div class="field">
+      <label for="fees">HOA / service fees <span class="hint">(per month)</span></label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="fees" inputmode="decimal" value="0"></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copy link to these results</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label">Total monthly payment</div><div class="value" id="outMonthly">—</div></div>
+    <div class="breakdown" id="bar"></div>
+    <div class="legend" id="barLegend"></div>
+    <div class="stats" style="margin-top:14px">
+      <div class="stat"><div class="label">Loan amount</div><div class="value" id="outLoan">—</div></div>
+      <div class="stat"><div class="label">Down payment</div><div class="value" id="outDown">—</div></div>
+      <div class="stat"><div class="label">Total interest</div><div class="value" id="outInterest">—</div></div>
+      <div class="stat"><div class="label">Total cost over term</div><div class="value" id="outTotal">—</div></div>
+    </div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+
+
+<article class="prose">
+<h2>What goes into a mortgage payment</h2>
+<p>Lenders often describe the monthly cost of a home as <strong>PITI</strong>: principal, interest, taxes and insurance. The loan itself only covers the first two. Property tax and insurance are often collected monthly with the loan (through an escrow account), so this calculator includes them, plus any building, estate or HOA fees.</p>
+<ul>
+  <li><strong>Principal and interest</strong> – the loan repayment, calculated with the standard amortization formula.</li>
+  <li><strong>Property tax</strong> – set by your local government, usually a percentage of the property's assessed value.</li>
+  <li><strong>Home insurance</strong> – covers the building against fire, storms and other damage; lenders usually require it.</li>
+  <li><strong>Fees</strong> – homeowners' association, estate management or service charges.</li>
+</ul>
+
+<h2>How much house can I afford?</h2>
+<p>A common rule of thumb is to keep your total housing payment below about <strong>28% of your gross monthly income</strong>, and all debt payments combined below about 36%. These are guidelines, not limits. Lenders in different countries use different ratios, and your own budget matters more than any formula.</p>
+<p>A bigger down payment lowers both the monthly payment and the total interest. In many markets, putting down less than 20% also means paying for mortgage insurance, which raises the monthly cost further.</p>
+
+<h2>Frequently asked questions</h2>
+<details class="faq"><summary>Should I choose a 15-year or 30-year mortgage?</summary><div>A 15-year term has a higher monthly payment but usually a lower rate and far less total interest. A 30-year term keeps payments lower and leaves more room in your budget. Switch the term above to compare the total interest for each.</div></details>
+<details class="faq"><summary>Does this include mortgage insurance (PMI)?</summary><div>Not automatically. If your lender charges mortgage insurance, add the monthly amount to the fees field to include it.</div></details>
+<details class="faq"><summary>Does it work outside the United States?</summary><div>Yes. Choose your currency at the top of the page. Set property tax to zero, or to your local equivalent, if it's charged differently where you live.</div></details>
+
+<div class="related"><h3>Related calculators</h3><ul>
+  <li><a href="/loan-calculator/">Loan calculator</a> – see a full amortization schedule and the effect of extra payments</li>
+  <li><a href="/savings-goal-calculator/">Savings goal calculator</a> – plan how to save for your down payment</li>
+</ul></div>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="/">ClearCalc</a>
+      <p>Free, private money calculators. Every calculation runs in your browser — nothing you type is sent anywhere.</p>
+    </div>
+    <div><h4>Calculators</h4><ul><li><a href="/loan-calculator/">Loan Calculator</a></li><li><a href="/mortgage-calculator/">Mortgage Calculator</a></li><li><a href="/compound-interest-calculator/">Compound Interest Calculator</a></li><li><a href="/savings-goal-calculator/">Savings Goal Calculator</a></li><li><a href="/freelance-rate-calculator/">Freelance Rate Calculator</a></li><li><a href="/salary-to-hourly-calculator/">Salary to Hourly Calculator</a></li></ul></div>
+    <div><h4>Site</h4><ul>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+      <li><a href="/privacy-policy/">Privacy policy</a></li>
+      <li><a href="/terms/">Terms of use</a></li>
+    </ul></div>
+  </div>
+  <div class="wrap fine">Results are estimates for information only and are not financial advice. © 2026 ClearCalc</div>
+</footer>
+<script src="/assets/app.js" defer></script>
+<script src="/assets/tools/mortgage.js" defer></script>
+</body>
+</html>

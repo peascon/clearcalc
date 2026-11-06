@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loan Calculator – Monthly Payment &amp; Amortization Schedule | ClearCalc</title>
+<meta name="description" content="Free loan calculator. Enter the amount, interest rate and term to see your monthly payment, total interest and a full amortization schedule. Works in any currency.">
+<link rel="canonical" href="https://www.example.com/loan-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Loan Calculator – Monthly Payment &amp; Amortization Schedule | ClearCalc">
+<meta property="og:description" content="Free loan calculator. Enter the amount, interest rate and term to see your monthly payment, total interest and a full amortization schedule. Works in any currency.">
+<meta property="og:url" content="https://www.example.com/loan-calculator/">
+<meta property="og:site_name" content="ClearCalc">
+<meta name="theme-color" content="#0f5e4b">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css">
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Loan Calculator", "url": "https://www.example.com/loan-calculator/", "applicationCategory": "FinanceApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Free loan calculator. Enter the amount, interest rate and term to see your monthly payment, total interest and a full amortization schedule. Works in any currency."}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does this work for car loans and mortgages?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, any fixed-rate loan with equal monthly payments works. For a home loan that includes property tax and insurance, the mortgage calculator adds those costs for you."}}, {"@type": "Question", "name": "What if my interest rate is 0%?", "acceptedAnswer": {"@type": "Answer", "text": "The calculator handles it: the payment is simply the loan amount divided by the number of months, and total interest is zero."}}, {"@type": "Question", "name": "Why is my bank's payment slightly different?", "acceptedAnswer": {"@type": "Answer", "text": "Lenders may add fees, insurance or a different day-count method, and some round each payment. The result here is a close estimate; your loan agreement shows the exact figure."}}, {"@type": "Question", "name": "Is my data saved or sent anywhere?", "acceptedAnswer": {"@type": "Answer", "text": "No. All calculations run in your browser. Nothing you type leaves your device."}}]}</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="/"><img src="/assets/favicon.svg" alt="" width="28" height="28">ClearCalc</a>
+    <nav class="tools-nav" aria-label="Calculators"><a href="/loan-calculator/" aria-current="page">Loan</a><a href="/mortgage-calculator/">Mortgage</a><a href="/compound-interest-calculator/">Compound interest</a><a href="/savings-goal-calculator/">Savings goal</a><a href="/freelance-rate-calculator/">Freelance rate</a><a href="/salary-to-hourly-calculator/">Salary ↔ hourly</a></nav>
+    <label class="currency-pick">
+      <span class="sr-only">Currency</span>
+      <select id="currency" aria-label="Currency"></select>
+    </label>
+  </div>
+</header>
+<main class="wrap">
+<h1>Loan Calculator</h1>
+<p class="lede">Find your monthly payment for a personal, car, student or business loan, and see how much of what you pay goes to interest.</p>
+
+
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="amount">Loan amount</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="amount" inputmode="decimal" value="20000"></div>
+    </div>
+    <div class="field">
+      <label for="rate">Annual interest rate</label>
+      <div class="input-wrap"><input id="rate" inputmode="decimal" value="8.5"><span class="unit">% per year</span></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="term">Loan term</label>
+        <div class="input-wrap"><input id="term" inputmode="decimal" value="5"></div>
+      </div>
+      <div class="field">
+        <label for="termUnit">&nbsp;</label>
+        <div class="input-wrap"><select id="termUnit"><option value="years">Years</option><option value="months">Months</option></select></div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="extra">Extra payment each month <span class="hint">(optional)</span></label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="extra" inputmode="decimal" value="0"></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copy link to these results</button><button class="btn" type="button" onclick="window.print()">Print</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label">Monthly payment</div><div class="value" id="outPayment">—</div></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Total interest</div><div class="value" id="outInterest">—</div></div>
+      <div class="stat"><div class="label">Total of all payments</div><div class="value" id="outTotal">—</div></div>
+      <div class="stat"><div class="label">Paid off in</div><div class="value" id="outTime">—</div></div>
+    </div>
+    <p class="note" id="outSaving"></p>
+    <div class="chart-box"><canvas id="chart" aria-label="Principal and interest paid each year" role="img"></canvas></div>
+    <div class="legend"><span><i style="background:#0f5e4b"></i>Principal</span><span><i style="background:#e9a23b"></i>Interest</span></div>
+    <details class="toggle"><summary>Show amortization schedule</summary>
+      <div class="table-scroll"><table class="schedule"><thead><tr><th>Year</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead><tbody id="schedule"></tbody></table></div>
+    </details>
+  </div>
+</section>
+
+
+
+<article class="prose">
+<h2>How the loan calculator works</h2>
+<p>Most loans are <strong>amortizing</strong>: you pay the same amount every month, and each payment covers that month's interest first, with the rest reducing what you owe (the principal). Early in the loan most of your payment is interest; near the end almost all of it is principal. The chart above shows that shift year by year.</p>
+<p>The monthly payment is calculated with the standard amortization formula:</p>
+<div class="formula">M = P × r × (1 + r)<sup>n</sup> ÷ ((1 + r)<sup>n</sup> − 1)</div>
+<ul>
+  <li><strong>M</strong> – monthly payment</li>
+  <li><strong>P</strong> – loan amount (principal)</li>
+  <li><strong>r</strong> – monthly interest rate (annual rate ÷ 12 ÷ 100)</li>
+  <li><strong>n</strong> – number of monthly payments</li>
+</ul>
+<p>Example: borrowing 20,000 at 8.5% for 5 years gives r = 0.00708 and n = 60, for a monthly payment of about 410.33 and total interest of roughly 4,620.</p>
+
+<h2>How to pay less interest</h2>
+<ul>
+  <li><strong>Choose a shorter term.</strong> The monthly payment goes up, but total interest drops sharply because you borrow the money for less time.</li>
+  <li><strong>Pay a little extra each month.</strong> Every extra amount goes straight to principal. Try the "extra payment" box above to see how many months you save.</li>
+  <li><strong>Compare the APR, not just the rate.</strong> Fees and insurance added to a loan raise its real cost. The annual percentage rate (APR) includes them.</li>
+  <li><strong>Improve your credit first.</strong> A better credit profile usually qualifies for a lower rate, and even 1–2 percentage points saves a lot over several years.</li>
+</ul>
+
+<h2>Frequently asked questions</h2>
+<details class="faq"><summary>Does this work for car loans and mortgages?</summary><div>Yes, any fixed-rate loan with equal monthly payments works. For a home loan that includes property tax and insurance, the <a href="/mortgage-calculator/">mortgage calculator</a> adds those costs for you.</div></details>
+<details class="faq"><summary>What if my interest rate is 0%?</summary><div>The calculator handles it: the payment is simply the loan amount divided by the number of months, and total interest is zero.</div></details>
+<details class="faq"><summary>Why is my bank's payment slightly different?</summary><div>Lenders may add fees, insurance or a different day-count method, and some round each payment. The result here is a close estimate; your loan agreement shows the exact figure.</div></details>
+<details class="faq"><summary>Is my data saved or sent anywhere?</summary><div>No. All calculations run in your browser. Nothing you type leaves your device.</div></details>
+
+<div class="related"><h3>Related calculators</h3><ul>
+  <li><a href="/mortgage-calculator/">Mortgage calculator</a> – home loan payments with taxes and insurance</li>
+  <li><a href="/savings-goal-calculator/">Savings goal calculator</a> – save for a purchase instead of borrowing</li>
+</ul></div>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="/">ClearCalc</a>
+      <p>Free, private money calculators. Every calculation runs in your browser — nothing you type is sent anywhere.</p>
+    </div>
+    <div><h4>Calculators</h4><ul><li><a href="/loan-calculator/">Loan Calculator</a></li><li><a href="/mortgage-calculator/">Mortgage Calculator</a></li><li><a href="/compound-interest-calculator/">Compound Interest Calculator</a></li><li><a href="/savings-goal-calculator/">Savings Goal Calculator</a></li><li><a href="/freelance-rate-calculator/">Freelance Rate Calculator</a></li><li><a href="/salary-to-hourly-calculator/">Salary to Hourly Calculator</a></li></ul></div>
+    <div><h4>Site</h4><ul>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+      <li><a href="/privacy-policy/">Privacy policy</a></li>
+      <li><a href="/terms/">Terms of use</a></li>
+    </ul></div>
+  </div>
+  <div class="wrap fine">Results are estimates for information only and are not financial advice. © 2026 ClearCalc</div>
+</footer>
+<script src="/assets/app.js" defer></script>
+<script src="/assets/tools/loan.js" defer></script>
+</body>
+</html>

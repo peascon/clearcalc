@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Freelance Hourly Rate Calculator – What Should I Charge? | ClearCalc</title>
+<meta name="description" content="Calculate the hourly, daily and project rate you need as a freelancer to hit your income goal after taxes, business expenses and unpaid time off.">
+<link rel="canonical" href="https://www.example.com/freelance-rate-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Freelance Hourly Rate Calculator – What Should I Charge? | ClearCalc">
+<meta property="og:description" content="Calculate the hourly, daily and project rate you need as a freelancer to hit your income goal after taxes, business expenses and unpaid time off.">
+<meta property="og:url" content="https://www.example.com/freelance-rate-calculator/">
+<meta property="og:site_name" content="ClearCalc">
+<meta name="theme-color" content="#0f5e4b">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css">
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Freelance Rate Calculator", "url": "https://www.example.com/freelance-rate-calculator/", "applicationCategory": "FinanceApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Calculate the hourly, daily and project rate you need as a freelancer to hit your income goal after taxes, business expenses and unpaid time off."}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What tax rate should I enter?", "acceptedAnswer": {"@type": "Answer", "text": "Use your best estimate of the combined income tax and social contributions on self-employed profit in your country. If you're not sure, a local accountant or your tax authority's website can give you the current rates."}}, {"@type": "Question", "name": "I work with international clients. Which currency should I use?", "acceptedAnswer": {"@type": "Answer", "text": "Use the currency you want to earn in. If clients pay in USD or EUR but you spend in local currency, also allow for transfer fees and exchange rate swings when setting your buffer."}}, {"@type": "Question", "name": "How many billable hours per week is realistic?", "acceptedAnswer": {"@type": "Answer", "text": "Most full-time freelancers bill 20–30 hours a week. Billing 40 hours every week is rare once you include sales and admin."}}]}</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="/"><img src="/assets/favicon.svg" alt="" width="28" height="28">ClearCalc</a>
+    <nav class="tools-nav" aria-label="Calculators"><a href="/loan-calculator/">Loan</a><a href="/mortgage-calculator/">Mortgage</a><a href="/compound-interest-calculator/">Compound interest</a><a href="/savings-goal-calculator/">Savings goal</a><a href="/freelance-rate-calculator/" aria-current="page">Freelance rate</a><a href="/salary-to-hourly-calculator/">Salary ↔ hourly</a></nav>
+    <label class="currency-pick">
+      <span class="sr-only">Currency</span>
+      <select id="currency" aria-label="Currency"></select>
+    </label>
+  </div>
+</header>
+<main class="wrap">
+<h1>Freelance Rate Calculator</h1>
+<p class="lede">Find the rate you need to charge as a freelancer or consultant to take home the income you want, after taxes, expenses and unpaid time off.</p>
+
+
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="income">Take-home income you want <span class="hint">(per year, after tax)</span></label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="income" inputmode="decimal" value="40000"></div>
+    </div>
+    <div class="field">
+      <label for="expenses">Business expenses <span class="hint">(per year: software, internet, equipment, workspace)</span></label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="expenses" inputmode="decimal" value="3000"></div>
+    </div>
+    <div class="field">
+      <label for="tax">Tax rate on your profit</label>
+      <div class="input-wrap"><input id="tax" inputmode="decimal" value="20"><span class="unit">%</span></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="hours">Billable hours</label>
+        <div class="input-wrap"><input id="hours" inputmode="decimal" value="25"><span class="unit">per week</span></div>
+      </div>
+      <div class="field">
+        <label for="weeks">Working weeks</label>
+        <div class="input-wrap"><input id="weeks" inputmode="decimal" value="46"><span class="unit">per year</span></div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="buffer">Safety buffer <span class="hint">(for slow months and late payments)</span></label>
+      <div class="input-wrap"><input id="buffer" inputmode="decimal" value="10"><span class="unit">%</span></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copy link to these results</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label">Minimum hourly rate</div><div class="value" id="outHourly">—</div></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Day rate</div><div class="value" id="outDay">—</div></div>
+      <div class="stat"><div class="label">Weekly revenue</div><div class="value" id="outWeek">—</div></div>
+      <div class="stat"><div class="label">Monthly revenue</div><div class="value" id="outMonth">—</div></div>
+      <div class="stat"><div class="label">Yearly revenue needed</div><div class="value" id="outYear">—</div></div>
+    </div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+
+
+<article class="prose">
+<h2>Why freelance rates are higher than salaries</h2>
+<p>A common mistake is to divide the salary you'd like by 2,080 (40 hours × 52 weeks). As a freelancer you also pay for things an employer would normally cover:</p>
+<ul>
+  <li><strong>Unbillable time.</strong> Finding clients, writing proposals, invoicing and admin can take 30–40% of your working week, so 25 billable hours out of 40 is realistic.</li>
+  <li><strong>Time off.</strong> Holidays, sick days and public holidays are unpaid. 46 working weeks a year is a common planning figure.</li>
+  <li><strong>Taxes and contributions</strong> that an employer would otherwise deduct or pay for you.</li>
+  <li><strong>Equipment and software:</strong> your laptop, internet, subscriptions and workspace.</li>
+</ul>
+
+<h2>The formula</h2>
+<div class="formula">Rate = ((Income ÷ (1 − Tax)) + Expenses) × (1 + Buffer) ÷ (Billable hours × Weeks)</div>
+<p>The result is the <em>minimum</em> you need to charge. Your market rate may be higher depending on your skills, niche and the clients you serve, and it's worth checking what others in your field charge.</p>
+
+<h2>Charging by project instead of by hour</h2>
+<p>Many freelancers quote a fixed price per project. Estimate the hours a project will take, multiply by your hourly rate, then add 15–25% for revisions and surprises. As you get faster, project pricing lets you earn more per hour without raising your stated rate.</p>
+
+<h2>Frequently asked questions</h2>
+<details class="faq"><summary>What tax rate should I enter?</summary><div>Use your best estimate of the combined income tax and social contributions on self-employed profit in your country. If you're not sure, a local accountant or your tax authority's website can give you the current rates.</div></details>
+<details class="faq"><summary>I work with international clients. Which currency should I use?</summary><div>Use the currency you want to earn in. If clients pay in USD or EUR but you spend in local currency, also allow for transfer fees and exchange rate swings when setting your buffer.</div></details>
+<details class="faq"><summary>How many billable hours per week is realistic?</summary><div>Most full-time freelancers bill 20–30 hours a week. Billing 40 hours every week is rare once you include sales and admin.</div></details>
+
+<div class="related"><h3>Related calculators</h3><ul>
+  <li><a href="/salary-to-hourly-calculator/">Salary to hourly calculator</a> – compare your rate with a salaried job</li>
+  <li><a href="/savings-goal-calculator/">Savings goal calculator</a> – build a buffer for irregular income</li>
+</ul></div>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="/">ClearCalc</a>
+      <p>Free, private money calculators. Every calculation runs in your browser — nothing you type is sent anywhere.</p>
+    </div>
+    <div><h4>Calculators</h4><ul><li><a href="/loan-calculator/">Loan Calculator</a></li><li><a href="/mortgage-calculator/">Mortgage Calculator</a></li><li><a href="/compound-interest-calculator/">Compound Interest Calculator</a></li><li><a href="/savings-goal-calculator/">Savings Goal Calculator</a></li><li><a href="/freelance-rate-calculator/">Freelance Rate Calculator</a></li><li><a href="/salary-to-hourly-calculator/">Salary to Hourly Calculator</a></li></ul></div>
+    <div><h4>Site</h4><ul>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+      <li><a href="/privacy-policy/">Privacy policy</a></li>
+      <li><a href="/terms/">Terms of use</a></li>
+    </ul></div>
+  </div>
+  <div class="wrap fine">Results are estimates for information only and are not financial advice. © 2026 ClearCalc</div>
+</footer>
+<script src="/assets/app.js" defer></script>
+<script src="/assets/tools/freelance.js" defer></script>
+</body>
+</html>

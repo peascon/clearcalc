@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salary to Hourly Calculator – Convert Annual, Monthly &amp; Hourly Pay | ClearCalc</title>
+<meta name="description" content="Convert pay between hourly, daily, weekly, every two weeks, monthly and yearly. Adjust hours per week and weeks worked to see what your salary is per hour.">
+<link rel="canonical" href="https://www.example.com/salary-to-hourly-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Salary to Hourly Calculator – Convert Annual, Monthly &amp; Hourly Pay | ClearCalc">
+<meta property="og:description" content="Convert pay between hourly, daily, weekly, every two weeks, monthly and yearly. Adjust hours per week and weeks worked to see what your salary is per hour.">
+<meta property="og:url" content="https://www.example.com/salary-to-hourly-calculator/">
+<meta property="og:site_name" content="ClearCalc">
+<meta name="theme-color" content="#0f5e4b">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css">
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Salary to Hourly Calculator", "url": "https://www.example.com/salary-to-hourly-calculator/", "applicationCategory": "FinanceApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Convert pay between hourly, daily, weekly, every two weeks, monthly and yearly. Adjust hours per week and weeks worked to see what your salary is per hour."}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is this before or after tax?", "acceptedAnswer": {"@type": "Answer", "text": "The calculator converts whatever figure you enter. Enter your gross pay to get gross results, or your net pay to get take-home results."}}, {"@type": "Question", "name": "How should I handle unpaid time off?", "acceptedAnswer": {"@type": "Answer", "text": "If you're paid hourly and don't get paid holidays, enter your unpaid weeks. The yearly figure then uses only the weeks you actually work."}}, {"@type": "Question", "name": "How many working hours are in a month?", "acceptedAnswer": {"@type": "Answer", "text": "On average, 40 × 52 ÷ 12 ≈ 173.3 hours. The exact number depends on the month and on public holidays where you live."}}]}</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="/"><img src="/assets/favicon.svg" alt="" width="28" height="28">ClearCalc</a>
+    <nav class="tools-nav" aria-label="Calculators"><a href="/loan-calculator/">Loan</a><a href="/mortgage-calculator/">Mortgage</a><a href="/compound-interest-calculator/">Compound interest</a><a href="/savings-goal-calculator/">Savings goal</a><a href="/freelance-rate-calculator/">Freelance rate</a><a href="/salary-to-hourly-calculator/" aria-current="page">Salary ↔ hourly</a></nav>
+    <label class="currency-pick">
+      <span class="sr-only">Currency</span>
+      <select id="currency" aria-label="Currency"></select>
+    </label>
+  </div>
+</header>
+<main class="wrap">
+<h1>Salary to Hourly Calculator</h1>
+<p class="lede">Convert pay between hourly, weekly, monthly and yearly. Useful for comparing job offers, or checking what your salary is worth per hour.</p>
+
+
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="row2">
+      <div class="field">
+        <label for="pay">Pay amount</label>
+        <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="pay" inputmode="decimal" value="50000"></div>
+      </div>
+      <div class="field">
+        <label for="period">Per</label>
+        <div class="input-wrap"><select id="period">
+          <option value="year">Year</option><option value="month">Month</option><option value="biweek">2 weeks</option>
+          <option value="week">Week</option><option value="day">Day</option><option value="hour">Hour</option>
+        </select></div>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="hours">Hours per week</label>
+        <div class="input-wrap"><input id="hours" inputmode="decimal" value="40"></div>
+      </div>
+      <div class="field">
+        <label for="days">Days per week</label>
+        <div class="input-wrap"><input id="days" inputmode="decimal" value="5"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="unpaid">Unpaid weeks off per year <span class="hint">(0 if holidays are paid)</span></label>
+      <div class="input-wrap"><input id="unpaid" inputmode="decimal" value="0"><span class="unit">weeks</span></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copy link to these results</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label">Hourly pay</div><div class="value" id="outHour">—</div></div>
+    <div class="table-scroll" style="max-height:none">
+      <table class="schedule"><tbody>
+        <tr><td>Daily</td><td id="outDay">—</td></tr>
+        <tr><td>Weekly</td><td id="outWeek">—</td></tr>
+        <tr><td>Every 2 weeks</td><td id="outBiweek">—</td></tr>
+        <tr><td>Monthly</td><td id="outMonth">—</td></tr>
+        <tr><td>Yearly</td><td id="outYear">—</td></tr>
+      </tbody></table>
+    </div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+
+
+<article class="prose">
+<h2>How to convert salary to hourly</h2>
+<p>Divide your yearly salary by the number of hours you work in a year. With a standard 40-hour week and 52 paid weeks, that's 2,080 hours:</p>
+<div class="formula">Hourly = Yearly salary ÷ (Hours per week × Weeks paid per year)</div>
+<p>So a salary of 50,000 a year works out to about 24.04 an hour. To go the other way, multiply your hourly rate by 2,080.</p>
+
+<h2>Quick reference</h2>
+<ul>
+  <li><strong>Monthly → yearly:</strong> multiply by 12.</li>
+  <li><strong>Weekly → yearly:</strong> multiply by 52.</li>
+  <li><strong>Every two weeks → yearly:</strong> multiply by 26. That's 26 paychecks, not 24, so two months a year have three paydays.</li>
+  <li><strong>Hourly → monthly:</strong> multiply by hours per week × 52 ÷ 12. At 40 hours, that's about 173.3 hours a month.</li>
+</ul>
+
+<h2>Comparing job offers fairly</h2>
+<p>Two offers with the same salary can pay very different hourly amounts. If one job expects 50 hours a week and another 40, the second pays 25% more for each hour you work. Change the hours above to compare. Remember to also weigh benefits like health cover, pension contributions and paid leave.</p>
+
+<h2>Frequently asked questions</h2>
+<details class="faq"><summary>Is this before or after tax?</summary><div>The calculator converts whatever figure you enter. Enter your gross pay to get gross results, or your net pay to get take-home results.</div></details>
+<details class="faq"><summary>How should I handle unpaid time off?</summary><div>If you're paid hourly and don't get paid holidays, enter your unpaid weeks. The yearly figure then uses only the weeks you actually work.</div></details>
+<details class="faq"><summary>How many working hours are in a month?</summary><div>On average, 40 × 52 ÷ 12 ≈ 173.3 hours. The exact number depends on the month and on public holidays where you live.</div></details>
+
+<div class="related"><h3>Related calculators</h3><ul>
+  <li><a href="/freelance-rate-calculator/">Freelance rate calculator</a> – what to charge when you're self-employed</li>
+  <li><a href="/compound-interest-calculator/">Compound interest calculator</a> – see what saving part of your pay could grow to</li>
+</ul></div>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="/">ClearCalc</a>
+      <p>Free, private money calculators. Every calculation runs in your browser — nothing you type is sent anywhere.</p>
+    </div>
+    <div><h4>Calculators</h4><ul><li><a href="/loan-calculator/">Loan Calculator</a></li><li><a href="/mortgage-calculator/">Mortgage Calculator</a></li><li><a href="/compound-interest-calculator/">Compound Interest Calculator</a></li><li><a href="/savings-goal-calculator/">Savings Goal Calculator</a></li><li><a href="/freelance-rate-calculator/">Freelance Rate Calculator</a></li><li><a href="/salary-to-hourly-calculator/">Salary to Hourly Calculator</a></li></ul></div>
+    <div><h4>Site</h4><ul>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+      <li><a href="/privacy-policy/">Privacy policy</a></li>
+      <li><a href="/terms/">Terms of use</a></li>
+    </ul></div>
+  </div>
+  <div class="wrap fine">Results are estimates for information only and are not financial advice. © 2026 ClearCalc</div>
+</footer>
+<script src="/assets/app.js" defer></script>
+<script src="/assets/tools/salary.js" defer></script>
+</body>
+</html>

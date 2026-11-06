@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compound Interest Calculator with Monthly Contributions | ClearCalc</title>
+<meta name="description" content="See how your savings or investments grow with compound interest. Add a starting amount and monthly contributions, choose the compounding frequency, and view growth year by year.">
+<link rel="canonical" href="https://www.example.com/compound-interest-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Compound Interest Calculator with Monthly Contributions | ClearCalc">
+<meta property="og:description" content="See how your savings or investments grow with compound interest. Add a starting amount and monthly contributions, choose the compounding frequency, and view growth year by year.">
+<meta property="og:url" content="https://www.example.com/compound-interest-calculator/">
+<meta property="og:site_name" content="ClearCalc">
+<meta name="theme-color" content="#0f5e4b">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css">
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Compound Interest Calculator", "url": "https://www.example.com/compound-interest-calculator/", "applicationCategory": "FinanceApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "See how your savings or investments grow with compound interest. Add a starting amount and monthly contributions, choose the compounding frequency, and view growth year by year."}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What return should I use?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on where the money is. Savings accounts and fixed deposits pay their stated rate. Long-run stock market averages have historically been higher, but they vary a lot from year to year and aren't guaranteed. Try a few rates to see a range of outcomes."}}, {"@type": "Question", "name": "Does compounding frequency make a big difference?", "acceptedAnswer": {"@type": "Answer", "text": "Less than most people expect. Moving from yearly to monthly compounding at 7% raises the effective yearly rate from 7.00% to about 7.23%. Your rate, your time horizon and how much you contribute matter far more."}}, {"@type": "Question", "name": "Are taxes included?", "acceptedAnswer": {"@type": "Answer", "text": "No. Tax on interest and investment gains varies by country and account type, so results are shown before tax."}}]}</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="/"><img src="/assets/favicon.svg" alt="" width="28" height="28">ClearCalc</a>
+    <nav class="tools-nav" aria-label="Calculators"><a href="/loan-calculator/">Loan</a><a href="/mortgage-calculator/">Mortgage</a><a href="/compound-interest-calculator/" aria-current="page">Compound interest</a><a href="/savings-goal-calculator/">Savings goal</a><a href="/freelance-rate-calculator/">Freelance rate</a><a href="/salary-to-hourly-calculator/">Salary ↔ hourly</a></nav>
+    <label class="currency-pick">
+      <span class="sr-only">Currency</span>
+      <select id="currency" aria-label="Currency"></select>
+    </label>
+  </div>
+</header>
+<main class="wrap">
+<h1>Compound Interest Calculator</h1>
+<p class="lede">See how much your money could grow when interest earns interest, with a starting amount, regular monthly deposits, or both.</p>
+
+
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="initial">Starting amount</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="initial" inputmode="decimal" value="5000"></div>
+    </div>
+    <div class="field">
+      <label for="monthly">Monthly contribution</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="monthly" inputmode="decimal" value="200"></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="rate">Annual return</label>
+        <div class="input-wrap"><input id="rate" inputmode="decimal" value="7"><span class="unit">%</span></div>
+      </div>
+      <div class="field">
+        <label for="years">Years</label>
+        <div class="input-wrap"><input id="years" inputmode="numeric" value="20"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="freq">Compounding</label>
+      <div class="input-wrap"><select id="freq">
+        <option value="12">Monthly</option><option value="4">Quarterly</option><option value="1">Yearly</option><option value="365">Daily</option>
+      </select></div>
+    </div>
+    <div class="field">
+      <label for="inflation">Inflation <span class="hint">(optional, to show today's buying power)</span></label>
+      <div class="input-wrap"><input id="inflation" inputmode="decimal" value="0"><span class="unit">% per year</span></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copy link to these results</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label">Future value</div><div class="value" id="outFV">—</div></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Total you put in</div><div class="value" id="outIn">—</div></div>
+      <div class="stat"><div class="label">Interest earned</div><div class="value" id="outInt">—</div></div>
+      <div class="stat" id="realBox" hidden><div class="label">In today's money</div><div class="value" id="outReal">—</div></div>
+    </div>
+    <div class="chart-box"><canvas id="chart" aria-label="Balance by year, split into contributions and interest" role="img"></canvas></div>
+    <div class="legend"><span><i style="background:#0f5e4b"></i>Your contributions</span><span><i style="background:#e9a23b"></i>Interest</span></div>
+    <p class="note" id="outNote"></p>
+    <details class="toggle"><summary>Show year-by-year table</summary>
+      <div class="table-scroll"><table class="schedule"><thead><tr><th>Year</th><th>Contributed</th><th>Interest</th><th>Balance</th></tr></thead><tbody id="table"></tbody></table></div>
+    </details>
+  </div>
+</section>
+
+
+
+<article class="prose">
+<h2>What is compound interest?</h2>
+<p>With <strong>simple interest</strong>, you earn interest only on the money you put in. With <strong>compound interest</strong>, the interest you've already earned is added to your balance and starts earning interest too. Over short periods the difference is small; over 20 or 30 years it often becomes larger than everything you contributed, which you can see in the orange part of the chart.</p>
+
+<h2>The formula</h2>
+<p>For a single deposit, the future value is:</p>
+<div class="formula">A = P × (1 + r/n)<sup>n·t</sup></div>
+<p>where <strong>P</strong> is the starting amount, <strong>r</strong> the annual rate as a decimal, <strong>n</strong> the number of compounding periods per year and <strong>t</strong> the number of years. With monthly contributions, this calculator adds each deposit at the end of the month and lets it compound from then on.</p>
+
+<h2>The rule of 72</h2>
+<p>A quick mental shortcut: divide 72 by your annual return to estimate how many years it takes to double your money. At 6% that's about 12 years; at 9%, about 8 years.</p>
+
+<h2>Three things that matter most</h2>
+<ul>
+  <li><strong>Time.</strong> Starting 10 years earlier often matters more than contributing twice as much.</li>
+  <li><strong>Consistency.</strong> Regular monthly deposits, even small ones, add up because each one gets years to compound.</li>
+  <li><strong>Fees and inflation.</strong> A 1% yearly fee or 3% inflation takes a large share of long-term growth. Use the inflation field to see your result in today's buying power.</li>
+</ul>
+
+<h2>Frequently asked questions</h2>
+<details class="faq"><summary>What return should I use?</summary><div>It depends on where the money is. Savings accounts and fixed deposits pay their stated rate. Long-run stock market averages have historically been higher, but they vary a lot from year to year and aren't guaranteed. Try a few rates to see a range of outcomes.</div></details>
+<details class="faq"><summary>Does compounding frequency make a big difference?</summary><div>Less than most people expect. Moving from yearly to monthly compounding at 7% raises the effective yearly rate from 7.00% to about 7.23%. Your rate, your time horizon and how much you contribute matter far more.</div></details>
+<details class="faq"><summary>Are taxes included?</summary><div>No. Tax on interest and investment gains varies by country and account type, so results are shown before tax.</div></details>
+
+<div class="related"><h3>Related calculators</h3><ul>
+  <li><a href="/savings-goal-calculator/">Savings goal calculator</a> – work backwards from a target amount</li>
+  <li><a href="/salary-to-hourly-calculator/">Salary to hourly calculator</a> – see what your time is worth</li>
+</ul></div>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="/">ClearCalc</a>
+      <p>Free, private money calculators. Every calculation runs in your browser — nothing you type is sent anywhere.</p>
+    </div>
+    <div><h4>Calculators</h4><ul><li><a href="/loan-calculator/">Loan Calculator</a></li><li><a href="/mortgage-calculator/">Mortgage Calculator</a></li><li><a href="/compound-interest-calculator/">Compound Interest Calculator</a></li><li><a href="/savings-goal-calculator/">Savings Goal Calculator</a></li><li><a href="/freelance-rate-calculator/">Freelance Rate Calculator</a></li><li><a href="/salary-to-hourly-calculator/">Salary to Hourly Calculator</a></li></ul></div>
+    <div><h4>Site</h4><ul>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+      <li><a href="/privacy-policy/">Privacy policy</a></li>
+      <li><a href="/terms/">Terms of use</a></li>
+    </ul></div>
+  </div>
+  <div class="wrap fine">Results are estimates for information only and are not financial advice. © 2026 ClearCalc</div>
+</footer>
+<script src="/assets/app.js" defer></script>
+<script src="/assets/tools/compound.js" defer></script>
+</body>
+</html>
