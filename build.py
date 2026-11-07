@@ -32,8 +32,8 @@ CONFIG = {
     "site_name": "ClearCalc",
     "tagline": "Free, private money calculators",
     # Your real domain, no trailing slash. Used for canonical URLs + sitemap.
-    "domain": "https://clearcalc-ay2.pages.dev",
-    "contact_email": "papynsenga350@gmail.com",
+    "domain": "https://www.example.com",
+    "contact_email": "hello@example.com",
     # Your AdSense publisher ID, e.g. "ca-pub-1234567890123456".
     # Leave empty until AdSense approves you: no ad code is output while empty.
     "adsense_client": "",
@@ -112,7 +112,7 @@ def render(page, tools):
         page[k] = page[k].replace("{{SITE_NAME}}", c["site_name"])
     current = ' aria-current="page"'
     nav_links = "".join(
-        f'<a href="{t["path"]}"{current if t["path"] == page["path"] else ""}>{t["nav"]}</a>'
+        f'<a href="{t["path"]}"{current if t["path"] == page["path"] else ""}>{t["h1"]}</a>'
         for t in tools
     )
     footer_tools = "".join(f'<li><a href="{t["path"]}">{t["h1"]}</a></li>' for t in tools)
@@ -178,7 +178,10 @@ def render(page, tools):
 <header class="site-header">
   <div class="wrap header-row">
     <a class="brand" href="/"><img src="/assets/favicon.svg" alt="" width="28" height="28">{c["site_name"]}</a>
-    <nav class="tools-nav" aria-label="Calculators">{nav_links}</nav>
+    <details class="menu">
+      <summary>Calculators <span aria-hidden="true">▾</span></summary>
+      <nav class="menu-panel" aria-label="Calculators">{nav_links}</nav>
+    </details>
     <label class="currency-pick">
       <span class="sr-only">Currency</span>
       <select id="currency" aria-label="Currency"></select>
