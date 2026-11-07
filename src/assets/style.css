@@ -25,17 +25,20 @@ img { max-width: 100%; }
 .site-header { background: var(--card); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 10; }
 .header-row { display: flex; align-items: center; gap: 18px; min-height: 60px; }
 .brand { display: inline-flex; align-items: center; gap: 8px; font-weight: 750; font-size: 1.15rem; color: var(--ink); text-decoration: none; letter-spacing: -.01em; }
-.tools-nav { display: flex; gap: 4px; overflow-x: auto; flex: 1; scrollbar-width: none; }
-.tools-nav::-webkit-scrollbar { display: none; }
-.tools-nav a { padding: 6px 10px; border-radius: 8px; color: var(--ink-soft); text-decoration: none; font-size: .92rem; white-space: nowrap; }
-.tools-nav a:hover { background: var(--bg); color: var(--ink); }
-.tools-nav a[aria-current="page"] { background: var(--brand-tint); color: var(--brand); font-weight: 600; }
+.menu { position: relative; margin-right: auto; }
+.menu summary { list-style: none; cursor: pointer; padding: 7px 12px; border-radius: 9px; font-weight: 600; font-size: .95rem; color: var(--ink); border: 1px solid var(--line); background: var(--card); user-select: none; }
+.menu summary::-webkit-details-marker { display: none; }
+.menu summary:hover, .menu[open] summary { border-color: var(--brand); color: var(--brand); }
+.menu-panel { position: absolute; top: calc(100% + 8px); left: 0; z-index: 20; display: grid; grid-template-columns: repeat(2, max-content); gap: 2px 8px; padding: 8px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 12px 32px rgba(20, 33, 29, .14); }
+.menu-panel a { padding: 9px 12px; border-radius: 8px; color: var(--ink); text-decoration: none; font-size: .93rem; white-space: nowrap; }
+.menu-panel a:hover { background: var(--bg); color: var(--brand); }
+.menu-panel a[aria-current="page"] { background: var(--brand-tint); color: var(--brand); font-weight: 600; }
 .currency-pick select { font: inherit; font-size: .9rem; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); }
 
 @media (max-width: 720px) {
-  .header-row { flex-wrap: wrap; gap: 8px; padding: 10px 20px; }
-  .tools-nav { order: 3; flex-basis: 100%; }
-  .currency-pick { margin-left: auto; }
+  .header-row { gap: 10px; }
+  .brand { font-size: 1.05rem; }
+  .menu-panel { position: fixed; left: 12px; right: 12px; top: 64px; grid-template-columns: 1fr; max-height: 70vh; overflow-y: auto; }
 }
 
 /* Main */
@@ -127,3 +130,11 @@ details.faq div { padding-bottom: 12px; color: #26332f; }
 @media print {
   .site-header, .site-footer, .ad-slot, .btn-row { display: none; }
 }
+
+/* Editable tables (debt payoff) */
+.debt-table td { padding: 4px; }
+.debt-table td:first-child { width: 34%; }
+.debt-table input { width: 100%; font: inherit; font-size: .92rem; padding: 8px; border: 1px solid #cdd8d4; border-radius: 8px; text-align: right; background: #fff; }
+.debt-table td:first-child input { text-align: left; }
+.debt-table input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-tint); }
+.stat .note { margin: 2px 0 0; font-size: .8rem; }
