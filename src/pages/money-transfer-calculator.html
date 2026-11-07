@@ -1,0 +1,110 @@
+<!--
+title: Money Transfer Cost Calculator – Compare Remittance Fees & Exchange Rates | ClearCalc
+description: Compare international money transfer providers by what your recipient actually gets. Includes hidden exchange-rate markups, not just the fee. Works for sending money to Rwanda, Kenya, Uganda and anywhere.
+path: /money-transfer-calculator/
+h1: Money Transfer Cost Calculator
+nav: Money transfer
+order: 9
+script: transfer.js
+blurb: Compare remittance providers by what your family actually receives, including hidden exchange-rate markups.
+-->
+<p class="lede">Sending money home or abroad? Compare up to three providers by what arrives on the other side, including the hidden cost in the exchange rate, not just the advertised fee.</p>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="amount">You send</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="amount" inputmode="decimal" value="200"></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="to">Recipient gets</label>
+        <div class="input-wrap"><select id="to">
+          <option>RWF</option><option>KES</option><option>UGX</option><option>TZS</option><option>BIF</option><option>CDF</option>
+          <option>NGN</option><option>GHS</option><option>ZAR</option><option>XOF</option><option>ETB</option><option>INR</option>
+          <option>PHP</option><option>USD</option><option>EUR</option><option>GBP</option>
+        </select></div>
+      </div>
+      <div class="field">
+        <label for="mid">Market rate <span class="hint">(1 unit you send =)</span></label>
+        <div class="input-wrap"><input id="mid" inputmode="decimal" value="1400"></div>
+      </div>
+    </div>
+    <p class="note" style="margin:-6px 0 14px">Find today's market rate by searching Google for e.g. "USD to RWF". The example numbers here are for illustration only.</p>
+
+    <div class="provider" data-i="1">
+      <div class="row2">
+        <div class="field"><label for="n1">Provider 1</label><div class="input-wrap"><input id="n1" value="Provider A"></div></div>
+        <div class="field"><label for="f1">Fee</label><div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="f1" inputmode="decimal" value="5"></div></div>
+      </div>
+      <div class="field"><label for="r1">Their exchange rate</label><div class="input-wrap"><input id="r1" inputmode="decimal" value="1375"></div></div>
+    </div>
+    <div class="provider" data-i="2">
+      <div class="row2">
+        <div class="field"><label for="n2">Provider 2</label><div class="input-wrap"><input id="n2" value="Provider B"></div></div>
+        <div class="field"><label for="f2">Fee</label><div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="f2" inputmode="decimal" value="0"></div></div>
+      </div>
+      <div class="field"><label for="r2">Their exchange rate</label><div class="input-wrap"><input id="r2" inputmode="decimal" value="1330"></div></div>
+    </div>
+    <div class="provider" data-i="3">
+      <div class="row2">
+        <div class="field"><label for="n3">Provider 3 <span class="hint">(optional)</span></label><div class="input-wrap"><input id="n3" value="Provider C"></div></div>
+        <div class="field"><label for="f3">Fee</label><div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="f3" inputmode="decimal" value="12"></div></div>
+      </div>
+      <div class="field"><label for="r3">Their exchange rate</label><div class="input-wrap"><input id="r3" inputmode="decimal" value="1392"></div></div>
+    </div>
+    <div class="field">
+      <label for="feeMode">Fees are…</label>
+      <div class="input-wrap"><select id="feeMode">
+        <option value="add">Added on top (you pay amount + fee)</option>
+        <option value="deduct">Taken from the amount you send</option>
+      </select></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copy link to these results</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label" id="bestLabel">Best value</div><div class="value" id="outBest">—</div></div>
+    <div class="table-scroll" style="max-height:none">
+      <table class="schedule">
+        <thead><tr><th>Provider</th><th>You pay</th><th>Recipient gets</th><th>Total cost</th><th>Cost %</th></tr></thead>
+        <tbody id="results"></tbody>
+      </table>
+    </div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>The fee is only half the cost</h2>
+<p>Money transfer services make money in two ways: the <strong>fee</strong> they show you, and the <strong>exchange rate markup</strong> they don't. If the real market rate is 1 dollar = 1,400 francs but a provider gives you 1,330, it keeps 70 francs on every dollar, which is 5% of your money, even when it advertises "zero fees".</p>
+<p>This calculator adds both together so you can compare providers fairly by the only number that matters: <strong>how much your recipient actually receives</strong>.</p>
+
+<h2>How the total cost is calculated</h2>
+<div class="formula">Recipient gets = (Amount − deducted fee) × Provider rate<br>Hidden cost = Amount converted × (Market rate − Provider rate) ÷ Market rate<br>Total cost = Fee + Hidden cost</div>
+<p>The <strong>market rate</strong> (also called the mid-market or interbank rate) is the rate halfway between what banks buy and sell a currency for. It's the rate you see when you search a currency pair on Google or a currency site, and the fairest benchmark.</p>
+
+<h2>Tips to send money for less</h2>
+<ul>
+  <li><strong>Compare every time.</strong> Rates and fees change daily, and the cheapest provider for 50 may not be cheapest for 500.</li>
+  <li><strong>Send larger amounts less often.</strong> Fixed fees hurt most on small transfers.</li>
+  <li><strong>Check how the money arrives.</strong> Mobile money (like MTN MoMo or M-Pesa), bank deposit and cash pickup can have different rates and fees with the same provider.</li>
+  <li><strong>Watch for receiving fees.</strong> Some banks charge the recipient to accept an international transfer.</li>
+  <li><strong>Avoid card-funded transfers</strong> if your card issuer treats them as cash advances, which can add fees and interest.</li>
+</ul>
+
+<h2>Frequently asked questions</h2>
+<details class="faq"><summary>Where do I find each provider's exchange rate?</summary><div>Start a transfer on the provider's website or app; most show the exact rate and fee before you pay. Enter those numbers here to compare.</div></details>
+<details class="faq"><summary>What is a good total cost for sending money?</summary><div>The United Nations' Sustainable Development Goals target an average remittance cost of 3% or less. Many providers charge more than that, especially for small transfers, so it pays to compare.</div></details>
+<details class="faq"><summary>Why is the cost percentage different from the fee?</summary><div>Because it includes the exchange rate markup. A provider charging no fee but a 4% weaker rate costs more than one charging a 2% fee at the market rate.</div></details>
+<details class="faq"><summary>Is my information stored?</summary><div>No. All calculations happen in your browser and nothing is sent anywhere.</div></details>
+
+<div class="related"><h3>Related calculators</h3><ul>
+  <li><a href="/freelance-rate-calculator/">Freelance rate calculator</a> – factor transfer costs into what you charge foreign clients</li>
+  <li><a href="/savings-goal-calculator/">Savings goal calculator</a> – plan regular support for family</li>
+</ul></div>
+</article>

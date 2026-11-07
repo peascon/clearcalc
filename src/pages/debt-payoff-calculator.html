@@ -1,0 +1,78 @@
+<!--
+title: Debt Payoff Calculator – Snowball vs Avalanche Method | ClearCalc
+description: Plan how to pay off multiple debts. Compare the debt snowball and avalanche methods to see your debt-free date, total interest and which debt to pay first.
+path: /debt-payoff-calculator/
+h1: Debt Payoff Calculator
+nav: Debt payoff
+order: 10
+script: debt.js
+blurb: Compare the snowball and avalanche methods to find your debt-free date and the order to pay debts off.
+-->
+<p class="lede">List your debts and how much extra you can pay each month. See when you'll be debt-free, and whether the snowball or avalanche method saves you more.</p>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <table class="schedule debt-table">
+      <thead><tr><th>Debt</th><th>Balance</th><th>Rate %</th><th>Min. / month</th></tr></thead>
+      <tbody>
+        <tr><td><input id="n1" value="Credit card" aria-label="Debt 1 name"></td><td><input id="b1" inputmode="decimal" value="3000" aria-label="Debt 1 balance"></td><td><input id="a1" inputmode="decimal" value="22" aria-label="Debt 1 interest rate"></td><td><input id="m1" inputmode="decimal" value="90" aria-label="Debt 1 minimum payment"></td></tr>
+        <tr><td><input id="n2" value="Phone loan" aria-label="Debt 2 name"></td><td><input id="b2" inputmode="decimal" value="800" aria-label="Debt 2 balance"></td><td><input id="a2" inputmode="decimal" value="15" aria-label="Debt 2 interest rate"></td><td><input id="m2" inputmode="decimal" value="50" aria-label="Debt 2 minimum payment"></td></tr>
+        <tr><td><input id="n3" value="Car loan" aria-label="Debt 3 name"></td><td><input id="b3" inputmode="decimal" value="7000" aria-label="Debt 3 balance"></td><td><input id="a3" inputmode="decimal" value="9" aria-label="Debt 3 interest rate"></td><td><input id="m3" inputmode="decimal" value="220" aria-label="Debt 3 minimum payment"></td></tr>
+        <tr><td><input id="n4" placeholder="Debt 4" aria-label="Debt 4 name"></td><td><input id="b4" inputmode="decimal" aria-label="Debt 4 balance"></td><td><input id="a4" inputmode="decimal" aria-label="Debt 4 interest rate"></td><td><input id="m4" inputmode="decimal" aria-label="Debt 4 minimum payment"></td></tr>
+        <tr><td><input id="n5" placeholder="Debt 5" aria-label="Debt 5 name"></td><td><input id="b5" inputmode="decimal" aria-label="Debt 5 balance"></td><td><input id="a5" inputmode="decimal" aria-label="Debt 5 interest rate"></td><td><input id="m5" inputmode="decimal" aria-label="Debt 5 minimum payment"></td></tr>
+      </tbody>
+    </table>
+    <div class="field" style="margin-top:16px">
+      <label for="extra">Extra you can pay each month <span class="hint">(on top of all minimums)</span></label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="extra" inputmode="decimal" value="150"></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copy link to these results</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label" id="mainLabel">Debt-free in</div><div class="value" id="outMain">—</div></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Avalanche (highest rate first)</div><div class="value" id="outAva">—</div><div class="note" id="outAvaInt"></div></div>
+      <div class="stat"><div class="label">Snowball (smallest balance first)</div><div class="value" id="outSnow">—</div><div class="note" id="outSnowInt"></div></div>
+      <div class="stat"><div class="label">Minimums only</div><div class="value" id="outMin">—</div><div class="note" id="outMinInt"></div></div>
+    </div>
+    <p class="note" id="outNote"></p>
+    <h3 style="margin-top:12px">Payoff order (<span id="orderName">avalanche</span>)</h3>
+    <ol id="order" style="margin:6px 0 0;padding-left:20px"></ol>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>Snowball vs avalanche: which is better?</h2>
+<p>Both methods have you pay the minimum on every debt and put all your extra money toward one target debt. When that debt is gone, its payment rolls onto the next one, so your payments grow like a snowball.</p>
+<ul>
+  <li><strong>Avalanche:</strong> target the debt with the <em>highest interest rate</em> first. This always costs the least interest overall and is usually the fastest.</li>
+  <li><strong>Snowball:</strong> target the <em>smallest balance</em> first. You pay a little more interest, but you clear whole debts sooner, and those quick wins keep many people motivated.</li>
+</ul>
+<p>The calculator runs both so you can see the real difference for your debts. If it's small, pick whichever you're more likely to stick with.</p>
+
+<h2>How it's calculated</h2>
+<p>Each month, interest is added to every balance (annual rate ÷ 12), the minimum is paid on each debt, and everything left over, including your extra amount and any minimums freed up by debts you've cleared, goes to the target debt. This repeats until every balance reaches zero.</p>
+
+<h2>Tips for getting out of debt faster</h2>
+<ul>
+  <li><strong>Stop adding new debt</strong> while you pay off the old.</li>
+  <li><strong>Ask for a lower rate.</strong> Lenders sometimes reduce rates for customers with a good repayment record, and refinancing a high-rate debt can save a lot.</li>
+  <li><strong>Put windfalls on the target debt.</strong> Bonuses, gifts and side income shorten the timeline quickly.</li>
+  <li><strong>Keep a small emergency fund</strong> so a surprise expense doesn't push you back into borrowing.</li>
+</ul>
+
+<h2>Frequently asked questions</h2>
+<details class="faq"><summary>What if my minimum payment doesn't cover the interest?</summary><div>Then that debt grows every month, even with payments. The calculator warns you if this happens. Increase the payment on that debt, or ask the lender about a lower rate or payment plan.</div></details>
+<details class="faq"><summary>Should I save or pay off debt first?</summary><div>Many people keep a small emergency fund first, then attack high-interest debt, because the interest saved on a debt charging 20% or more is usually higher than what savings earn.</div></details>
+<details class="faq"><summary>Does this include fees?</summary><div>No. It uses the balance, interest rate and payments you enter. If a debt has monthly fees, add them to that debt's minimum payment.</div></details>
+
+<div class="related"><h3>Related calculators</h3><ul>
+  <li><a href="/loan-calculator/">Loan calculator</a> – see the full schedule for a single loan</li>
+  <li><a href="/savings-goal-calculator/">Savings goal calculator</a> – build your emergency fund</li>
+</ul></div>
+</article>
