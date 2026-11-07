@@ -1,0 +1,84 @@
+<!--
+title: VAT Calculator – Add or Remove VAT for Any Country | ClearCalc
+description: Free VAT calculator. Add VAT to a net price or remove VAT from a gross price, with standard rates for Rwanda, Kenya, Uganda, the UK, EU and more, or any custom rate.
+path: /vat-calculator/
+h1: VAT Calculator
+nav: VAT
+order: 7
+script: vat.js
+blurb: Add VAT to a price or remove it from a total, with standard rates for dozens of countries or your own rate.
+-->
+<p class="lede">Add VAT to a price, or work out how much VAT is inside a total you've already paid. Pick your country or enter any rate.</p>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="mode">What do you want to do?</label>
+      <div class="input-wrap"><select id="mode">
+        <option value="add">Add VAT to a price (price excludes VAT)</option>
+        <option value="remove">Remove VAT from a price (price includes VAT)</option>
+      </select></div>
+    </div>
+    <div class="field">
+      <label for="amount" id="amountLabel">Price before VAT</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="amount" inputmode="decimal" value="100"></div>
+    </div>
+    <div class="field">
+      <label for="country">Country</label>
+      <div class="input-wrap"><select id="country"></select></div>
+    </div>
+    <div class="field">
+      <label for="rate">VAT rate</label>
+      <div class="input-wrap"><input id="rate" inputmode="decimal" value="18"><span class="unit">%</span></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copy link to these results</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label" id="mainLabel">Price including VAT</div><div class="value" id="outMain">—</div></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Net price (excl. VAT)</div><div class="value" id="outNet">—</div></div>
+      <div class="stat"><div class="label">VAT amount</div><div class="value" id="outVat">—</div></div>
+      <div class="stat"><div class="label">Gross price (incl. VAT)</div><div class="value" id="outGross">—</div></div>
+    </div>
+    <div class="breakdown" id="bar"></div>
+    <div class="legend"><span><i style="background:#0f5e4b"></i>Net price</span><span><i style="background:#e9a23b"></i>VAT</span></div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>How to add VAT</h2>
+<p>Multiply the net price by 1 plus the VAT rate:</p>
+<div class="formula">Gross = Net × (1 + rate ÷ 100)</div>
+<p>Example: a product costs 10,000 before VAT, and the rate is 18%. The VAT is 10,000 × 0.18 = 1,800, so the customer pays 11,800.</p>
+
+<h2>How to remove VAT</h2>
+<p>A very common mistake is to take 18% off the total. That gives the wrong answer, because the VAT was calculated on the <em>net</em> price, not the total. Divide instead:</p>
+<div class="formula">Net = Gross ÷ (1 + rate ÷ 100)</div>
+<p>Example: a receipt shows 11,800 including 18% VAT. The net price is 11,800 ÷ 1.18 = 10,000, and the VAT inside it is 1,800. Taking 18% off 11,800 would wrongly give 9,676.</p>
+<p>A shortcut for the VAT amount inside a total is <strong>Gross × rate ÷ (100 + rate)</strong>. At 18%, that's the total × 18/118.</p>
+
+<h2>Standard VAT rates by country</h2>
+<p>The calculator includes the standard rates below. Many countries also have reduced or zero rates for items like basic food, medicine, education and exports, so check the rate that applies to your product.</p>
+<table class="schedule" style="max-width:520px">
+<thead><tr><th>Country</th><th>Standard rate</th></tr></thead>
+<tbody id="rateTable"></tbody>
+</table>
+<p class="note">Rates last checked November 2026. Tax rates change, so confirm with your national tax authority before filing.</p>
+
+<h2>Frequently asked questions</h2>
+<details class="faq"><summary>Is VAT the same as GST or sales tax?</summary><div>GST (goods and services tax) works the same way as VAT and uses the same maths, so this calculator works for GST too. US sales tax is different: it's set by states and cities and only charged at the final sale, but adding it to a price uses the same formula.</div></details>
+<details class="faq"><summary>When does a business have to charge VAT?</summary><div>Usually once its yearly sales pass a registration threshold set by the tax authority. The threshold differs by country, so check your tax authority's website.</div></details>
+<details class="faq"><summary>What is the VAT rate in Rwanda?</summary><div>The standard VAT rate in Rwanda is 18%. Some goods and services, such as exports, are zero-rated or exempt.</div></details>
+<details class="faq"><summary>Why does my total not match exactly?</summary><div>Shops and invoicing systems sometimes round VAT per item instead of on the total, which can cause differences of a few cents or francs.</div></details>
+
+<div class="related"><h3>Related calculators</h3><ul>
+  <li><a href="/profit-margin-calculator/">Profit margin calculator</a> – set prices that cover your costs and earn a profit</li>
+  <li><a href="/freelance-rate-calculator/">Freelance rate calculator</a> – what to charge for your services</li>
+</ul></div>
+</article>

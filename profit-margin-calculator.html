@@ -1,0 +1,107 @@
+<!--
+title: Profit Margin Calculator – Margin, Markup & Selling Price | ClearCalc
+description: Calculate profit margin and markup from cost and price, or find the selling price you need for a target margin. Free, simple and works in any currency.
+path: /profit-margin-calculator/
+h1: Profit Margin Calculator
+nav: Profit margin
+order: 8
+script: margin.js
+blurb: Find your margin and markup, or the selling price you need to hit a target profit.
+-->
+<p class="lede">Work out your profit margin and markup, or find the selling price you need to earn the margin you want. Built for shops, traders and small businesses.</p>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="mode">I know…</label>
+      <div class="input-wrap"><select id="mode">
+        <option value="price">My cost and selling price</option>
+        <option value="margin">My cost and the margin I want</option>
+        <option value="markup">My cost and the markup I want</option>
+      </select></div>
+    </div>
+    <div class="field">
+      <label for="cost">Cost per item <span class="hint">(what you pay to buy or make it)</span></label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="cost" inputmode="decimal" value="60"></div>
+    </div>
+    <div class="field" id="priceField">
+      <label for="price">Selling price per item</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="price" inputmode="decimal" value="100"></div>
+    </div>
+    <div class="field" id="pctField" hidden>
+      <label for="pct" id="pctLabel">Target margin</label>
+      <div class="input-wrap"><input id="pct" inputmode="decimal" value="40"><span class="unit">%</span></div>
+    </div>
+    <div class="field">
+      <label for="qty">Items sold <span class="hint">(optional, per month)</span></label>
+      <div class="input-wrap"><input id="qty" inputmode="numeric" value="1"></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copy link to these results</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label" id="mainLabel">Profit margin</div><div class="value" id="outMain">—</div></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Selling price</div><div class="value" id="outPrice">—</div></div>
+      <div class="stat"><div class="label">Profit per item</div><div class="value" id="outProfit">—</div></div>
+      <div class="stat"><div class="label">Margin</div><div class="value" id="outMargin">—</div></div>
+      <div class="stat"><div class="label">Markup</div><div class="value" id="outMarkup">—</div></div>
+    </div>
+    <div class="stats" id="totals">
+      <div class="stat"><div class="label">Total revenue</div><div class="value" id="outRevenue">—</div></div>
+      <div class="stat"><div class="label">Total profit</div><div class="value" id="outTotalProfit">—</div></div>
+    </div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>Margin vs markup: what's the difference?</h2>
+<p>Both measure profit, but they divide by different numbers, and mixing them up is one of the most common pricing mistakes.</p>
+<ul>
+  <li><strong>Margin</strong> is profit as a share of the <em>selling price</em>. It tells you how much of every sale you keep.</li>
+  <li><strong>Markup</strong> is profit as a share of the <em>cost</em>. It tells you how much you added on top of what you paid.</li>
+</ul>
+<div class="formula">Margin = (Price − Cost) ÷ Price × 100<br>Markup = (Price − Cost) ÷ Cost × 100</div>
+<p>Example: you buy an item for 60 and sell it for 100. Your profit is 40, so your <strong>margin is 40%</strong> (40 ÷ 100) but your <strong>markup is 66.7%</strong> (40 ÷ 60). A 40% markup would only give you a 28.6% margin.</p>
+
+<h2>How to price for a target margin</h2>
+<p>To earn a specific margin, divide the cost by (1 − margin):</p>
+<div class="formula">Price = Cost ÷ (1 − Margin ÷ 100)</div>
+<p>For a 40% margin on an item costing 60: 60 ÷ 0.6 = 100. Adding 40% to the cost (60 × 1.4 = 84) would give only a 28.6% margin.</p>
+
+<h2>Quick conversion table</h2>
+<table class="schedule" style="max-width:420px">
+<thead><tr><th>Margin</th><th>Equivalent markup</th></tr></thead>
+<tbody>
+<tr><td>10%</td><td>11.1%</td></tr>
+<tr><td>20%</td><td>25%</td></tr>
+<tr><td>25%</td><td>33.3%</td></tr>
+<tr><td>30%</td><td>42.9%</td></tr>
+<tr><td>40%</td><td>66.7%</td></tr>
+<tr><td>50%</td><td>100%</td></tr>
+<tr><td>60%</td><td>150%</td></tr>
+</tbody>
+</table>
+
+<h2>Tips for healthier margins</h2>
+<ul>
+  <li><strong>Count all your costs.</strong> Include transport, packaging, payment fees and losses, not just the purchase price.</li>
+  <li><strong>Watch VAT.</strong> If you're VAT-registered, calculate margin on prices <em>excluding</em> VAT. Use the <a href="/vat-calculator/">VAT calculator</a> to remove it first.</li>
+  <li><strong>Buy in bulk carefully.</strong> A lower unit cost raises margin, but only if the stock sells.</li>
+</ul>
+
+<h2>Frequently asked questions</h2>
+<details class="faq"><summary>What is a good profit margin?</summary><div>It depends heavily on the industry. Grocery and fuel businesses often run on single-digit margins and make money through volume, while services, software and handmade goods often have margins above 50%. Compare yourself with similar businesses.</div></details>
+<details class="faq"><summary>Can margin be more than 100%?</summary><div>No. Margin is a share of the selling price, so it can never reach 100% unless the cost is zero. Markup has no upper limit.</div></details>
+<details class="faq"><summary>Is this gross or net margin?</summary><div>This calculator shows gross margin per item: price minus the direct cost of the item. Net margin also subtracts overheads like rent, salaries and marketing.</div></details>
+
+<div class="related"><h3>Related calculators</h3><ul>
+  <li><a href="/vat-calculator/">VAT calculator</a> – add or remove VAT from your prices</li>
+  <li><a href="/loan-calculator/">Loan calculator</a> – check the cost of a business loan</li>
+</ul></div>
+</article>
