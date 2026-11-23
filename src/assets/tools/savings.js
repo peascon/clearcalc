@@ -16,7 +16,7 @@
     var months = Math.round(years * 12);
     if (!(goal > 0) || !(months > 0) || have < 0 || rate < 0) {
       ["outMonthly", "outWeekly", "outDaily", "outDeposits", "outInterest"].forEach(function (id) { CC.set(id, "—"); });
-      CC.set("outNote", "Enter a goal and how long you have to reach it.");
+      CC.set("outNote", CC.tr("Enter a goal and how long you have to reach it.", "Saisissez un objectif et le temps dont vous disposez pour l'atteindre."));
       return;
     }
     var r = needed(goal, have, rate, months);
@@ -24,7 +24,8 @@
       CC.set("outMonthly", CC.money(0));
       ["outWeekly", "outDaily", "outDeposits"].forEach(function (id) { CC.set(id, CC.money(0)); });
       CC.set("outInterest", CC.money(r.grown - have, true));
-      CC.set("outNote", "You're already on track: your current savings grow to about " + CC.money(r.grown, true) + " by then.");
+      CC.set("outNote", CC.tr("You're already on track: your current savings grow to about " + CC.money(r.grown, true) + " by then.",
+        "Vous êtes déjà sur la bonne voie : votre épargne actuelle atteindra environ " + CC.money(r.grown, true) + " d'ici là."));
       return;
     }
     var deposits = r.pmt * months;
@@ -35,8 +36,10 @@
     CC.set("outInterest", CC.money(goal - deposits - have, true));
     var noInt = needed(goal, have, 0, months).pmt;
     CC.set("outNote", rate > 0
-      ? "Without interest you'd need " + CC.money(noInt) + " a month, so interest saves you " + CC.money(noInt - r.pmt) + " each month."
-      : "Add an interest rate to see how a savings account would lower the monthly amount.");
+      ? CC.tr("Without interest you'd need " + CC.money(noInt) + " a month, so interest saves you " + CC.money(noInt - r.pmt) + " each month.",
+          "Sans intérêts, il vous faudrait " + CC.money(noInt) + " par mois : les intérêts vous font donc économiser " + CC.money(noInt - r.pmt) + " chaque mois.")
+      : CC.tr("Add an interest rate to see how a savings account would lower the monthly amount.",
+          "Ajoutez un taux d'intérêt pour voir comment un compte d'épargne réduirait le montant mensuel."));
   }
 
   CC.bind(root, calc);

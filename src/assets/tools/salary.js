@@ -26,7 +26,7 @@
     var hours = CC.val("hours"), days = CC.val("days"), unpaid = CC.val("unpaid") || 0;
     if (!(pay > 0) || !(hours > 0 && hours <= 168) || !(days > 0 && days <= 7) || !(unpaid >= 0 && unpaid < 52)) {
       ["outHour", "outDay", "outWeek", "outBiweek", "outMonth", "outYear"].forEach(function (id) { CC.set(id, "—"); });
-      CC.set("outNote", "Enter your pay, hours per week (1–168), days per week (1–7) and unpaid weeks (0–51).");
+      CC.set("outNote", CC.tr("Enter your pay, hours per week (1–168), days per week (1–7) and unpaid weeks (0–51).", "Saisissez votre salaire, vos heures par semaine (1 à 168), vos jours par semaine (1 à 7) et vos semaines non payées (0 à 51)."));
       return;
     }
     var c = convert(pay, period, hours, days, unpaid);
@@ -36,8 +36,9 @@
     CC.set("outBiweek", CC.money(c.biweek));
     CC.set("outMonth", CC.money(c.month));
     CC.set("outYear", CC.money(c.year, true));
-    CC.set("outNote", "Based on " + CC.num(hours * (52 - unpaid), 0) + " paid hours a year (" + CC.num(hours, 1) +
-      " hours × " + CC.num(52 - unpaid, 1) + " weeks). Weekly and daily figures are for weeks you work.");
+    CC.set("outNote", CC.tr(
+      "Based on " + CC.num(hours * (52 - unpaid), 0) + " paid hours a year (" + CC.num(hours, 1) + " hours × " + CC.num(52 - unpaid, 1) + " weeks). Weekly and daily figures are for weeks you work.",
+      "Sur la base de " + CC.num(hours * (52 - unpaid), 0) + " heures payées par an (" + CC.num(hours, 1) + " heures × " + CC.num(52 - unpaid, 1) + " semaines). Les montants hebdomadaires et journaliers concernent les semaines travaillées."));
   }
 
   CC.bind(root, calc);

@@ -24,12 +24,7 @@
     return { months: months, interest: totalInt, years: years };
   }
 
-  function fmtTime(m) {
-    var y = Math.floor(m / 12), mo = m % 12, s = [];
-    if (y) s.push(y + (y === 1 ? " year" : " years"));
-    if (mo) s.push(mo + (mo === 1 ? " month" : " months"));
-    return s.join(" ") || "0 months";
-  }
+  var fmtTime = CC.duration;
 
   function calc() {
     var P = CC.val("amount"), rate = CC.val("rate"), term = CC.val("term");
@@ -37,7 +32,7 @@
     var n = Math.round(document.getElementById("termUnit").value === "years" ? term * 12 : term);
     if (!(P > 0) || !(rate >= 0) || !(n > 0) || extra < 0) {
       ["outPayment", "outInterest", "outTotal", "outTime"].forEach(function (id) { CC.set(id, "—"); });
-      CC.set("outSaving", "Enter a loan amount, rate and term to see results.");
+      CC.set("outSaving", CC.tr("Enter a loan amount, rate and term to see results.", "Saisissez un montant, un taux et une durée pour voir les résultats."));
       return;
     }
     var r = rate / 100 / 12;
@@ -50,14 +45,17 @@
     CC.set("outTotal", CC.money(P + s.interest, true));
     CC.set("outTime", fmtTime(s.months));
     if (extra > 0) {
-      CC.set("outSaving", "Paying " + CC.money(extra) + " extra each month saves " +
-        CC.money(base.interest - s.interest, true) + " in interest and clears the loan " +
-        fmtTime(base.months - s.months) + " early. (Required payment: " + CC.money(M) + ")");
+      CC.set("outSaving", CC.tr(
+        "Paying " + CC.money(extra) + " extra each month saves " + CC.money(base.interest - s.interest, true) +
+          " in interest and clears the loan " + fmtTime(base.months - s.months) + " early. (Required payment: " + CC.money(M) + ")",
+        "Payer " + CC.money(extra) + " de plus chaque mois économise " + CC.money(base.interest - s.interest, true) +
+          " d'intérêts et rembourse le prêt " + fmtTime(base.months - s.months) + " plus tôt. (Mensualité minimale : " + CC.money(M) + ")"));
     } else {
-      CC.set("outSaving", "Interest is " + CC.num(s.interest / P * 100, 1) + "% of the amount you borrow.");
+      CC.set("outSaving", CC.tr("Interest is " + CC.num(s.interest / P * 100, 1) + "% of the amount you borrow.",
+        "Les intérêts représentent " + CC.num(s.interest / P * 100, 1) + " % du montant emprunté."));
     }
 
-    var labels = s.years.map(function (_, i) { return "Y" + (i + 1); });
+    var labels = s.years.map(function (_, i) { return CC.yearLabel(i + 1); });
     CC.stackedBars(document.getElementById("chart"), labels, [
       { values: s.years.map(function (y) { return y.p; }), color: "#0f5e4b" },
       { values: s.years.map(function (y) { return y.i; }), color: "#e9a23b" }

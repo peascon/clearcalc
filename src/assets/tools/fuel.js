@@ -28,7 +28,7 @@
 
     if (!(dist > 0) || !(eff > 0) || !(price > 0)) {
       ["outTrip", "outPerson", "outFuel", "outPerKm", "outMonth", "outYearCost"].forEach(function (id) { CC.set(id, "—"); });
-      CC.set("outNote", "Enter the distance, your vehicle's fuel efficiency and the fuel price.");
+      CC.set("outNote", CC.tr("Enter the distance, your vehicle's fuel efficiency and the fuel price.", "Saisissez la distance, la consommation de votre véhicule et le prix du carburant."));
       return;
     }
     var km = dist * (distUnit === "mi" ? KM_PER_MI : 1) * legs;
@@ -42,7 +42,7 @@
     CC.set("outFuel", showGal ? CC.num(litres / galSize, 2) + " gal" : CC.num(litres, 1) + " L");
     var perUnitDist = distUnit === "mi" ? cost / (km / KM_PER_MI) : cost / km;
     CC.set("outPerKm", CC.money(perUnitDist));
-    document.querySelector("#outPerKm").previousElementSibling.textContent = distUnit === "mi" ? "Cost per mile" : "Cost per km";
+    document.querySelector("#outPerKm").previousElementSibling.textContent = distUnit === "mi" ? CC.tr("Cost per mile", "Coût par mile") : CC.tr("Cost per km", "Coût par km");
 
     var monthly = document.getElementById("monthly");
     if (perMonth > 1) {
@@ -52,8 +52,9 @@
     } else monthly.style.display = "none";
 
     var totalDist = CC.num(distUnit === "mi" ? km / KM_PER_MI : km, 0) + (distUnit === "mi" ? " miles" : " km");
-    CC.set("outNote", "Based on " + totalDist + (legs === 2 ? " there and back" : " one way") +
-      (people > 1 ? ", split between " + people + " people" : "") + ". Only fuel is included, not maintenance or tolls.");
+    CC.set("outNote", CC.tr(
+      "Based on " + totalDist + (legs === 2 ? " there and back" : " one way") + (people > 1 ? ", split between " + people + " people" : "") + ". Only fuel is included, not maintenance or tolls.",
+      "Sur la base de " + totalDist + (legs === 2 ? " aller-retour" : " aller simple") + (people > 1 ? ", partagé entre " + people + " personnes" : "") + ". Seul le carburant est inclus, pas l'entretien ni les péages."));
   }
 
   CC.bind(root, calc);

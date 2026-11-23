@@ -21,7 +21,7 @@
     var infl = CC.val("inflation") || 0;
     if (!(rate >= 0) || !(years > 0 && years <= 100) || initial < 0 || monthly < 0 || initial + monthly <= 0) {
       CC.set("outFV", "—");
-      CC.set("outNote", "Enter a starting amount or monthly contribution, a return and 1–100 years.");
+      CC.set("outNote", CC.tr("Enter a starting amount or monthly contribution, a return and 1–100 years.", "Saisissez un capital de départ ou un versement mensuel, un rendement et une durée de 1 à 100 ans."));
       return;
     }
     var g = grow(initial, monthly, rate, years, freq);
@@ -34,10 +34,14 @@
     if (infl > 0) CC.set("outReal", CC.money(g.balance / Math.pow(1 + infl / 100, years), true));
 
     var share = (g.balance - g.contributed) / g.balance * 100;
-    CC.set("outNote", rate > 0 ? "Interest makes up " + CC.num(share, 0) + "% of your final balance. At " + CC.num(rate, 2) +
-      "% your money doubles roughly every " + CC.num(72 / rate, 1) + " years (rule of 72)." : "With a 0% return, your balance is only what you put in.");
+    CC.set("outNote", rate > 0
+      ? CC.tr("Interest makes up " + CC.num(share, 0) + "% of your final balance. At " + CC.num(rate, 2) +
+          "% your money doubles roughly every " + CC.num(72 / rate, 1) + " years (rule of 72).",
+        "Les intérêts représentent " + CC.num(share, 0) + " % de votre solde final. À " + CC.num(rate, 2) +
+          " %, votre argent double environ tous les " + CC.num(72 / rate, 1) + " ans (règle de 72).")
+      : CC.tr("With a 0% return, your balance is only what you put in.", "Avec un rendement de 0 %, votre solde se limite à vos versements."));
 
-    CC.stackedBars(document.getElementById("chart"), g.rows.map(function (_, i) { return "Y" + (i + 1); }), [
+    CC.stackedBars(document.getElementById("chart"), g.rows.map(function (_, i) { return CC.yearLabel(i + 1); }), [
       { values: g.rows.map(function (r) { return r.contributed; }), color: "#0f5e4b" },
       { values: g.rows.map(function (r) { return r.balance - r.contributed; }), color: "#e9a23b" }
     ]);

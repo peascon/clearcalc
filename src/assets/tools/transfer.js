@@ -27,36 +27,38 @@
     var tbody = document.getElementById("results");
     if (!(amount > 0) || !(mid > 0)) {
       CC.set("outBest", "—"); tbody.innerHTML = "";
-      CC.set("outNote", "Enter the amount you send and today's market rate.");
+      CC.set("outNote", CC.tr("Enter the amount you send and today's market rate.", "Saisissez le montant envoyé et le taux du marché du jour."));
       return;
     }
     var rows = [];
     for (var i = 1; i <= 3; i++) {
       var rate = CC.val("r" + i), fee = CC.val("f" + i) || 0;
-      var name = document.getElementById("n" + i).value.trim() || "Provider " + i;
+      var name = document.getElementById("n" + i).value.trim() || CC.tr("Provider ", "Fournisseur ") + i;
       if (!(rate > 0)) continue;
       var c = compare(amount, mid, fee, rate, deduct);
       if (c) { c.name = name; rows.push(c); }
     }
     if (!rows.length) {
       CC.set("outBest", "—"); tbody.innerHTML = "";
-      CC.set("outNote", "Enter at least one provider's exchange rate.");
+      CC.set("outNote", CC.tr("Enter at least one provider's exchange rate.", "Saisissez le taux de change d'au moins un fournisseur."));
       return;
     }
     // Rank by money received per unit paid, so "added" and "deducted" fees compare fairly.
     rows.sort(function (a, b) { return b.received / b.paid - a.received / a.paid; });
     var best = rows[0];
-    CC.set("bestLabel", "Best value: " + best.name);
+    CC.set("bestLabel", CC.tr("Best value: ", "Meilleure offre : ") + best.name);
     CC.set("outBest", fmtTo(best.received, to));
     tbody.innerHTML = rows.map(function (r, i) {
       return "<tr" + (i === 0 ? ' style="font-weight:700;background:#e5f1ed"' : "") + "><td>" + esc(r.name) +
-        "</td><td>" + CC.money(r.paid) + "</td><td>" + fmtTo(r.received, to) + "</td><td>" + CC.money(r.total) + "</td><td>" + CC.num(r.pct, 1) + "%</td></tr>";
+        "</td><td>" + CC.money(r.paid) + "</td><td>" + fmtTo(r.received, to) + "</td><td>" + CC.money(r.total) + "</td><td>" + CC.num(r.pct, 1) + CC.tr("%", " %") + "</td></tr>";
     }).join("");
 
-    var note = "At the market rate with no fees, " + CC.money(amount) + " would be " + fmtTo(amount * mid, to) + ".";
+    var note = CC.tr("At the market rate with no fees, " + CC.money(amount) + " would be " + fmtTo(amount * mid, to) + ".",
+      "Au taux du marché et sans frais, " + CC.money(amount) + " donneraient " + fmtTo(amount * mid, to) + ".");
     if (rows.length > 1) {
       var worst = rows[rows.length - 1];
-      note += " " + best.name + " costs you " + CC.money(worst.total - best.total) + " less in total than " + worst.name + ". Best value means the most money received for every unit you pay.";
+      note += CC.tr(" " + best.name + " costs you " + CC.money(worst.total - best.total) + " less in total than " + worst.name + ". Best value means the most money received for every unit you pay.",
+        " " + best.name + " vous coûte " + CC.money(worst.total - best.total) + " de moins au total que " + worst.name + ". La meilleure offre est celle qui fait arriver le plus d'argent pour chaque unité payée.");
     }
     CC.set("outNote", note);
   }

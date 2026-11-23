@@ -10,9 +10,11 @@
   function compare(id, actual, target, isSave) {
     if (!(actual >= 0) || isNaN(actual)) { CC.set(id, ""); return; }
     var d = actual - target;
-    if (Math.abs(d) < 0.5) CC.set(id, "On target ✓");
-    else if (isSave) CC.set(id, d > 0 ? "You save " + CC.money(d, true) + " more ✓" : CC.money(-d, true) + " below target");
-    else CC.set(id, d > 0 ? "You spend " + CC.money(d, true) + " over" : CC.money(-d, true) + " under ✓");
+    if (Math.abs(d) < 0.5) CC.set(id, CC.tr("On target ✓", "Objectif atteint ✓"));
+    else if (isSave) CC.set(id, d > 0 ? CC.tr("You save " + CC.money(d, true) + " more ✓", "Vous épargnez " + CC.money(d, true) + " de plus ✓")
+      : CC.money(-d, true) + CC.tr(" below target", " sous l'objectif"));
+    else CC.set(id, d > 0 ? CC.tr("You spend " + CC.money(d, true) + " over", "Vous dépensez " + CC.money(d, true) + " de trop")
+      : CC.money(-d, true) + CC.tr(" under ✓", " de moins ✓"));
   }
 
   function calc() {
@@ -25,13 +27,14 @@
 
     if (!(income > 0) || !(pn >= 0) || !(pw >= 0) || pn + pw > 100) {
       ["outSave", "outNeeds", "outWants", "outSave2", "outYear", "outEmergency"].forEach(function (id) { CC.set(id, "—"); });
-      CC.set("outNote", pn + pw > 100 ? "Needs and wants can't add up to more than 100%." : "Enter your monthly take-home income.");
+      CC.set("outNote", pn + pw > 100 ? CC.tr("Needs and wants can't add up to more than 100%.", "Les besoins et les envies ne peuvent pas dépasser 100 % au total.")
+        : CC.tr("Enter your monthly take-home income.", "Saisissez votre revenu mensuel net."));
       return;
     }
     var s = split(income, pn, pw);
-    CC.set("lblNeeds", "Needs (" + CC.num(s.pn, 1) + "%)");
-    CC.set("lblWants", "Wants (" + CC.num(s.pw, 1) + "%)");
-    CC.set("lblSave", "Savings (" + CC.num(s.ps, 1) + "%)");
+    CC.set("lblNeeds", CC.tr("Needs (", "Besoins (") + CC.num(s.pn, 1) + CC.tr("%)", " %)"));
+    CC.set("lblWants", CC.tr("Wants (", "Envies (") + CC.num(s.pw, 1) + CC.tr("%)", " %)"));
+    CC.set("lblSave", CC.tr("Savings (", "Épargne (") + CC.num(s.ps, 1) + CC.tr("%)", " %)"));
     CC.set("outSave", CC.money(s.save));
     CC.set("outNeeds", CC.money(s.needs));
     CC.set("outWants", CC.money(s.wants));
@@ -54,13 +57,16 @@
       var actualSave = income - (an || 0) - (aw || 0);
       compare("cmpSave", actualSave, s.save, true);
       note = actualSave < 0
-        ? "You're spending " + CC.money(-actualSave) + " more than you earn each month. Start with the biggest needs and wants."
-        : "Based on your spending, you have " + CC.money(actualSave) + " left to save each month (" + CC.num(actualSave / income * 100, 0) + "% of income).";
+        ? CC.tr("You're spending " + CC.money(-actualSave) + " more than you earn each month. Start with the biggest needs and wants.",
+            "Vous dépensez " + CC.money(-actualSave) + " de plus que ce que vous gagnez chaque mois. Commencez par les plus gros postes.")
+        : CC.tr("Based on your spending, you have " + CC.money(actualSave) + " left to save each month (" + CC.num(actualSave / income * 100, 0) + "% of income).",
+            "D'après vos dépenses, il vous reste " + CC.money(actualSave) + " à épargner chaque mois (" + CC.num(actualSave / income * 100, 0) + " % du revenu).");
     } else {
       CC.set("cmpSave", "");
-      note = "Saving " + CC.money(s.save) + " a month builds a 3-month emergency fund in about " +
-        CC.num(Math.ceil(needsBase * 3 / s.save), 0) + " months.";
-      if (!(s.save > 0)) note = "This split leaves nothing for savings. Try to save at least a little each month.";
+      note = CC.tr("Saving " + CC.money(s.save) + " a month builds a 3-month emergency fund in about " + CC.num(Math.ceil(needsBase * 3 / s.save), 0) + " months.",
+        "En épargnant " + CC.money(s.save) + " par mois, vous constituez une épargne de précaution de 3 mois en environ " + CC.num(Math.ceil(needsBase * 3 / s.save), 0) + " mois.");
+      if (!(s.save > 0)) note = CC.tr("This split leaves nothing for savings. Try to save at least a little each month.",
+        "Cette répartition ne laisse rien pour l'épargne. Essayez de mettre au moins un peu de côté chaque mois.");
     }
     CC.set("outNote", note);
   }
