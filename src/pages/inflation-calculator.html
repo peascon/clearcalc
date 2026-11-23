@@ -1,0 +1,82 @@
+<!--
+title: Inflation Calculator – Future Cost & Buying Power of Money | ClearCalc
+description: See how inflation changes prices and the value of your money over time. Find what something will cost in the future, or what an amount from the past is worth today.
+path: /inflation-calculator/
+h1: Inflation Calculator
+nav: Inflation
+order: 12
+script: inflation.js
+blurb: See what prices will be in the future, and how inflation shrinks the buying power of your money.
+-->
+<p class="lede">See how rising prices affect your money: what something will cost in the future, or how much an amount from the past is worth today.</p>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="mode">What do you want to know?</label>
+      <div class="input-wrap"><select id="mode">
+        <option value="future">What will something cost in the future?</option>
+        <option value="past">What is an amount from the past worth today?</option>
+      </select></div>
+    </div>
+    <div class="field">
+      <label for="amount" id="amountLabel">Price today</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="amount" inputmode="decimal" value="100"></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="rate">Average inflation</label>
+        <div class="input-wrap"><input id="rate" inputmode="decimal" value="5"><span class="unit">% / year</span></div>
+      </div>
+      <div class="field">
+        <label for="years" id="yearsLabel">Years from now</label>
+        <div class="input-wrap"><input id="years" inputmode="decimal" value="10"></div>
+      </div>
+    </div>
+    <p class="note">Use your country's recent average inflation rate. You'll usually find it on your central bank's or national statistics office's website.</p>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copy link to these results</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label" id="mainLabel">Future price</div><div class="value" id="outMain">—</div></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Total price increase</div><div class="value" id="outIncrease">—</div></div>
+      <div class="stat"><div class="label" id="powerLabel">Buying power lost</div><div class="value" id="outPower">—</div></div>
+      <div class="stat"><div class="label">Prices double every</div><div class="value" id="outDouble">—</div></div>
+    </div>
+    <div class="chart-box"><canvas id="chart" aria-label="Price growth year by year" role="img"></canvas></div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>What is inflation?</h2>
+<p>Inflation is the general rise in prices over time. When prices go up, each unit of money buys less. That's why bread, transport or school fees cost more today than they did ten years ago. Most central banks aim to keep inflation low and stable, often around 2–5% a year, though it can be much higher in some years and countries.</p>
+
+<h2>How it's calculated</h2>
+<p>Inflation compounds, just like interest. Each year's price rise builds on the year before:</p>
+<div class="formula">Future price = Today's price × (1 + inflation ÷ 100)<sup>years</sup><br>Value today = Past amount × (1 + inflation ÷ 100)<sup>years</sup></div>
+<p>Example: at 5% inflation, something costing 100 today will cost about 163 in 10 years. Put the other way, 100 kept in cash for 10 years will buy only about 61% of what it buys today.</p>
+
+<h2>How to protect your money from inflation</h2>
+<ul>
+  <li><strong>Don't keep long-term savings only in cash.</strong> Money that earns nothing loses value every year.</li>
+  <li><strong>Earn a rate above inflation.</strong> Compare savings accounts, fixed deposits and government bonds. The real return is roughly the interest rate minus inflation.</li>
+  <li><strong>Plan future goals in future prices.</strong> If school fees rise every year, save for what they'll cost, not what they cost today.</li>
+  <li><strong>Ask for raises that keep up.</strong> A raise below inflation is really a pay cut in buying power.</li>
+</ul>
+
+<h2>Frequently asked questions</h2>
+<details class="faq"><summary>What inflation rate should I use?</summary><div>Use a recent multi-year average for your country, which central banks and statistics offices publish. For long-term planning, many people test a few rates to see a range of outcomes.</div></details>
+<details class="faq"><summary>What is the rule of 70?</summary><div>Divide 70 by the inflation rate to estimate how many years it takes for prices to double. At 5% inflation, prices double in about 14 years.</div></details>
+<details class="faq"><summary>Is this exact for my country's history?</summary><div>No. This calculator uses one average rate for every year. Real inflation changes year to year, so official historical price data will give slightly different results.</div></details>
+
+<div class="related"><h3>Related calculators</h3><ul>
+  <li><a href="/compound-interest-calculator/">Compound interest calculator</a> – see if your savings beat inflation</li>
+  <li><a href="/salary-to-hourly-calculator/">Salary to hourly calculator</a> – check what a raise really means</li>
+</ul></div>
+</article>

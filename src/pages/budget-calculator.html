@@ -1,0 +1,97 @@
+<!--
+title: Budget Calculator – 50/30/20 Rule Monthly Budget Planner | ClearCalc
+description: Free budget calculator using the 50/30/20 rule. Enter your monthly take-home pay to see how much to spend on needs and wants and how much to save, and compare it with your real spending.
+path: /budget-calculator/
+h1: Budget Calculator (50/30/20 Rule)
+nav: Budget
+order: 11
+script: budget.js
+blurb: Split your monthly income into needs, wants and savings with the 50/30/20 rule, and compare it with what you really spend.
+-->
+<p class="lede">Enter your monthly take-home pay to see a simple, balanced budget: what to spend on needs and on wants, and how much to save.</p>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="income">Monthly take-home income <span class="hint">(after tax)</span></label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="income" inputmode="decimal" value="1000"></div>
+    </div>
+    <div class="field">
+      <label for="split">Budget rule</label>
+      <div class="input-wrap"><select id="split">
+        <option value="50-30-20">50 / 30 / 20 (standard)</option>
+        <option value="60-20-20">60 / 20 / 20 (high living costs)</option>
+        <option value="70-20-10">70 / 20 / 10 (tight budget)</option>
+        <option value="40-30-30">40 / 30 / 30 (aggressive saving)</option>
+        <option value="custom">Custom</option>
+      </select></div>
+    </div>
+    <div class="row2" id="customRow" style="display:none">
+      <div class="field"><label for="pn">Needs %</label><div class="input-wrap"><input id="pn" inputmode="decimal" value="50"></div></div>
+      <div class="field"><label for="pw">Wants %</label><div class="input-wrap"><input id="pw" inputmode="decimal" value="30"></div></div>
+    </div>
+
+    <h3 style="margin-top:8px">Compare with your real spending <span class="hint" style="font-weight:400">(optional)</span></h3>
+    <div class="field">
+      <label for="an">Needs: rent, food, transport, bills, loan minimums</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="an" inputmode="decimal" placeholder="0"></div>
+    </div>
+    <div class="field">
+      <label for="aw">Wants: eating out, entertainment, shopping, data bundles beyond basics</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="aw" inputmode="decimal" placeholder="0"></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copy link to these results</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label">Save each month</div><div class="value" id="outSave">—</div></div>
+    <div class="breakdown" id="bar"></div>
+    <div class="legend"><span><i style="background:#0f5e4b"></i>Needs</span><span><i style="background:#5b8def"></i>Wants</span><span><i style="background:#e9a23b"></i>Savings</span></div>
+    <div class="stats" style="margin-top:14px">
+      <div class="stat"><div class="label" id="lblNeeds">Needs (50%)</div><div class="value" id="outNeeds">—</div><div class="note" id="cmpNeeds"></div></div>
+      <div class="stat"><div class="label" id="lblWants">Wants (30%)</div><div class="value" id="outWants">—</div><div class="note" id="cmpWants"></div></div>
+      <div class="stat"><div class="label" id="lblSave">Savings (20%)</div><div class="value" id="outSave2">—</div><div class="note" id="cmpSave"></div></div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="label">Saved per year</div><div class="value" id="outYear">—</div></div>
+      <div class="stat"><div class="label">Emergency fund goal <span class="hint">(3 months of needs)</span></div><div class="value" id="outEmergency">—</div></div>
+    </div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>What is the 50/30/20 rule?</h2>
+<p>The 50/30/20 rule is a simple way to budget without tracking every purchase. You split your take-home pay into three groups:</p>
+<ul>
+  <li><strong>50% for needs:</strong> things you must pay to live and work, like rent, basic food, transport, utilities, school fees, insurance and minimum loan payments.</li>
+  <li><strong>30% for wants:</strong> things that make life enjoyable but you could cut, like eating out, entertainment, new clothes, subscriptions and travel.</li>
+  <li><strong>20% for savings:</strong> your emergency fund, savings goals, investments and any extra debt repayment.</li>
+</ul>
+<p>Example: with a take-home income of 300,000 a month, you'd aim for 150,000 on needs, 90,000 on wants and 60,000 in savings.</p>
+
+<h2>When to use a different split</h2>
+<p>The 50/30/20 rule is a starting point, not a law. Where rent and food take a big share of income, 60/20/20 or even 70/20/10 may be more realistic. If you're paying off debt or saving for something big, 40/30/30 speeds things up. Choose a rule above and see what fits.</p>
+
+<h2>How to make your budget work</h2>
+<ul>
+  <li><strong>Pay yourself first.</strong> Move your savings amount to a separate account or mobile money wallet on payday, before spending anything.</li>
+  <li><strong>Build an emergency fund first.</strong> Aim for three to six months of needs, so surprises don't push you into debt.</li>
+  <li><strong>Review monthly.</strong> Compare your real spending with the plan and adjust. Small changes add up.</li>
+  <li><strong>If needs are above 50%,</strong> look at the biggest items first, like rent, transport and loans. That's where changes make the most difference.</li>
+</ul>
+
+<h2>Frequently asked questions</h2>
+<details class="faq"><summary>Should I use income before or after tax?</summary><div>Use your take-home pay, the amount that actually reaches your bank account or wallet after tax and deductions.</div></details>
+<details class="faq"><summary>Is paying off debt a need or savings?</summary><div>Minimum payments are needs. Anything you pay above the minimum counts towards the savings 20%, because it improves your financial position just like saving does.</div></details>
+<details class="faq"><summary>My income changes every month. How do I budget?</summary><div>Budget based on your lowest typical month, and save anything extra in good months. A bigger emergency fund is especially important with irregular income.</div></details>
+
+<div class="related"><h3>Related calculators</h3><ul>
+  <li><a href="/savings-goal-calculator/">Savings goal calculator</a> – plan how long a goal will take</li>
+  <li><a href="/debt-payoff-calculator/">Debt payoff calculator</a> – put your savings 20% to work on debt</li>
+</ul></div>
+</article>

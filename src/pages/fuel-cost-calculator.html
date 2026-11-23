@@ -1,0 +1,116 @@
+<!--
+title: Fuel Cost Calculator – Trip & Commute Petrol Cost | ClearCalc
+description: Calculate the fuel cost of a trip or your daily commute. Works with km or miles, L/100km, km/L or MPG, and splits the cost between passengers.
+path: /fuel-cost-calculator/
+h1: Fuel Cost Calculator
+nav: Fuel cost
+order: 13
+script: fuel.js
+blurb: Work out the petrol or diesel cost of a trip or commute, and split it between passengers.
+-->
+<p class="lede">Find out how much fuel a trip or your daily commute will cost, for a car, motorbike or van, and how much each passenger should chip in.</p>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="row2">
+      <div class="field">
+        <label for="distance">Distance (one way)</label>
+        <div class="input-wrap"><input id="distance" inputmode="decimal" value="120"></div>
+      </div>
+      <div class="field">
+        <label for="distUnit">&nbsp;</label>
+        <div class="input-wrap"><select id="distUnit"><option value="km">Kilometres</option><option value="mi">Miles</option></select></div>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="eff">Fuel efficiency</label>
+        <div class="input-wrap"><input id="eff" inputmode="decimal" value="8"></div>
+      </div>
+      <div class="field">
+        <label for="effUnit">&nbsp;</label>
+        <div class="input-wrap"><select id="effUnit">
+          <option value="l100">L / 100 km</option><option value="kml">km / L</option>
+          <option value="mpgus">MPG (US)</option><option value="mpguk">MPG (UK)</option>
+        </select></div>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="price">Fuel price</label>
+        <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="price" inputmode="decimal" value="1.50"></div>
+      </div>
+      <div class="field">
+        <label for="priceUnit">&nbsp;</label>
+        <div class="input-wrap"><select id="priceUnit">
+          <option value="l">per litre</option><option value="galus">per US gallon</option><option value="galuk">per UK gallon</option>
+        </select></div>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="trip">Trip type</label>
+        <div class="input-wrap"><select id="trip"><option value="2">Return trip</option><option value="1">One way</option></select></div>
+      </div>
+      <div class="field">
+        <label for="people">People sharing</label>
+        <div class="input-wrap"><input id="people" inputmode="numeric" value="1"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="perMonth">Trips per month <span class="hint">(for commutes, e.g. 22 working days)</span></label>
+      <div class="input-wrap"><input id="perMonth" inputmode="numeric" value="1"></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copy link to these results</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label">Fuel cost per trip</div><div class="value" id="outTrip">—</div></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Per person</div><div class="value" id="outPerson">—</div></div>
+      <div class="stat"><div class="label">Fuel needed</div><div class="value" id="outFuel">—</div></div>
+      <div class="stat"><div class="label">Cost per km</div><div class="value" id="outPerKm">—</div></div>
+    </div>
+    <div class="stats" id="monthly">
+      <div class="stat"><div class="label">Per month</div><div class="value" id="outMonth">—</div></div>
+      <div class="stat"><div class="label">Per year</div><div class="value" id="outYearCost">—</div></div>
+    </div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>How to calculate fuel cost</h2>
+<p>You need three numbers: how far you're going, how much fuel your vehicle uses, and the fuel price.</p>
+<div class="formula">Fuel needed (L) = Distance (km) × L/100km ÷ 100<br>Fuel cost = Fuel needed × Price per litre</div>
+<p>Example: a 120 km trip there and back is 240 km. A car using 8 L/100 km burns 240 × 8 ÷ 100 = 19.2 litres. At 1.50 per litre, the trip costs about 28.80.</p>
+
+<h2>Finding your fuel efficiency</h2>
+<ul>
+  <li><strong>Check the manual or manufacturer's website</strong> for your model's official figure. Real-world use is usually 10–20% higher.</li>
+  <li><strong>Measure it yourself:</strong> fill the tank, note the odometer, drive normally, then fill up again. Divide the litres you added by the kilometres driven and multiply by 100 to get L/100 km.</li>
+  <li><strong>Typical figures:</strong> small cars often use 5–7 L/100 km, SUVs 8–12, and motorbikes 2–4 (25–50 km per litre).</li>
+</ul>
+
+<h2>Ways to spend less on fuel</h2>
+<ul>
+  <li><strong>Drive smoothly.</strong> Hard acceleration and braking can raise fuel use noticeably.</li>
+  <li><strong>Keep tyres properly inflated</strong> and the engine serviced.</li>
+  <li><strong>Remove extra weight</strong> and roof racks you're not using.</li>
+  <li><strong>Share rides.</strong> Use the "people sharing" box to see each person's fair share.</li>
+</ul>
+
+<h2>Frequently asked questions</h2>
+<details class="faq"><summary>What's the difference between L/100 km and km/L?</summary><div>They're two ways of saying the same thing. L/100 km is how many litres you need for 100 km, where lower is better. km/L is how far one litre takes you, where higher is better. 10 km/L equals 10 L/100 km, and 20 km/L equals 5 L/100 km.</div></details>
+<details class="faq"><summary>Does this include other car costs?</summary><div>No, only fuel. Insurance, maintenance, tyres, parking and tolls add to the real cost of driving.</div></details>
+<details class="faq"><summary>Can I use it for a motorbike or boda boda?</summary><div>Yes. Choose km/L and enter how many kilometres it does per litre, often 30–50 for small motorbikes.</div></details>
+
+<div class="related"><h3>Related calculators</h3><ul>
+  <li><a href="/budget-calculator/">Budget calculator</a> – fit transport costs into your monthly budget</li>
+  <li><a href="/loan-calculator/">Loan calculator</a> – work out the cost of a car loan</li>
+</ul></div>
+</article>
