@@ -138,3 +138,14 @@ details.faq div { padding-bottom: 12px; color: #26332f; }
 .debt-table td:first-child input { text-align: left; }
 .debt-table input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-tint); }
 .stat .note { margin: 2px 0 0; font-size: .8rem; }
+
+/* How to use box */
+details.howto { background: var(--brand-tint); border: 1px solid #cfe5dd; border-radius: 12px; padding: 2px 16px; margin: 0 0 20px; max-width: 720px; }
+details.howto summary { cursor: pointer; font-weight: 650; color: var(--brand); padding: 10px 0; list-style: none; }
+details.howto summary::-webkit-details-marker { display: none; }
+details.howto summary::before { content: "📘 "; }
+details.howto summary::after { content: " ▸"; }
+details.howto[open] summary::after { content: " ▾"; }
+details.howto ol { margin: 0 0 8px; padding-left: 22px; }
+details.howto li { margin-bottom: 4px; }
+.howto-example { margin: 0 0 12px; font-size: .93rem; color: #26332f; }
