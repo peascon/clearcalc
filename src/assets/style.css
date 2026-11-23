@@ -149,3 +149,12 @@ details.howto[open] summary::after { content: " ▾"; }
 details.howto ol { margin: 0 0 8px; padding-left: 22px; }
 details.howto li { margin-bottom: 4px; }
 .howto-example { margin: 0 0 12px; font-size: .93rem; color: #26332f; }
+
+/* Language switch */
+.lang-switch { font-weight: 700; font-size: .85rem; letter-spacing: .03em; color: var(--brand); text-decoration: none; padding: 7px 10px; border: 1px solid var(--line); border-radius: 9px; background: var(--card); }
+.lang-switch:hover { border-color: var(--brand); }
+.menu summary { white-space: nowrap; }
+@media (max-width: 480px) {
+  .site-header .brand { font-size: 0; gap: 0; }
+  .site-header .brand img { width: 32px; height: 32px; }
+}

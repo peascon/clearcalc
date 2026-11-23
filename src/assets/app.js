@@ -47,7 +47,14 @@
   }
   buildFormatters();
 
+  var LANG = (document.documentElement.lang || "en").slice(0, 2);
+
   var CC = {
+    lang: LANG,
+
+    /** Pick the text for the page's language: CC.tr("English", "Français"). */
+    tr: function (en, fr) { return LANG === "fr" && fr != null ? fr : en; },
+
     currency: function () { return currency; },
 
     /** Format money. whole=true drops decimals (good for big totals). */
@@ -65,7 +72,10 @@
     val: function (id) {
       var el = document.getElementById(id);
       if (!el) return NaN;
-      var v = String(el.value).replace(/[\s,]/g, "");
+      var v = String(el.value).replace(/\s/g, "");
+      // English: "1,200.50" (comma = thousands). French: "1 200,50" or "8,5" (comma = decimal).
+      if (LANG === "fr") v = v.indexOf(",") > -1 ? v.replace(/\./g, "").replace(",", ".") : v;
+      else v = v.replace(/,/g, "");
       return v === "" ? NaN : Number(v);
     },
 
@@ -75,6 +85,17 @@
     },
 
     onCurrencyChange: function (fn) { listeners.push(fn); },
+
+    /** "2 years 3 months" / "2 ans 3 mois" */
+    duration: function (m) {
+      var y = Math.floor(m / 12), mo = m % 12, s = [];
+      if (y) s.push(y + (LANG === "fr" ? (y === 1 ? " an" : " ans") : (y === 1 ? " year" : " years")));
+      if (mo) s.push(mo + (LANG === "fr" ? " mois" : (mo === 1 ? " month" : " months")));
+      return s.join(" ") || CC.tr("0 months", "0 mois");
+    },
+
+    /** Short year label for chart axes: Y1 / A1 */
+    yearLabel: function (i) { return CC.tr("Y", "A") + i; },
 
     /**
      * Run `calc` on load and whenever any input/select inside `root` changes.
@@ -98,10 +119,10 @@
         if (el.id && el.value !== "") params.set(el.id, el.value);
       });
       var url = location.origin + location.pathname + "?" + params.toString();
-      var done = function () { var t = btn.textContent; btn.textContent = "Link copied ✓"; setTimeout(function () { btn.textContent = t; }, 1800); };
+      var done = function () { var t = btn.textContent; btn.textContent = CC.tr("Link copied ✓", "Lien copié ✓"); setTimeout(function () { btn.textContent = t; }, 1800); };
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url).then(done, function () { prompt("Copy this link:", url); });
-      } else { prompt("Copy this link:", url); }
+        navigator.clipboard.writeText(url).then(done, function () { prompt(CC.tr("Copy this link:", "Copiez ce lien :"), url); });
+      } else { prompt(CC.tr("Copy this link:", "Copiez ce lien :"), url); }
     },
 
     /**
