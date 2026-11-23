@@ -1,0 +1,117 @@
+<!--
+title: Calculateur de frais de transfert d'argent – Comparer les envois | ClearCalc
+description: Comparez les services de transfert d'argent selon ce que votre destinataire reçoit vraiment, marge cachée sur le taux de change comprise. Pour envoyer de l'argent au Rwanda, au Congo, en Afrique de l'Ouest et partout.
+path: /fr/calculateur-frais-transfert-argent/
+h1: Calculateur de frais de transfert d'argent
+nav: Transfert d'argent
+order: 9
+script: transfer.js
+lang: fr
+blurb: Comparez les services de transfert selon ce que votre famille reçoit vraiment, marges cachées sur le taux de change comprises.
+-->
+<p class="lede">Vous envoyez de l'argent au pays ou à l'étranger ? Comparez jusqu'à trois services selon ce qui arrive de l'autre côté, y compris le coût caché dans le taux de change, et pas seulement les frais affichés.</p>
+
+<details class="howto">
+  <summary>Comment utiliser cette calculatrice</summary>
+  <ol><li>Saisissez le <strong>montant envoyé</strong> et choisissez la <strong>devise reçue</strong> par votre destinataire.</li><li>Saisissez le <strong>taux du marché</strong> du jour. Cherchez par exemple « USD en RWF » sur Google.</li><li>Pour chaque service, saisissez ses <strong>frais</strong> et le <strong>taux de change</strong> qu'il propose. La plupart des applications les affichent avant le paiement.</li><li>La meilleure offre apparaît en haut : celle qui fait arriver le plus d'argent pour ce que vous payez.</li></ol>
+  <p class="howto-example"><strong>Exemple :</strong> un service « sans frais » avec un taux de change moins bon coûte souvent plus cher qu'un service qui prend de petits frais.</p>
+</details>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="amount">Vous envoyez</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="amount" inputmode="decimal" value="200"></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="to">Le destinataire reçoit</label>
+        <div class="input-wrap"><select id="to">
+          <option>RWF</option><option>KES</option><option>UGX</option><option>TZS</option><option>BIF</option><option>CDF</option>
+          <option>NGN</option><option>GHS</option><option>ZAR</option><option>XOF</option><option>ETB</option><option>INR</option>
+          <option>PHP</option><option>USD</option><option>EUR</option><option>GBP</option>
+        </select></div>
+      </div>
+      <div class="field">
+        <label for="mid">Taux du marché <span class="hint">(1 unité envoyée =)</span></label>
+        <div class="input-wrap"><input id="mid" inputmode="decimal" value="1400"></div>
+      </div>
+    </div>
+    <p class="note" style="margin:-6px 0 14px">Trouvez le taux du marché du jour en cherchant par exemple « USD en RWF » sur Google. Les chiffres d'exemple ici sont uniquement illustratifs.</p>
+
+    <div class="provider" data-i="1">
+      <div class="row2">
+        <div class="field"><label for="n1">Service 1</label><div class="input-wrap"><input id="n1" value="Fournisseur A"></div></div>
+        <div class="field"><label for="f1">Frais</label><div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="f1" inputmode="decimal" value="5"></div></div>
+      </div>
+      <div class="field"><label for="r1">Son taux de change</label><div class="input-wrap"><input id="r1" inputmode="decimal" value="1375"></div></div>
+    </div>
+    <div class="provider" data-i="2">
+      <div class="row2">
+        <div class="field"><label for="n2">Service 2</label><div class="input-wrap"><input id="n2" value="Fournisseur B"></div></div>
+        <div class="field"><label for="f2">Frais</label><div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="f2" inputmode="decimal" value="0"></div></div>
+      </div>
+      <div class="field"><label for="r2">Son taux de change</label><div class="input-wrap"><input id="r2" inputmode="decimal" value="1330"></div></div>
+    </div>
+    <div class="provider" data-i="3">
+      <div class="row2">
+        <div class="field"><label for="n3">Service 3 <span class="hint">(facultatif)</span></label><div class="input-wrap"><input id="n3" value="Fournisseur C"></div></div>
+        <div class="field"><label for="f3">Frais</label><div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="f3" inputmode="decimal" value="12"></div></div>
+      </div>
+      <div class="field"><label for="r3">Son taux de change</label><div class="input-wrap"><input id="r3" inputmode="decimal" value="1392"></div></div>
+    </div>
+    <div class="field">
+      <label for="feeMode">Les frais sont…</label>
+      <div class="input-wrap"><select id="feeMode">
+        <option value="add">Ajoutés en plus (vous payez montant + frais)</option>
+        <option value="deduct">Déduits du montant envoyé</option>
+      </select></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copier le lien vers ces résultats</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label" id="bestLabel">Meilleure offre</div><div class="value" id="outBest">—</div></div>
+    <div class="table-scroll" style="max-height:none">
+      <table class="schedule">
+        <thead><tr><th>Service</th><th>Vous payez</th><th>Le destinataire reçoit</th><th>Coût total</th><th>Coût %</th></tr></thead>
+        <tbody id="results"></tbody>
+      </table>
+    </div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>Les frais ne sont que la moitié du coût</h2>
+<p>Les services de transfert gagnent de l'argent de deux façons : les <strong>frais</strong> qu'ils affichent, et la <strong>marge sur le taux de change</strong> qu'ils n'affichent pas. Si le vrai taux du marché est 1 dollar = 1 400 francs mais qu'un service vous donne 1 330, il garde 70 francs sur chaque dollar, soit 5 % de votre argent, même s'il annonce « zéro frais ».</p>
+<p>Cette calculatrice additionne les deux pour comparer les services équitablement selon le seul chiffre qui compte : <strong>ce que votre destinataire reçoit réellement</strong>.</p>
+
+<h2>Comment le coût total est calculé</h2>
+<div class="formula">Reçu = (Montant − frais déduits) × Taux du service<br>Coût caché = Montant converti × (Taux du marché − Taux du service) ÷ Taux du marché<br>Coût total = Frais + Coût caché</div>
+<p>Le <strong>taux du marché</strong> (aussi appelé taux interbancaire ou taux médian) est le taux à mi-chemin entre les prix d'achat et de vente d'une devise par les banques. C'est celui que vous voyez en cherchant une paire de devises sur Google ou un site de change, et la référence la plus juste.</p>
+
+<h2>Conseils pour envoyer de l'argent moins cher</h2>
+<ul>
+  <li><strong>Comparez à chaque fois.</strong> Les taux et frais changent chaque jour, et le service le moins cher pour 50 ne l'est pas forcément pour 500.</li>
+  <li><strong>Envoyez de plus gros montants moins souvent.</strong> Les frais fixes pèsent surtout sur les petits envois.</li>
+  <li><strong>Vérifiez le mode de réception.</strong> Mobile money (MTN MoMo, Airtel Money, M-Pesa…), dépôt bancaire et retrait en espèces peuvent avoir des taux et frais différents chez un même service.</li>
+  <li><strong>Attention aux frais de réception.</strong> Certaines banques font payer le destinataire pour recevoir un virement international.</li>
+  <li><strong>Évitez de payer par carte de crédit</strong> si votre banque traite l'envoi comme une avance de fonds, ce qui ajoute des frais et des intérêts.</li>
+</ul>
+
+<h2>Questions fréquentes</h2>
+<details class="faq"><summary>Où trouver le taux de change de chaque service ?</summary><div>Commencez un transfert sur le site ou l'application du service : la plupart affichent le taux exact et les frais avant le paiement. Saisissez ces chiffres ici pour comparer.</div></details>
+<details class="faq"><summary>Quel est un bon coût total pour un transfert ?</summary><div>Les Objectifs de développement durable des Nations unies visent un coût moyen des envois de fonds de 3 % ou moins. Beaucoup de services prennent davantage, surtout sur les petits montants : comparer est donc rentable.</div></details>
+<details class="faq"><summary>Pourquoi le pourcentage de coût diffère-t-il des frais ?</summary><div>Parce qu'il inclut la marge sur le taux de change. Un service sans frais mais avec un taux 4 % moins bon coûte plus cher qu'un service qui prend 2 % de frais au taux du marché.</div></details>
+<details class="faq"><summary>Mes informations sont-elles enregistrées ?</summary><div>Non. Tous les calculs se font dans votre navigateur et rien n'est envoyé.</div></details>
+
+<div class="related"><h3>Calculatrices associées</h3><ul>
+  <li><a href="/fr/calculateur-tarif-freelance/">Calculateur de tarif freelance</a> : intégrer les frais de transfert dans vos tarifs pour des clients étrangers</li>
+  <li><a href="/fr/calculateur-objectif-epargne/">Calculateur d'objectif d'épargne</a> : planifier une aide régulière à votre famille</li>
+</ul></div>
+</article>

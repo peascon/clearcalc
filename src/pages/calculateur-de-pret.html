@@ -1,0 +1,98 @@
+<!--
+title: Calculateur de prêt – Mensualité et tableau d'amortissement | ClearCalc
+description: Calculateur de prêt gratuit. Saisissez le montant, le taux et la durée pour connaître votre mensualité, le coût total des intérêts et le tableau d'amortissement. Toutes devises.
+path: /fr/calculateur-de-pret/
+h1: Calculateur de prêt
+nav: Prêt
+order: 1
+script: loan.js
+lang: fr
+blurb: Mensualité, coût total des intérêts et tableau d'amortissement année par année pour tout prêt personnel, auto ou professionnel.
+-->
+<p class="lede">Calculez la mensualité d'un prêt personnel, auto, étudiant ou professionnel, et voyez quelle part de vos paiements part en intérêts.</p>
+
+<details class="howto">
+  <summary>Comment utiliser cette calculatrice</summary>
+  <ol><li>Saisissez le <strong>montant</strong> que vous voulez emprunter.</li><li>Saisissez le <strong>taux d'intérêt annuel</strong> proposé par votre banque ou votre prêteur.</li><li>Saisissez la <strong>durée</strong> du prêt, puis choisissez années ou mois.</li><li>Facultatif : ajoutez un <strong>paiement supplémentaire mensuel</strong> pour voir les intérêts et le temps économisés.</li></ol>
+  <p class="howto-example"><strong>Exemple :</strong> emprunter 20 000 à 8,5 % sur 5 ans donne une mensualité d'environ 410,33.</p>
+</details>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="amount">Montant du prêt</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="amount" inputmode="decimal" value="20000"></div>
+    </div>
+    <div class="field">
+      <label for="rate">Taux d'intérêt annuel</label>
+      <div class="input-wrap"><input id="rate" inputmode="decimal" value="8.5"><span class="unit">% par an</span></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="term">Durée du prêt</label>
+        <div class="input-wrap"><input id="term" inputmode="decimal" value="5"></div>
+      </div>
+      <div class="field">
+        <label for="termUnit">&nbsp;</label>
+        <div class="input-wrap"><select id="termUnit"><option value="years">Années</option><option value="months">Mois</option></select></div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="extra">Paiement supplémentaire mensuel <span class="hint">(facultatif)</span></label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="extra" inputmode="decimal" value="0"></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copier le lien vers ces résultats</button><button class="btn" type="button" onclick="window.print()">Imprimer</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label">Mensualité</div><div class="value" id="outPayment">—</div></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Total des intérêts</div><div class="value" id="outInterest">—</div></div>
+      <div class="stat"><div class="label">Total remboursé</div><div class="value" id="outTotal">—</div></div>
+      <div class="stat"><div class="label">Remboursé en</div><div class="value" id="outTime">—</div></div>
+    </div>
+    <p class="note" id="outSaving"></p>
+    <div class="chart-box"><canvas id="chart" aria-label="Capital et intérêts payés chaque année" role="img"></canvas></div>
+    <div class="legend"><span><i style="background:#0f5e4b"></i>Capital</span><span><i style="background:#e9a23b"></i>Intérêts</span></div>
+    <details class="toggle"><summary>Afficher le tableau d'amortissement</summary>
+      <div class="table-scroll"><table class="schedule"><thead><tr><th>Année</th><th>Capital</th><th>Intérêts</th><th>Restant dû</th></tr></thead><tbody id="schedule"></tbody></table></div>
+    </details>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>Comment fonctionne le calculateur de prêt</h2>
+<p>La plupart des prêts sont <strong>amortissables</strong> : vous payez le même montant chaque mois. Chaque paiement couvre d'abord les intérêts du mois, et le reste réduit ce que vous devez (le capital). Au début du prêt, la plus grande partie de la mensualité sert à payer des intérêts ; vers la fin, presque tout rembourse le capital. Le graphique ci-dessus montre cette évolution année par année.</p>
+<p>La mensualité se calcule avec la formule d'amortissement standard :</p>
+<div class="formula">M = P × r × (1 + r)<sup>n</sup> ÷ ((1 + r)<sup>n</sup> − 1)</div>
+<ul>
+  <li><strong>M</strong> : mensualité</li>
+  <li><strong>P</strong> : montant emprunté (capital)</li>
+  <li><strong>r</strong> : taux d'intérêt mensuel (taux annuel ÷ 12 ÷ 100)</li>
+  <li><strong>n</strong> : nombre de mensualités</li>
+</ul>
+<p>Exemple : emprunter 20 000 à 8,5 % sur 5 ans donne r = 0,00708 et n = 60, soit une mensualité d'environ 410,33 et environ 4 620 d'intérêts au total.</p>
+
+<h2>Comment payer moins d'intérêts</h2>
+<ul>
+  <li><strong>Choisissez une durée plus courte.</strong> La mensualité augmente, mais le total des intérêts baisse fortement, car vous empruntez l'argent moins longtemps.</li>
+  <li><strong>Payez un peu plus chaque mois.</strong> Chaque montant supplémentaire réduit directement le capital. Essayez la case « paiement supplémentaire » ci-dessus pour voir combien de mois vous gagnez.</li>
+  <li><strong>Comparez le TAEG, pas seulement le taux.</strong> Les frais et assurances ajoutés au prêt en augmentent le coût réel. Le taux annuel effectif global (TAEG) les inclut.</li>
+  <li><strong>Améliorez votre dossier d'abord.</strong> Un bon historique de remboursement permet souvent d'obtenir un meilleur taux, et même 1 à 2 points de moins font une grosse différence sur plusieurs années.</li>
+</ul>
+
+<h2>Questions fréquentes</h2>
+<details class="faq"><summary>Est-ce valable pour un prêt auto ou immobilier ?</summary><div>Oui, pour tout prêt à taux fixe avec des mensualités égales. Pour un prêt immobilier incluant la taxe foncière et l'assurance, le <a href="/fr/calculateur-de-pret-immobilier/">calculateur de prêt immobilier</a> ajoute ces coûts pour vous.</div></details>
+<details class="faq"><summary>Et si mon taux d'intérêt est de 0 % ?</summary><div>La calculatrice le gère : la mensualité est simplement le montant emprunté divisé par le nombre de mois, et les intérêts sont nuls.</div></details>
+<details class="faq"><summary>Pourquoi la mensualité de ma banque est-elle un peu différente ?</summary><div>Les prêteurs peuvent ajouter des frais, une assurance ou une autre méthode de calcul des jours, et certains arrondissent chaque paiement. Le résultat ici est une estimation proche ; votre contrat de prêt indique le montant exact.</div></details>
+<details class="faq"><summary>Mes données sont-elles enregistrées ou envoyées ?</summary><div>Non. Tous les calculs se font dans votre navigateur. Rien de ce que vous saisissez ne quitte votre appareil.</div></details>
+
+<div class="related"><h3>Calculatrices associées</h3><ul>
+  <li><a href="/fr/calculateur-de-pret-immobilier/">Calculateur de prêt immobilier</a> : mensualités avec taxe foncière et assurance</li>
+  <li><a href="/fr/calculateur-objectif-epargne/">Calculateur d'objectif d'épargne</a> : épargner pour un achat au lieu d'emprunter</li>
+</ul></div>
+</article>

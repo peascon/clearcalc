@@ -1,0 +1,89 @@
+<!--
+title: Calculateur d'inflation – Prix futurs et pouvoir d'achat | ClearCalc
+description: Voyez comment l'inflation change les prix et la valeur de votre argent. Calculez ce que coûtera un achat dans le futur, ou ce que vaut aujourd'hui un montant du passé.
+path: /fr/calculateur-inflation/
+h1: Calculateur d'inflation
+nav: Inflation
+order: 12
+script: inflation.js
+lang: fr
+blurb: Découvrez les prix de demain, et comment l'inflation réduit le pouvoir d'achat de votre argent.
+-->
+<p class="lede">Voyez l'effet de la hausse des prix sur votre argent : ce que coûtera un achat dans le futur, ou ce que vaut aujourd'hui un montant du passé.</p>
+
+<details class="howto">
+  <summary>Comment utiliser cette calculatrice</summary>
+  <ol><li>Choisissez si vous voulez un <strong>prix futur</strong> ou la <strong>valeur actuelle</strong> d'un montant passé.</li><li>Saisissez le <strong>montant</strong>.</li><li>Saisissez le <strong>taux d'inflation annuel moyen</strong> et le <strong>nombre d'années</strong>.</li><li>Lisez le résultat et l'évolution du pouvoir d'achat.</li></ol>
+  <p class="howto-example"><strong>Exemple :</strong> avec 5 % d'inflation, ce qui coûte 100 aujourd'hui coûtera environ 163 dans 10 ans.</p>
+</details>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="mode">Que voulez-vous savoir ?</label>
+      <div class="input-wrap"><select id="mode">
+        <option value="future">Combien coûtera un achat dans le futur ?</option>
+        <option value="past">Que vaut aujourd'hui un montant du passé ?</option>
+      </select></div>
+    </div>
+    <div class="field">
+      <label for="amount" id="amountLabel">Prix aujourd'hui</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="amount" inputmode="decimal" value="100"></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="rate">Inflation moyenne</label>
+        <div class="input-wrap"><input id="rate" inputmode="decimal" value="5"><span class="unit">% / an</span></div>
+      </div>
+      <div class="field">
+        <label for="years" id="yearsLabel">Dans combien d'années</label>
+        <div class="input-wrap"><input id="years" inputmode="decimal" value="10"></div>
+      </div>
+    </div>
+    <p class="note">Utilisez le taux d'inflation moyen récent de votre pays. Vous le trouverez généralement sur le site de votre banque centrale ou de l'institut national de statistique.</p>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copier le lien vers ces résultats</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label" id="mainLabel">Prix futur</div><div class="value" id="outMain">—</div></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Hausse totale des prix</div><div class="value" id="outIncrease">—</div></div>
+      <div class="stat"><div class="label" id="powerLabel">Pouvoir d'achat perdu</div><div class="value" id="outPower">—</div></div>
+      <div class="stat"><div class="label">Les prix doublent tous les</div><div class="value" id="outDouble">—</div></div>
+    </div>
+    <div class="chart-box"><canvas id="chart" aria-label="Évolution du prix année par année" role="img"></canvas></div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>Qu'est-ce que l'inflation ?</h2>
+<p>L'inflation est la hausse générale des prix au fil du temps. Quand les prix augmentent, chaque unité de monnaie achète moins. C'est pourquoi le pain, le transport ou les frais de scolarité coûtent plus cher aujourd'hui qu'il y a dix ans. La plupart des banques centrales cherchent à maintenir une inflation basse et stable, souvent autour de 2 à 5 % par an, même si elle peut être bien plus élevée certaines années et dans certains pays.</p>
+
+<h2>Comment le calcul fonctionne</h2>
+<p>L'inflation se cumule, comme des intérêts : la hausse de chaque année s'ajoute à celle de l'année précédente.</p>
+<div class="formula">Prix futur = Prix actuel × (1 + inflation ÷ 100)<sup>années</sup><br>Valeur actuelle = Montant passé × (1 + inflation ÷ 100)<sup>années</sup></div>
+<p>Exemple : avec 5 % d'inflation, ce qui coûte 100 aujourd'hui coûtera environ 163 dans 10 ans. Autrement dit, 100 gardés en liquide pendant 10 ans n'achèteront plus qu'environ 61 % de ce qu'ils achètent aujourd'hui.</p>
+
+<h2>Comment protéger votre argent de l'inflation</h2>
+<ul>
+  <li><strong>Ne gardez pas votre épargne à long terme uniquement en liquide.</strong> L'argent qui ne rapporte rien perd de la valeur chaque année.</li>
+  <li><strong>Visez un rendement supérieur à l'inflation.</strong> Comparez comptes d'épargne, dépôts à terme et obligations d'État. Le rendement réel est à peu près le taux d'intérêt moins l'inflation.</li>
+  <li><strong>Planifiez vos objectifs en prix futurs.</strong> Si les frais de scolarité augmentent chaque année, épargnez pour ce qu'ils coûteront, pas pour ce qu'ils coûtent aujourd'hui.</li>
+  <li><strong>Demandez des augmentations qui suivent l'inflation.</strong> Une augmentation inférieure à l'inflation est en réalité une baisse de pouvoir d'achat.</li>
+</ul>
+
+<h2>Questions fréquentes</h2>
+<details class="faq"><summary>Quel taux d'inflation utiliser ?</summary><div>Utilisez une moyenne récente sur plusieurs années pour votre pays, publiée par la banque centrale ou l'institut de statistique. Pour une planification à long terme, testez plusieurs taux pour voir une fourchette de résultats.</div></details>
+<details class="faq"><summary>Qu'est-ce que la règle de 70 ?</summary><div>Divisez 70 par le taux d'inflation pour estimer en combien d'années les prix doublent. Avec 5 % d'inflation, les prix doublent en environ 14 ans.</div></details>
+<details class="faq"><summary>Est-ce exact pour l'historique de mon pays ?</summary><div>Non. Cette calculatrice utilise un taux moyen identique chaque année. L'inflation réelle varie d'une année à l'autre, donc les données officielles de prix donneront des résultats un peu différents.</div></details>
+
+<div class="related"><h3>Calculatrices associées</h3><ul>
+  <li><a href="/fr/calculateur-interets-composes/">Calculateur d'intérêts composés</a> : vérifier si votre épargne bat l'inflation</li>
+  <li><a href="/fr/calculateur-salaire-horaire/">Convertisseur salaire / taux horaire</a> : voir ce que vaut vraiment une augmentation</li>
+</ul></div>
+</article>

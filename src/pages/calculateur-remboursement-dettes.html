@@ -1,0 +1,85 @@
+<!--
+title: Calculateur de remboursement de dettes – Boule de neige ou avalanche | ClearCalc
+description: Planifiez le remboursement de plusieurs dettes. Comparez les méthodes boule de neige et avalanche pour connaître votre date de fin, le total des intérêts et l'ordre de remboursement.
+path: /fr/calculateur-remboursement-dettes/
+h1: Calculateur de remboursement de dettes
+nav: Remboursement de dettes
+order: 10
+script: debt.js
+lang: fr
+blurb: Comparez les méthodes boule de neige et avalanche pour connaître votre date de fin et l'ordre de remboursement.
+-->
+<p class="lede">Listez vos dettes et ce que vous pouvez payer en plus chaque mois. Découvrez quand vous serez libéré de vos dettes, et si la méthode boule de neige ou avalanche vous fait économiser davantage.</p>
+
+<details class="howto">
+  <summary>Comment utiliser cette calculatrice</summary>
+  <ol><li>Pour chaque dette, saisissez un <strong>nom</strong>, le <strong>solde</strong>, le <strong>taux d'intérêt</strong> annuel et le <strong>paiement mensuel minimum</strong>.</li><li>Laissez vides les lignes inutilisées.</li><li>Saisissez le <strong>montant supplémentaire</strong> que vous pouvez payer chaque mois en plus des minimums.</li><li>Comparez les méthodes <strong>avalanche</strong> et <strong>boule de neige</strong> et suivez l'ordre de remboursement indiqué.</li></ol>
+  <p class="howto-example"><strong>Exemple :</strong> avec les trois dettes d'exemple et 150 de plus par mois, vous êtes libéré en environ 2 ans au lieu de plus de 4.</p>
+</details>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <table class="schedule debt-table">
+      <thead><tr><th>Dette</th><th>Solde</th><th>Taux %</th><th>Min. / mois</th></tr></thead>
+      <tbody>
+        <tr><td><input id="n1" value="Carte de crédit" aria-label="Nom de la dette 1"></td><td><input id="b1" inputmode="decimal" value="3000" aria-label="Solde de la dette 1"></td><td><input id="a1" inputmode="decimal" value="22" aria-label="Taux de la dette 1"></td><td><input id="m1" inputmode="decimal" value="90" aria-label="Minimum de la dette 1"></td></tr>
+        <tr><td><input id="n2" value="Prêt téléphone" aria-label="Nom de la dette 2"></td><td><input id="b2" inputmode="decimal" value="800" aria-label="Solde de la dette 2"></td><td><input id="a2" inputmode="decimal" value="15" aria-label="Taux de la dette 2"></td><td><input id="m2" inputmode="decimal" value="50" aria-label="Minimum de la dette 2"></td></tr>
+        <tr><td><input id="n3" value="Prêt auto" aria-label="Nom de la dette 3"></td><td><input id="b3" inputmode="decimal" value="7000" aria-label="Solde de la dette 3"></td><td><input id="a3" inputmode="decimal" value="9" aria-label="Taux de la dette 3"></td><td><input id="m3" inputmode="decimal" value="220" aria-label="Minimum de la dette 3"></td></tr>
+        <tr><td><input id="n4" placeholder="Dette 4" aria-label="Nom de la dette 4"></td><td><input id="b4" inputmode="decimal" aria-label="Solde de la dette 4"></td><td><input id="a4" inputmode="decimal" aria-label="Taux de la dette 4"></td><td><input id="m4" inputmode="decimal" aria-label="Minimum de la dette 4"></td></tr>
+        <tr><td><input id="n5" placeholder="Dette 5" aria-label="Nom de la dette 5"></td><td><input id="b5" inputmode="decimal" aria-label="Solde de la dette 5"></td><td><input id="a5" inputmode="decimal" aria-label="Taux de la dette 5"></td><td><input id="m5" inputmode="decimal" aria-label="Minimum de la dette 5"></td></tr>
+      </tbody>
+    </table>
+    <div class="field" style="margin-top:16px">
+      <label for="extra">Montant supplémentaire par mois <span class="hint">(en plus de tous les minimums)</span></label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="extra" inputmode="decimal" value="150"></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copier le lien vers ces résultats</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label" id="mainLabel">Libéré de vos dettes dans</div><div class="value" id="outMain">—</div></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Avalanche (taux le plus élevé d'abord)</div><div class="value" id="outAva">—</div><div class="note" id="outAvaInt"></div></div>
+      <div class="stat"><div class="label">Boule de neige (plus petit solde d'abord)</div><div class="value" id="outSnow">—</div><div class="note" id="outSnowInt"></div></div>
+      <div class="stat"><div class="label">Minimums seulement</div><div class="value" id="outMin">—</div><div class="note" id="outMinInt"></div></div>
+    </div>
+    <p class="note" id="outNote"></p>
+    <h3 style="margin-top:12px">Ordre de remboursement (<span id="orderName">avalanche</span>)</h3>
+    <ol id="order" style="margin:6px 0 0;padding-left:20px"></ol>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>Boule de neige ou avalanche : quelle méthode choisir ?</h2>
+<p>Dans les deux méthodes, vous payez le minimum sur chaque dette et consacrez tout votre argent supplémentaire à une dette cible. Une fois celle-ci remboursée, son paiement s'ajoute à la suivante : vos paiements grossissent comme une boule de neige.</p>
+<ul>
+  <li><strong>Avalanche :</strong> visez d'abord la dette au <em>taux d'intérêt le plus élevé</em>. C'est toujours la méthode qui coûte le moins d'intérêts au total, et généralement la plus rapide.</li>
+  <li><strong>Boule de neige :</strong> visez d'abord le <em>plus petit solde</em>. Vous payez un peu plus d'intérêts, mais vous soldez des dettes entières plus vite, et ces petites victoires motivent beaucoup de gens.</li>
+</ul>
+<p>La calculatrice applique les deux méthodes pour vous montrer la différence réelle sur vos dettes. Si l'écart est faible, choisissez celle que vous suivrez le plus facilement.</p>
+
+<h2>Comment le calcul fonctionne</h2>
+<p>Chaque mois, les intérêts s'ajoutent à chaque solde (taux annuel ÷ 12), le minimum est payé sur chaque dette, et tout le reste (votre montant supplémentaire et les minimums libérés par les dettes déjà soldées) va à la dette cible. Le processus se répète jusqu'à ce que tous les soldes soient à zéro.</p>
+
+<h2>Conseils pour sortir plus vite de l'endettement</h2>
+<ul>
+  <li><strong>Arrêtez de contracter de nouvelles dettes</strong> pendant que vous remboursez les anciennes.</li>
+  <li><strong>Demandez un taux plus bas.</strong> Les prêteurs réduisent parfois le taux des bons payeurs, et renégocier une dette à taux élevé peut faire économiser beaucoup.</li>
+  <li><strong>Affectez les rentrées exceptionnelles à la dette cible.</strong> Primes, cadeaux et revenus annexes raccourcissent vite le délai.</li>
+  <li><strong>Gardez une petite épargne de précaution</strong> pour qu'une dépense imprévue ne vous fasse pas réemprunter.</li>
+</ul>
+
+<h2>Questions fréquentes</h2>
+<details class="faq"><summary>Et si mon paiement minimum ne couvre pas les intérêts ?</summary><div>Alors cette dette augmente chaque mois, même avec vos paiements. La calculatrice vous prévient dans ce cas. Augmentez le paiement de cette dette, ou demandez au prêteur un taux plus bas ou un plan de remboursement.</div></details>
+<details class="faq"><summary>Faut-il épargner ou rembourser ses dettes d'abord ?</summary><div>Beaucoup de gens constituent d'abord une petite épargne de précaution, puis s'attaquent aux dettes à taux élevé, car les intérêts économisés sur une dette à 20 % ou plus dépassent généralement ce que rapporte l'épargne.</div></details>
+<details class="faq"><summary>Les frais sont-ils inclus ?</summary><div>Non. La calculatrice utilise le solde, le taux et les paiements que vous saisissez. Si une dette a des frais mensuels, ajoutez-les à son paiement minimum.</div></details>
+
+<div class="related"><h3>Calculatrices associées</h3><ul>
+  <li><a href="/fr/calculateur-de-pret/">Calculateur de prêt</a> : voir le tableau complet d'un prêt</li>
+  <li><a href="/fr/calculateur-budget/">Calculateur de budget</a> : trouver de l'argent à consacrer à vos dettes</li>
+</ul></div>
+</article>

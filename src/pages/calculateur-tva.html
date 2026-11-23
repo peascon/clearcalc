@@ -1,0 +1,91 @@
+<!--
+title: Calculateur de TVA – Calcul HT / TTC pour tous les pays | ClearCalc
+description: Calculateur de TVA gratuit. Passez du HT au TTC ou du TTC au HT, avec les taux standard du Rwanda, du Kenya, de la France, de la Belgique, de l'Afrique et plus, ou tout taux personnalisé.
+path: /fr/calculateur-tva/
+h1: Calculateur de TVA (HT / TTC)
+nav: TVA
+order: 7
+script: vat.js
+lang: fr
+blurb: Ajoutez la TVA à un prix ou retirez-la d'un total, avec les taux standard de dizaines de pays ou votre propre taux.
+-->
+<p class="lede">Passez d'un prix hors taxes (HT) à un prix toutes taxes comprises (TTC), ou retrouvez la TVA contenue dans un montant déjà payé. Choisissez votre pays ou saisissez n'importe quel taux.</p>
+
+<details class="howto">
+  <summary>Comment utiliser cette calculatrice</summary>
+  <ol><li>Choisissez <strong>Ajouter la TVA</strong> (votre prix est HT) ou <strong>Retirer la TVA</strong> (votre prix est TTC).</li><li>Saisissez le <strong>prix</strong>.</li><li>Choisissez votre <strong>pays</strong>, ou saisissez un taux de TVA.</li><li>Lisez le prix HT, le prix TTC et le montant de la TVA.</li></ol>
+  <p class="howto-example"><strong>Exemple :</strong> 10 000 HT plus 18 % de TVA donnent 11 800 TTC. Un total de 11 800 TTC contient 1 800 de TVA.</p>
+</details>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="mode">Que voulez-vous faire ?</label>
+      <div class="input-wrap"><select id="mode">
+        <option value="add">Ajouter la TVA (prix hors taxes → TTC)</option>
+        <option value="remove">Retirer la TVA (prix TTC → hors taxes)</option>
+      </select></div>
+    </div>
+    <div class="field">
+      <label for="amount" id="amountLabel">Prix hors TVA</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="amount" inputmode="decimal" value="100"></div>
+    </div>
+    <div class="field">
+      <label for="country">Pays</label>
+      <div class="input-wrap"><select id="country"></select></div>
+    </div>
+    <div class="field">
+      <label for="rate">Taux de TVA</label>
+      <div class="input-wrap"><input id="rate" inputmode="decimal" value="18"><span class="unit">%</span></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copier le lien vers ces résultats</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label" id="mainLabel">Prix TTC</div><div class="value" id="outMain">—</div></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Prix hors taxes (HT)</div><div class="value" id="outNet">—</div></div>
+      <div class="stat"><div class="label">Montant de la TVA</div><div class="value" id="outVat">—</div></div>
+      <div class="stat"><div class="label">Prix TTC</div><div class="value" id="outGross">—</div></div>
+    </div>
+    <div class="breakdown" id="bar"></div>
+    <div class="legend"><span><i style="background:#0f5e4b"></i>Prix HT</span><span><i style="background:#e9a23b"></i>TVA</span></div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>Comment ajouter la TVA (HT → TTC)</h2>
+<p>Multipliez le prix hors taxes par 1 plus le taux de TVA :</p>
+<div class="formula">TTC = HT × (1 + taux ÷ 100)</div>
+<p>Exemple : un produit coûte 10 000 HT et le taux est de 18 %. La TVA vaut 10 000 × 0,18 = 1 800, donc le client paie 11 800 TTC.</p>
+
+<h2>Comment retirer la TVA (TTC → HT)</h2>
+<p>Une erreur très courante consiste à retirer 18 % du total. Cela donne un mauvais résultat, car la TVA a été calculée sur le prix <em>hors taxes</em>, pas sur le total. Il faut diviser :</p>
+<div class="formula">HT = TTC ÷ (1 + taux ÷ 100)</div>
+<p>Exemple : un reçu indique 11 800 TTC avec 18 % de TVA. Le prix HT est 11 800 ÷ 1,18 = 10 000, et la TVA incluse est de 1 800. Retirer 18 % de 11 800 donnerait à tort 9 676.</p>
+<p>Raccourci pour trouver la TVA contenue dans un total : <strong>TTC × taux ÷ (100 + taux)</strong>. À 18 %, c'est le total × 18/118.</p>
+
+<h2>Taux de TVA standard par pays</h2>
+<p>La calculatrice inclut les taux standard ci-dessous. Beaucoup de pays appliquent aussi des taux réduits ou nuls pour certains produits comme l'alimentation de base, les médicaments, l'éducation ou les exportations : vérifiez le taux qui s'applique à votre produit.</p>
+<table class="schedule" style="max-width:520px">
+<thead><tr><th>Pays</th><th>Taux standard</th></tr></thead>
+<tbody id="rateTable"></tbody>
+</table>
+<p class="note">Taux vérifiés en novembre 2026. Les taux changent : confirmez-les auprès de votre administration fiscale avant toute déclaration.</p>
+
+<h2>Questions fréquentes</h2>
+<details class="faq"><summary>La TVA est-elle la même chose que la TPS ou la taxe de vente ?</summary><div>La TPS (taxe sur les produits et services) fonctionne comme la TVA et utilise le même calcul : cette calculatrice convient donc aussi. La taxe de vente américaine est différente, fixée par les États et les villes et perçue seulement à la vente finale, mais l'ajouter à un prix suit la même formule.</div></details>
+<details class="faq"><summary>Quand une entreprise doit-elle facturer la TVA ?</summary><div>En général, dès que son chiffre d'affaires annuel dépasse un seuil d'assujettissement fixé par l'administration fiscale. Ce seuil varie selon les pays : consultez le site de votre administration fiscale.</div></details>
+<details class="faq"><summary>Quel est le taux de TVA au Rwanda ?</summary><div>Le taux standard de TVA au Rwanda est de 18 %. Certains biens et services, comme les exportations, sont taxés à 0 % ou exonérés.</div></details>
+<details class="faq"><summary>Pourquoi mon total ne correspond-il pas exactement ?</summary><div>Les commerces et logiciels de facturation arrondissent parfois la TVA article par article plutôt que sur le total, ce qui peut créer des écarts de quelques centimes ou francs.</div></details>
+
+<div class="related"><h3>Calculatrices associées</h3><ul>
+  <li><a href="/fr/calculateur-marge/">Calculateur de marge</a> : fixer des prix qui couvrent vos coûts et dégagent un bénéfice</li>
+  <li><a href="/fr/calculateur-tarif-freelance/">Calculateur de tarif freelance</a> : combien facturer vos services</li>
+</ul></div>
+</article>

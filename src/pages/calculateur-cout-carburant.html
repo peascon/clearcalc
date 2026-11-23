@@ -1,0 +1,123 @@
+<!--
+title: Calculateur de coût de carburant – Trajet et déplacements | ClearCalc
+description: Calculez le coût en carburant d'un trajet ou de vos déplacements quotidiens. Fonctionne en km ou miles, L/100 km, km/L ou MPG, et partage le coût entre passagers.
+path: /fr/calculateur-cout-carburant/
+h1: Calculateur de coût de carburant
+nav: Carburant
+order: 13
+script: fuel.js
+lang: fr
+blurb: Calculez le coût en essence ou diesel d'un trajet ou de vos déplacements, et partagez-le entre passagers.
+-->
+<p class="lede">Découvrez combien coûtera en carburant un trajet ou vos déplacements quotidiens, en voiture, moto ou camionnette, et combien chaque passager doit participer.</p>
+
+<details class="howto">
+  <summary>Comment utiliser cette calculatrice</summary>
+  <ol><li>Saisissez la <strong>distance</strong> aller et choisissez km ou miles.</li><li>Saisissez la <strong>consommation</strong> de votre véhicule et son unité (L/100 km, km/L ou MPG).</li><li>Saisissez le <strong>prix du carburant</strong> et choisissez par litre ou par gallon.</li><li>Choisissez <strong>aller-retour ou aller simple</strong>, et le nombre de personnes qui partagent le coût.</li></ol>
+  <p class="howto-example"><strong>Exemple :</strong> un trajet de 120 km aller-retour, dans une voiture qui consomme 8 L/100 km, à 1,50 le litre, coûte environ 28,80.</p>
+</details>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="row2">
+      <div class="field">
+        <label for="distance">Distance (aller)</label>
+        <div class="input-wrap"><input id="distance" inputmode="decimal" value="120"></div>
+      </div>
+      <div class="field">
+        <label for="distUnit">&nbsp;</label>
+        <div class="input-wrap"><select id="distUnit"><option value="km">Kilomètres</option><option value="mi">Miles</option></select></div>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="eff">Consommation</label>
+        <div class="input-wrap"><input id="eff" inputmode="decimal" value="8"></div>
+      </div>
+      <div class="field">
+        <label for="effUnit">&nbsp;</label>
+        <div class="input-wrap"><select id="effUnit">
+          <option value="l100">L / 100 km</option><option value="kml">km / L</option>
+          <option value="mpgus">MPG (US)</option><option value="mpguk">MPG (UK)</option>
+        </select></div>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="price">Prix du carburant</label>
+        <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="price" inputmode="decimal" value="1.50"></div>
+      </div>
+      <div class="field">
+        <label for="priceUnit">&nbsp;</label>
+        <div class="input-wrap"><select id="priceUnit">
+          <option value="l">par litre</option><option value="galus">par gallon US</option><option value="galuk">par gallon UK</option>
+        </select></div>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="trip">Type de trajet</label>
+        <div class="input-wrap"><select id="trip"><option value="2">Aller-retour</option><option value="1">Aller simple</option></select></div>
+      </div>
+      <div class="field">
+        <label for="people">Personnes qui partagent</label>
+        <div class="input-wrap"><input id="people" inputmode="numeric" value="1"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="perMonth">Trajets par mois <span class="hint">(pour les trajets domicile-travail, p. ex. 22 jours ouvrés)</span></label>
+      <div class="input-wrap"><input id="perMonth" inputmode="numeric" value="1"></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copier le lien vers ces résultats</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label">Coût du carburant par trajet</div><div class="value" id="outTrip">—</div></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Par personne</div><div class="value" id="outPerson">—</div></div>
+      <div class="stat"><div class="label">Carburant nécessaire</div><div class="value" id="outFuel">—</div></div>
+      <div class="stat"><div class="label">Coût par km</div><div class="value" id="outPerKm">—</div></div>
+    </div>
+    <div class="stats" id="monthly">
+      <div class="stat"><div class="label">Par mois</div><div class="value" id="outMonth">—</div></div>
+      <div class="stat"><div class="label">Par an</div><div class="value" id="outYearCost">—</div></div>
+    </div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>Comment calculer le coût du carburant</h2>
+<p>Il vous faut trois chiffres : la distance à parcourir, la consommation de votre véhicule et le prix du carburant.</p>
+<div class="formula">Carburant nécessaire (L) = Distance (km) × L/100 km ÷ 100<br>Coût = Carburant nécessaire × Prix au litre</div>
+<p>Exemple : un trajet de 120 km aller-retour fait 240 km. Une voiture qui consomme 8 L/100 km brûle 240 × 8 ÷ 100 = 19,2 litres. À 1,50 le litre, le trajet coûte environ 28,80.</p>
+
+<h2>Connaître la consommation de votre véhicule</h2>
+<ul>
+  <li><strong>Consultez le manuel ou le site du constructeur</strong> pour le chiffre officiel de votre modèle. En conditions réelles, la consommation est souvent 10 à 20 % plus élevée.</li>
+  <li><strong>Mesurez-la vous-même :</strong> faites le plein, notez le compteur, roulez normalement, puis refaites le plein. Divisez les litres ajoutés par les kilomètres parcourus et multipliez par 100 pour obtenir des L/100 km.</li>
+  <li><strong>Chiffres courants :</strong> les petites voitures consomment souvent 5 à 7 L/100 km, les SUV 8 à 12, et les motos 2 à 4 (25 à 50 km par litre).</li>
+</ul>
+
+<h2>Comment dépenser moins en carburant</h2>
+<ul>
+  <li><strong>Conduisez en douceur.</strong> Les accélérations et freinages brusques augmentent nettement la consommation.</li>
+  <li><strong>Gardez des pneus bien gonflés</strong> et un moteur bien entretenu.</li>
+  <li><strong>Retirez le poids inutile</strong> et les barres de toit que vous n'utilisez pas.</li>
+  <li><strong>Partagez vos trajets.</strong> Utilisez la case « personnes qui partagent » pour voir la part juste de chacun.</li>
+</ul>
+
+<h2>Questions fréquentes</h2>
+<details class="faq"><summary>Quelle différence entre L/100 km et km/L ?</summary><div>Ce sont deux façons de dire la même chose. L/100 km indique combien de litres il faut pour 100 km : plus c'est bas, mieux c'est. km/L indique combien de kilomètres fait un litre : plus c'est haut, mieux c'est. 10 km/L équivaut à 10 L/100 km, et 20 km/L à 5 L/100 km.</div></details>
+<details class="faq"><summary>Les autres frais du véhicule sont-ils inclus ?</summary><div>Non, seulement le carburant. L'assurance, l'entretien, les pneus, le stationnement et les péages s'ajoutent au coût réel de la conduite.</div></details>
+<details class="faq"><summary>Puis-je l'utiliser pour une moto ou un moto-taxi ?</summary><div>Oui. Choisissez km/L et saisissez combien de kilomètres la moto parcourt avec un litre, souvent 30 à 50 pour les petites motos.</div></details>
+
+<div class="related"><h3>Calculatrices associées</h3><ul>
+  <li><a href="/fr/calculateur-budget/">Calculateur de budget</a> : intégrer le transport dans votre budget mensuel</li>
+  <li><a href="/fr/calculateur-de-pret/">Calculateur de prêt</a> : calculer le coût d'un prêt auto</li>
+</ul></div>
+</article>

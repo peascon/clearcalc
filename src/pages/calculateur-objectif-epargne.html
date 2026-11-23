@@ -1,0 +1,82 @@
+<!--
+title: Calculateur d'objectif d'épargne – Combien épargner par mois | ClearCalc
+description: Découvrez combien épargner chaque mois pour atteindre votre objectif à temps, en tenant compte de ce que vous avez déjà et des intérêts de votre épargne.
+path: /fr/calculateur-objectif-epargne/
+h1: Calculateur d'objectif d'épargne
+nav: Objectif d'épargne
+order: 4
+script: savings.js
+lang: fr
+blurb: Partez de votre objectif : combien épargner chaque mois pour l'atteindre à temps.
+-->
+<p class="lede">Vous épargnez pour un apport, une voiture, des frais de scolarité ou une épargne de précaution ? Saisissez votre objectif et votre échéance pour savoir combien mettre de côté chaque mois.</p>
+
+<details class="howto">
+  <summary>Comment utiliser cette calculatrice</summary>
+  <ol><li>Saisissez votre <strong>objectif d'épargne</strong>, le montant total à atteindre.</li><li>Saisissez ce que vous avez <strong>déjà épargné</strong>.</li><li>Saisissez le <strong>nombre d'années</strong> dont vous disposez et le <strong>taux d'intérêt</strong> de votre épargne.</li><li>Lisez combien épargner <strong>par mois, par semaine ou par jour</strong>.</li></ol>
+  <p class="howto-example"><strong>Exemple :</strong> pour atteindre 15 000 en 3 ans avec 1 000 déjà épargnés à 4 %, épargnez environ 363 par mois.</p>
+</details>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="goal">Objectif d'épargne</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="goal" inputmode="decimal" value="15000"></div>
+    </div>
+    <div class="field">
+      <label for="have">Déjà épargné</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="have" inputmode="decimal" value="1000"></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="years">Délai pour l'atteindre</label>
+        <div class="input-wrap"><input id="years" inputmode="decimal" value="3"><span class="unit">ans</span></div>
+      </div>
+      <div class="field">
+        <label for="rate">Intérêt / rendement</label>
+        <div class="input-wrap"><input id="rate" inputmode="decimal" value="4"><span class="unit">%</span></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copier le lien vers ces résultats</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label">À épargner chaque mois</div><div class="value" id="outMonthly">—</div></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Par semaine</div><div class="value" id="outWeekly">—</div></div>
+      <div class="stat"><div class="label">Par jour</div><div class="value" id="outDaily">—</div></div>
+      <div class="stat"><div class="label">Total de vos dépôts</div><div class="value" id="outDeposits">—</div></div>
+      <div class="stat"><div class="label">Intérêts gagnés</div><div class="value" id="outInterest">—</div></div>
+    </div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>Comment le calcul fonctionne</h2>
+<p>La calculatrice détermine d'abord ce que votre épargne actuelle vaudra à l'échéance, puis trouve le versement mensuel qui couvre le reste, chaque versement rapportant des intérêts à partir du mois où il est fait :</p>
+<div class="formula">PMT = (Objectif − Épargne × (1 + i)<sup>n</sup>) × i ÷ ((1 + i)<sup>n</sup> − 1)</div>
+<p>Ici, <strong>i</strong> est le taux d'intérêt mensuel et <strong>n</strong> le nombre de mois. À 0 % d'intérêt, c'est simplement le montant restant divisé par le nombre de mois.</p>
+
+<h2>Conseils pour atteindre votre objectif plus vite</h2>
+<ul>
+  <li><strong>Automatisez.</strong> Programmez un virement ou un transfert mobile money vers votre épargne le jour de la paie, avant de pouvoir dépenser l'argent.</li>
+  <li><strong>Utilisez un compte séparé.</strong> Garder l'argent de l'objectif à part des dépenses courantes aide beaucoup à ne pas y toucher.</li>
+  <li><strong>Faites-le rapporter.</strong> Même un taux modeste sur un compte d'épargne ou un dépôt à terme réduit ce que vous devez verser vous-même.</li>
+  <li><strong>Ajoutez les rentrées exceptionnelles.</strong> Primes, cadeaux et revenus annexes versés à l'objectif raccourcissent le délai.</li>
+</ul>
+
+<h2>Questions fréquentes</h2>
+<details class="faq"><summary>Quel montant pour une épargne de précaution ?</summary><div>Un repère courant est de trois à six mois de dépenses essentielles. Si vos revenus sont irréguliers, par exemple en freelance ou à la commission, visez plutôt le haut de la fourchette.</div></details>
+<details class="faq"><summary>Et si le résultat indique que j'ai déjà atteint mon objectif ?</summary><div>Cela signifie que votre épargne actuelle dépassera l'objectif à l'échéance avec le taux saisi : aucun versement supplémentaire n'est nécessaire.</div></details>
+<details class="faq"><summary>Faut-il tenir compte de l'inflation ?</summary><div>Si votre objectif est un achat futur dont le prix va augmenter, comme des frais de scolarité ou une voiture, augmentez l'objectif de l'inflation prévue pour rester dans les temps.</div></details>
+
+<div class="related"><h3>Calculatrices associées</h3><ul>
+  <li><a href="/fr/calculateur-interets-composes/">Calculateur d'intérêts composés</a> : voir comment une épargne régulière grandit</li>
+  <li><a href="/fr/calculateur-de-pret/">Calculateur de prêt</a> : comparer épargner et emprunter</li>
+</ul></div>
+</article>

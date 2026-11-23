@@ -1,0 +1,101 @@
+<!--
+title: Calculateur d'intérêts composés avec versements mensuels | ClearCalc
+description: Voyez comment votre épargne ou vos placements grandissent avec les intérêts composés. Ajoutez un capital de départ et des versements mensuels, et suivez la croissance année par année.
+path: /fr/calculateur-interets-composes/
+h1: Calculateur d'intérêts composés
+nav: Intérêts composés
+order: 3
+script: compound.js
+lang: fr
+blurb: Voyez comment votre épargne et vos placements grandissent avec des versements réguliers et les intérêts composés.
+-->
+<p class="lede">Découvrez combien votre argent pourrait rapporter quand les intérêts produisent eux-mêmes des intérêts, avec un capital de départ, des versements mensuels, ou les deux.</p>
+
+<details class="howto">
+  <summary>Comment utiliser cette calculatrice</summary>
+  <ol><li>Saisissez votre <strong>capital de départ</strong>. Mettez 0 si vous partez de rien.</li><li>Saisissez le montant que vous <strong>ajouterez chaque mois</strong>.</li><li>Saisissez le <strong>rendement annuel</strong> attendu et le <strong>nombre d'années</strong>.</li><li>Facultatif : ajoutez l'<strong>inflation</strong> pour voir le résultat en argent d'aujourd'hui.</li></ol>
+  <p class="howto-example"><strong>Exemple :</strong> 5 000 plus 200 par mois à 7 % pendant 20 ans deviennent environ 124 379.</p>
+</details>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="initial">Capital de départ</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="initial" inputmode="decimal" value="5000"></div>
+    </div>
+    <div class="field">
+      <label for="monthly">Versement mensuel</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="monthly" inputmode="decimal" value="200"></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="rate">Rendement annuel</label>
+        <div class="input-wrap"><input id="rate" inputmode="decimal" value="7"><span class="unit">%</span></div>
+      </div>
+      <div class="field">
+        <label for="years">Années</label>
+        <div class="input-wrap"><input id="years" inputmode="numeric" value="20"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="freq">Capitalisation</label>
+      <div class="input-wrap"><select id="freq">
+        <option value="12">Mensuelle</option><option value="4">Trimestrielle</option><option value="1">Annuelle</option><option value="365">Quotidienne</option>
+      </select></div>
+    </div>
+    <div class="field">
+      <label for="inflation">Inflation <span class="hint">(facultatif, pour voir le pouvoir d'achat actuel)</span></label>
+      <div class="input-wrap"><input id="inflation" inputmode="decimal" value="0"><span class="unit">% par an</span></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copier le lien vers ces résultats</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label">Valeur future</div><div class="value" id="outFV">—</div></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Total versé</div><div class="value" id="outIn">—</div></div>
+      <div class="stat"><div class="label">Intérêts gagnés</div><div class="value" id="outInt">—</div></div>
+      <div class="stat" id="realBox" hidden><div class="label">En argent d'aujourd'hui</div><div class="value" id="outReal">—</div></div>
+    </div>
+    <div class="chart-box"><canvas id="chart" aria-label="Solde par année, réparti entre versements et intérêts" role="img"></canvas></div>
+    <div class="legend"><span><i style="background:#0f5e4b"></i>Vos versements</span><span><i style="background:#e9a23b"></i>Intérêts</span></div>
+    <p class="note" id="outNote"></p>
+    <details class="toggle"><summary>Afficher le tableau année par année</summary>
+      <div class="table-scroll"><table class="schedule"><thead><tr><th>Année</th><th>Versé</th><th>Intérêts</th><th>Solde</th></tr></thead><tbody id="table"></tbody></table></div>
+    </details>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>Qu'est-ce que les intérêts composés ?</h2>
+<p>Avec des <strong>intérêts simples</strong>, vous gagnez des intérêts uniquement sur l'argent que vous avez placé. Avec des <strong>intérêts composés</strong>, les intérêts déjà gagnés s'ajoutent à votre solde et produisent eux aussi des intérêts. Sur une courte période, la différence est faible ; sur 20 ou 30 ans, elle dépasse souvent tout ce que vous avez versé, comme le montre la partie orange du graphique.</p>
+
+<h2>La formule</h2>
+<p>Pour un versement unique, la valeur future est :</p>
+<div class="formula">A = P × (1 + r/n)<sup>n·t</sup></div>
+<p>où <strong>P</strong> est le capital de départ, <strong>r</strong> le taux annuel en décimal, <strong>n</strong> le nombre de capitalisations par an et <strong>t</strong> le nombre d'années. Avec des versements mensuels, cette calculatrice ajoute chaque versement à la fin du mois et le fait fructifier à partir de là.</p>
+
+<h2>La règle de 72</h2>
+<p>Un raccourci de calcul mental : divisez 72 par votre rendement annuel pour estimer en combien d'années votre argent double. À 6 %, il faut environ 12 ans ; à 9 %, environ 8 ans.</p>
+
+<h2>Les trois facteurs qui comptent le plus</h2>
+<ul>
+  <li><strong>Le temps.</strong> Commencer 10 ans plus tôt compte souvent plus que verser deux fois plus.</li>
+  <li><strong>La régularité.</strong> Des versements mensuels réguliers, même petits, s'additionnent, car chacun a des années pour fructifier.</li>
+  <li><strong>Les frais et l'inflation.</strong> Des frais de 1 % par an ou une inflation de 3 % absorbent une grande partie de la croissance à long terme. Utilisez le champ inflation pour voir le résultat en pouvoir d'achat actuel.</li>
+</ul>
+
+<h2>Questions fréquentes</h2>
+<details class="faq"><summary>Quel rendement dois-je utiliser ?</summary><div>Cela dépend de l'endroit où se trouve l'argent. Les comptes d'épargne et dépôts à terme rapportent leur taux affiché. Les moyennes historiques des marchés boursiers ont été plus élevées sur le long terme, mais elles varient beaucoup d'une année à l'autre et ne sont pas garanties. Essayez plusieurs taux pour voir un éventail de résultats.</div></details>
+<details class="faq"><summary>La fréquence de capitalisation change-t-elle beaucoup de choses ?</summary><div>Moins qu'on ne le pense. Passer d'une capitalisation annuelle à mensuelle à 7 % fait passer le taux effectif annuel de 7,00 % à environ 7,23 %. Votre taux, votre horizon et vos versements comptent bien davantage.</div></details>
+<details class="faq"><summary>Les impôts sont-ils inclus ?</summary><div>Non. L'imposition des intérêts et des plus-values varie selon les pays et les types de comptes, donc les résultats sont affichés avant impôts.</div></details>
+
+<div class="related"><h3>Calculatrices associées</h3><ul>
+  <li><a href="/fr/calculateur-objectif-epargne/">Calculateur d'objectif d'épargne</a> : partir d'un montant cible</li>
+  <li><a href="/fr/calculateur-inflation/">Calculateur d'inflation</a> : vérifier si votre épargne bat l'inflation</li>
+</ul></div>
+</article>

@@ -1,0 +1,97 @@
+<!--
+title: Convertisseur salaire / taux horaire – Annuel, mensuel, horaire | ClearCalc
+description: Convertissez un salaire entre horaire, journalier, hebdomadaire, toutes les deux semaines, mensuel et annuel. Ajustez les heures et les semaines travaillées.
+path: /fr/calculateur-salaire-horaire/
+h1: Convertisseur salaire / taux horaire
+nav: Salaire ↔ horaire
+order: 6
+script: salary.js
+lang: fr
+blurb: Convertissez un salaire entre horaire, hebdomadaire, mensuel et annuel, et comparez des offres d'emploi équitablement.
+-->
+<p class="lede">Convertissez une rémunération entre horaire, hebdomadaire, mensuel et annuel : pratique pour comparer des offres d'emploi ou savoir ce que vaut votre salaire de l'heure.</p>
+
+<details class="howto">
+  <summary>Comment utiliser cette calculatrice</summary>
+  <ol><li>Saisissez le <strong>montant</strong> de votre rémunération.</li><li>Choisissez s'il s'agit d'un montant <strong>par an, par mois, par semaine, par jour ou de l'heure</strong>.</li><li>Saisissez vos <strong>heures par semaine</strong> et vos <strong>jours par semaine</strong>.</li><li>Lisez votre rémunération convertie pour toutes les autres périodes.</li></ol>
+  <p class="howto-example"><strong>Exemple :</strong> 50 000 par an à 40 heures par semaine correspondent à environ 24,04 de l'heure.</p>
+</details>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="row2">
+      <div class="field">
+        <label for="pay">Montant</label>
+        <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="pay" inputmode="decimal" value="50000"></div>
+      </div>
+      <div class="field">
+        <label for="period">Par</label>
+        <div class="input-wrap"><select id="period">
+          <option value="year">An</option><option value="month">Mois</option><option value="biweek">2 semaines</option>
+          <option value="week">Semaine</option><option value="day">Jour</option><option value="hour">Heure</option>
+        </select></div>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="hours">Heures par semaine</label>
+        <div class="input-wrap"><input id="hours" inputmode="decimal" value="40"></div>
+      </div>
+      <div class="field">
+        <label for="days">Jours par semaine</label>
+        <div class="input-wrap"><input id="days" inputmode="decimal" value="5"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="unpaid">Semaines de congé non payées par an <span class="hint">(0 si vos congés sont payés)</span></label>
+      <div class="input-wrap"><input id="unpaid" inputmode="decimal" value="0"><span class="unit">semaines</span></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copier le lien vers ces résultats</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label">Taux horaire</div><div class="value" id="outHour">—</div></div>
+    <div class="table-scroll" style="max-height:none">
+      <table class="schedule"><tbody>
+        <tr><td>Par jour</td><td id="outDay">—</td></tr>
+        <tr><td>Par semaine</td><td id="outWeek">—</td></tr>
+        <tr><td>Toutes les 2 semaines</td><td id="outBiweek">—</td></tr>
+        <tr><td>Par mois</td><td id="outMonth">—</td></tr>
+        <tr><td>Par an</td><td id="outYear">—</td></tr>
+      </tbody></table>
+    </div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>Comment convertir un salaire en taux horaire</h2>
+<p>Divisez votre salaire annuel par le nombre d'heures travaillées dans l'année. Avec une semaine de 40 heures et 52 semaines payées, cela fait 2 080 heures :</p>
+<div class="formula">Taux horaire = Salaire annuel ÷ (Heures par semaine × Semaines payées par an)</div>
+<p>Un salaire de 50 000 par an correspond donc à environ 24,04 de l'heure. Dans l'autre sens, multipliez votre taux horaire par 2 080.</p>
+
+<h2>Repères rapides</h2>
+<ul>
+  <li><strong>Mensuel → annuel :</strong> multipliez par 12.</li>
+  <li><strong>Hebdomadaire → annuel :</strong> multipliez par 52.</li>
+  <li><strong>Toutes les deux semaines → annuel :</strong> multipliez par 26. Cela fait 26 paies et non 24 : deux mois par an comptent trois jours de paie.</li>
+  <li><strong>Horaire → mensuel :</strong> multipliez par heures par semaine × 52 ÷ 12. À 40 heures, cela fait environ 173,3 heures par mois.</li>
+</ul>
+
+<h2>Comparer des offres d'emploi équitablement</h2>
+<p>Deux offres au même salaire peuvent payer très différemment à l'heure. Si un poste demande 50 heures par semaine et l'autre 40, le second paie 25 % de plus pour chaque heure travaillée. Modifiez les heures ci-dessus pour comparer. Pensez aussi aux avantages : couverture santé, cotisations retraite et congés payés.</p>
+
+<h2>Questions fréquentes</h2>
+<details class="faq"><summary>Est-ce avant ou après impôts ?</summary><div>La calculatrice convertit le montant que vous saisissez. Saisissez votre salaire brut pour des résultats bruts, ou votre salaire net pour des résultats nets.</div></details>
+<details class="faq"><summary>Comment gérer les congés non payés ?</summary><div>Si vous êtes payé à l'heure sans congés payés, saisissez vos semaines non payées. Le montant annuel n'utilisera alors que les semaines réellement travaillées.</div></details>
+<details class="faq"><summary>Combien d'heures de travail compte un mois ?</summary><div>En moyenne, 40 × 52 ÷ 12 ≈ 173,3 heures. Le nombre exact dépend du mois et des jours fériés de votre pays.</div></details>
+
+<div class="related"><h3>Calculatrices associées</h3><ul>
+  <li><a href="/fr/calculateur-tarif-freelance/">Calculateur de tarif freelance</a> : combien facturer en indépendant</li>
+  <li><a href="/fr/calculateur-budget/">Calculateur de budget</a> : répartir votre salaire mensuel</li>
+</ul></div>
+</article>

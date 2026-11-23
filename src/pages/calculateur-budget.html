@@ -1,0 +1,104 @@
+<!--
+title: Calculateur de budget – Règle 50/30/20 pour votre budget mensuel | ClearCalc
+description: Calculateur de budget gratuit avec la règle 50/30/20. Saisissez votre revenu mensuel net pour savoir combien consacrer aux besoins, aux envies et à l'épargne, et comparez avec vos vraies dépenses.
+path: /fr/calculateur-budget/
+h1: Calculateur de budget (règle 50/30/20)
+nav: Budget
+order: 11
+script: budget.js
+lang: fr
+blurb: Répartissez votre revenu mensuel entre besoins, envies et épargne avec la règle 50/30/20, et comparez avec vos vraies dépenses.
+-->
+<p class="lede">Saisissez votre revenu mensuel net pour obtenir un budget simple et équilibré : combien dépenser pour vos besoins, pour vos envies, et combien épargner.</p>
+
+<details class="howto">
+  <summary>Comment utiliser cette calculatrice</summary>
+  <ol><li>Saisissez votre <strong>revenu mensuel net</strong>, après impôts.</li><li>Choisissez une <strong>règle de budget</strong>. La règle 50/30/20 est la plus courante.</li><li>Facultatif : saisissez ce que vous dépensez vraiment en <strong>besoins</strong> et en <strong>envies</strong> pour comparer.</li><li>Lisez combien consacrer à chaque catégorie et combien épargner.</li></ol>
+  <p class="howto-example"><strong>Exemple :</strong> avec 1 000 par mois : 500 pour les besoins, 300 pour les envies et 200 d'épargne.</p>
+</details>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="income">Revenu mensuel net <span class="hint">(après impôts)</span></label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="income" inputmode="decimal" value="1000"></div>
+    </div>
+    <div class="field">
+      <label for="split">Règle de budget</label>
+      <div class="input-wrap"><select id="split">
+        <option value="50-30-20">50 / 30 / 20 (standard)</option>
+        <option value="60-20-20">60 / 20 / 20 (coût de la vie élevé)</option>
+        <option value="70-20-10">70 / 20 / 10 (budget serré)</option>
+        <option value="40-30-30">40 / 30 / 30 (épargne ambitieuse)</option>
+        <option value="custom">Personnalisée</option>
+      </select></div>
+    </div>
+    <div class="row2" id="customRow" style="display:none">
+      <div class="field"><label for="pn">Besoins %</label><div class="input-wrap"><input id="pn" inputmode="decimal" value="50"></div></div>
+      <div class="field"><label for="pw">Envies %</label><div class="input-wrap"><input id="pw" inputmode="decimal" value="30"></div></div>
+    </div>
+
+    <h3 style="margin-top:8px">Comparer avec vos vraies dépenses <span class="hint" style="font-weight:400">(facultatif)</span></h3>
+    <div class="field">
+      <label for="an">Besoins : loyer, nourriture, transport, factures, remboursements minimums</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="an" inputmode="decimal" placeholder="0"></div>
+    </div>
+    <div class="field">
+      <label for="aw">Envies : restaurants, loisirs, shopping, forfaits internet au-delà de l'essentiel</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="aw" inputmode="decimal" placeholder="0"></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copier le lien vers ces résultats</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label">À épargner chaque mois</div><div class="value" id="outSave">—</div></div>
+    <div class="breakdown" id="bar"></div>
+    <div class="legend"><span><i style="background:#0f5e4b"></i>Besoins</span><span><i style="background:#5b8def"></i>Envies</span><span><i style="background:#e9a23b"></i>Épargne</span></div>
+    <div class="stats" style="margin-top:14px">
+      <div class="stat"><div class="label" id="lblNeeds">Besoins (50 %)</div><div class="value" id="outNeeds">—</div><div class="note" id="cmpNeeds"></div></div>
+      <div class="stat"><div class="label" id="lblWants">Envies (30 %)</div><div class="value" id="outWants">—</div><div class="note" id="cmpWants"></div></div>
+      <div class="stat"><div class="label" id="lblSave">Épargne (20 %)</div><div class="value" id="outSave2">—</div><div class="note" id="cmpSave"></div></div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="label">Épargné par an</div><div class="value" id="outYear">—</div></div>
+      <div class="stat"><div class="label">Objectif d'épargne de précaution <span class="hint">(3 mois de besoins)</span></div><div class="value" id="outEmergency">—</div></div>
+    </div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>Qu'est-ce que la règle 50/30/20 ?</h2>
+<p>La règle 50/30/20 est une façon simple de faire un budget sans noter chaque achat. Vous répartissez votre revenu net en trois catégories :</p>
+<ul>
+  <li><strong>50 % pour les besoins :</strong> ce que vous devez payer pour vivre et travailler, comme le loyer, la nourriture de base, le transport, les factures, les frais de scolarité, les assurances et les remboursements minimums.</li>
+  <li><strong>30 % pour les envies :</strong> ce qui rend la vie agréable mais que vous pourriez réduire, comme les restaurants, les loisirs, les vêtements, les abonnements et les voyages.</li>
+  <li><strong>20 % pour l'épargne :</strong> votre épargne de précaution, vos objectifs d'épargne, vos placements et tout remboursement de dette supplémentaire.</li>
+</ul>
+<p>Exemple : avec un revenu net de 300 000 par mois, visez 150 000 pour les besoins, 90 000 pour les envies et 60 000 d'épargne.</p>
+
+<h2>Quand choisir une autre répartition</h2>
+<p>La règle 50/30/20 est un point de départ, pas une loi. Là où le loyer et la nourriture absorbent une grande part du revenu, 60/20/20 voire 70/20/10 peut être plus réaliste. Si vous remboursez des dettes ou épargnez pour un gros projet, 40/30/30 accélère les choses. Choisissez une règle ci-dessus et voyez ce qui vous convient.</p>
+
+<h2>Comment faire fonctionner votre budget</h2>
+<ul>
+  <li><strong>Payez-vous en premier.</strong> Transférez votre montant d'épargne vers un compte ou un porte-monnaie mobile séparé le jour de la paie, avant toute dépense.</li>
+  <li><strong>Constituez d'abord une épargne de précaution.</strong> Visez trois à six mois de besoins, pour que les imprévus ne vous poussent pas à vous endetter.</li>
+  <li><strong>Faites le point chaque mois.</strong> Comparez vos vraies dépenses au plan et ajustez. Les petits changements s'additionnent.</li>
+  <li><strong>Si vos besoins dépassent 50 %,</strong> regardez d'abord les plus gros postes : loyer, transport et crédits. C'est là que les changements comptent le plus.</li>
+</ul>
+
+<h2>Questions fréquentes</h2>
+<details class="faq"><summary>Faut-il utiliser le revenu avant ou après impôts ?</summary><div>Utilisez votre revenu net : le montant qui arrive réellement sur votre compte ou votre porte-monnaie mobile après impôts et retenues.</div></details>
+<details class="faq"><summary>Rembourser une dette, est-ce un besoin ou de l'épargne ?</summary><div>Les paiements minimums sont des besoins. Tout ce que vous payez au-delà du minimum compte dans les 20 % d'épargne, car cela améliore votre situation financière comme le fait l'épargne.</div></details>
+<details class="faq"><summary>Mon revenu change chaque mois. Comment faire un budget ?</summary><div>Basez votre budget sur votre mois habituel le plus faible, et épargnez le surplus des bons mois. Une épargne de précaution plus importante est particulièrement utile avec des revenus irréguliers.</div></details>
+
+<div class="related"><h3>Calculatrices associées</h3><ul>
+  <li><a href="/fr/calculateur-objectif-epargne/">Calculateur d'objectif d'épargne</a> : savoir combien de temps prendra un objectif</li>
+  <li><a href="/fr/calculateur-remboursement-dettes/">Calculateur de remboursement de dettes</a> : utiliser vos 20 % pour rembourser vos dettes</li>
+</ul></div>
+</article>

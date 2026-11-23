@@ -1,0 +1,93 @@
+<!--
+title: Calculateur de tarif freelance – Quel taux horaire facturer ? | ClearCalc
+description: Calculez le taux horaire, le tarif journalier et le chiffre d'affaires nécessaires en freelance pour atteindre votre revenu net après impôts, frais et congés non payés.
+path: /fr/calculateur-tarif-freelance/
+h1: Calculateur de tarif freelance
+nav: Tarif freelance
+order: 5
+script: freelance.js
+lang: fr
+blurb: Le taux horaire et le tarif journalier à facturer pour atteindre votre revenu après impôts, frais et congés.
+-->
+<p class="lede">Trouvez le tarif à facturer en tant que freelance ou consultant pour gagner le revenu net que vous visez, après impôts, frais et périodes non payées.</p>
+
+<details class="howto">
+  <summary>Comment utiliser cette calculatrice</summary>
+  <ol><li>Saisissez le <strong>revenu net</strong> que vous voulez par an, après impôts.</li><li>Saisissez vos <strong>frais professionnels</strong> annuels et votre <strong>taux d'imposition</strong>.</li><li>Saisissez le nombre d'<strong>heures facturables par semaine</strong> et de <strong>semaines travaillées</strong> par an.</li><li>Lisez votre <strong>taux horaire minimum</strong> et votre tarif journalier.</li></ol>
+  <p class="howto-example"><strong>Exemple :</strong> pour gagner 40 000 nets avec 3 000 de frais, 20 % d'impôts et 25 heures facturables par semaine, facturez au moins environ 50,70 de l'heure.</p>
+</details>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="income">Revenu net souhaité <span class="hint">(par an, après impôts)</span></label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="income" inputmode="decimal" value="40000"></div>
+    </div>
+    <div class="field">
+      <label for="expenses">Frais professionnels <span class="hint">(par an : logiciels, internet, matériel, bureau)</span></label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="expenses" inputmode="decimal" value="3000"></div>
+    </div>
+    <div class="field">
+      <label for="tax">Taux d'imposition sur votre bénéfice</label>
+      <div class="input-wrap"><input id="tax" inputmode="decimal" value="20"><span class="unit">%</span></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="hours">Heures facturables</label>
+        <div class="input-wrap"><input id="hours" inputmode="decimal" value="25"><span class="unit">par semaine</span></div>
+      </div>
+      <div class="field">
+        <label for="weeks">Semaines travaillées</label>
+        <div class="input-wrap"><input id="weeks" inputmode="decimal" value="46"><span class="unit">par an</span></div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="buffer">Marge de sécurité <span class="hint">(mois creux et retards de paiement)</span></label>
+      <div class="input-wrap"><input id="buffer" inputmode="decimal" value="10"><span class="unit">%</span></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copier le lien vers ces résultats</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label">Taux horaire minimum</div><div class="value" id="outHourly">—</div></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Tarif journalier</div><div class="value" id="outDay">—</div></div>
+      <div class="stat"><div class="label">Chiffre d'affaires hebdomadaire</div><div class="value" id="outWeek">—</div></div>
+      <div class="stat"><div class="label">Chiffre d'affaires mensuel</div><div class="value" id="outMonth">—</div></div>
+      <div class="stat"><div class="label">Chiffre d'affaires annuel nécessaire</div><div class="value" id="outYear">—</div></div>
+    </div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>Pourquoi les tarifs freelance sont plus élevés que les salaires</h2>
+<p>Une erreur fréquente consiste à diviser le salaire souhaité par 2 080 heures (40 heures × 52 semaines). En freelance, vous payez aussi ce qu'un employeur prendrait normalement en charge :</p>
+<ul>
+  <li><strong>Le temps non facturable.</strong> Trouver des clients, rédiger des propositions, facturer et gérer l'administratif peut prendre 30 à 40 % de la semaine : 25 heures facturables sur 40 est réaliste.</li>
+  <li><strong>Les congés.</strong> Vacances, maladie et jours fériés ne sont pas payés. 46 semaines travaillées par an est une base de calcul courante.</li>
+  <li><strong>Les impôts et cotisations</strong> qu'un employeur retiendrait ou paierait pour vous.</li>
+  <li><strong>Le matériel et les logiciels</strong> : ordinateur, internet, abonnements et espace de travail.</li>
+</ul>
+
+<h2>La formule</h2>
+<div class="formula">Tarif = ((Revenu ÷ (1 − Impôt)) + Frais) × (1 + Marge) ÷ (Heures facturables × Semaines)</div>
+<p>Le résultat est le tarif <em>minimum</em> à facturer. Votre tarif de marché peut être plus élevé selon vos compétences, votre spécialité et vos clients : regardez ce que facturent d'autres professionnels de votre domaine.</p>
+
+<h2>Facturer au projet plutôt qu'à l'heure</h2>
+<p>Beaucoup de freelances proposent un prix fixe par projet. Estimez les heures nécessaires, multipliez par votre taux horaire, puis ajoutez 15 à 25 % pour les révisions et les imprévus. En gagnant en rapidité, le prix au projet vous permet de gagner plus par heure sans augmenter votre tarif affiché.</p>
+
+<h2>Questions fréquentes</h2>
+<details class="faq"><summary>Quel taux d'imposition dois-je saisir ?</summary><div>Utilisez votre meilleure estimation de l'impôt sur le revenu et des cotisations sociales sur un bénéfice d'indépendant dans votre pays. En cas de doute, un comptable local ou le site de votre administration fiscale indique les taux en vigueur.</div></details>
+<details class="faq"><summary>Je travaille avec des clients étrangers. Quelle devise utiliser ?</summary><div>Celle dans laquelle vous voulez gagner. Si vos clients paient en dollars ou en euros mais que vous dépensez en monnaie locale, prévoyez aussi les frais de transfert et les variations de change dans votre marge de sécurité.</div></details>
+<details class="faq"><summary>Combien d'heures facturables par semaine est réaliste ?</summary><div>La plupart des freelances à temps plein facturent 20 à 30 heures par semaine. Facturer 40 heures chaque semaine est rare une fois la prospection et l'administratif pris en compte.</div></details>
+
+<div class="related"><h3>Calculatrices associées</h3><ul>
+  <li><a href="/fr/calculateur-salaire-horaire/">Convertisseur salaire / taux horaire</a> : comparer avec un emploi salarié</li>
+  <li><a href="/fr/calculateur-frais-transfert-argent/">Calculateur de frais de transfert</a> : être payé par des clients étrangers au meilleur coût</li>
+</ul></div>
+</article>

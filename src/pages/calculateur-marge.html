@@ -1,0 +1,115 @@
+<!--
+title: Calculateur de marge – Marge, majoration et prix de vente | ClearCalc
+description: Calculez votre marge et votre majoration à partir du coût et du prix, ou trouvez le prix de vente nécessaire pour atteindre une marge cible. Gratuit, simple, toutes devises.
+path: /fr/calculateur-marge/
+h1: Calculateur de marge bénéficiaire
+nav: Marge
+order: 8
+script: margin.js
+lang: fr
+blurb: Trouvez votre marge et votre majoration, ou le prix de vente nécessaire pour atteindre le bénéfice visé.
+-->
+<p class="lede">Calculez votre marge et votre majoration, ou trouvez le prix de vente qui vous donnera la marge souhaitée. Conçu pour les boutiques, commerçants et petites entreprises.</p>
+
+<details class="howto">
+  <summary>Comment utiliser cette calculatrice</summary>
+  <ol><li>Choisissez ce que vous connaissez : votre <strong>prix de vente</strong>, ou la <strong>marge</strong> ou la <strong>majoration</strong> visée.</li><li>Saisissez votre <strong>coût par article</strong> : ce que vous payez pour l'acheter ou le fabriquer.</li><li>Saisissez le prix de vente, ou le pourcentage de marge ou de majoration.</li><li>Facultatif : saisissez le nombre d'<strong>articles vendus</strong> par mois pour voir votre bénéfice total.</li></ol>
+  <p class="howto-example"><strong>Exemple :</strong> acheter à 60 et vendre à 100 donne une marge de 40 % et une majoration de 66,7 %.</p>
+</details>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="mode">Je connais…</label>
+      <div class="input-wrap"><select id="mode">
+        <option value="price">Mon coût et mon prix de vente</option>
+        <option value="margin">Mon coût et la marge que je veux</option>
+        <option value="markup">Mon coût et la majoration que je veux</option>
+      </select></div>
+    </div>
+    <div class="field">
+      <label for="cost">Coût par article <span class="hint">(ce que vous payez pour l'acheter ou le fabriquer)</span></label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="cost" inputmode="decimal" value="60"></div>
+    </div>
+    <div class="field" id="priceField">
+      <label for="price">Prix de vente par article</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="price" inputmode="decimal" value="100"></div>
+    </div>
+    <div class="field" id="pctField" hidden>
+      <label for="pct" id="pctLabel">Marge visée</label>
+      <div class="input-wrap"><input id="pct" inputmode="decimal" value="40"><span class="unit">%</span></div>
+    </div>
+    <div class="field">
+      <label for="qty">Articles vendus <span class="hint">(facultatif, par mois)</span></label>
+      <div class="input-wrap"><input id="qty" inputmode="numeric" value="1"></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copier le lien vers ces résultats</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label" id="mainLabel">Marge bénéficiaire</div><div class="value" id="outMain">—</div></div>
+    <div class="stats">
+      <div class="stat"><div class="label">Prix de vente</div><div class="value" id="outPrice">—</div></div>
+      <div class="stat"><div class="label">Bénéfice par article</div><div class="value" id="outProfit">—</div></div>
+      <div class="stat"><div class="label">Marge</div><div class="value" id="outMargin">—</div></div>
+      <div class="stat"><div class="label">Majoration</div><div class="value" id="outMarkup">—</div></div>
+    </div>
+    <div class="stats" id="totals">
+      <div class="stat"><div class="label">Chiffre d'affaires total</div><div class="value" id="outRevenue">—</div></div>
+      <div class="stat"><div class="label">Bénéfice total</div><div class="value" id="outTotalProfit">—</div></div>
+    </div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>Marge ou majoration : quelle différence ?</h2>
+<p>Les deux mesurent le bénéfice, mais elles ne divisent pas par le même nombre. Les confondre est l'une des erreurs de prix les plus fréquentes.</p>
+<ul>
+  <li><strong>La marge</strong> est le bénéfice en pourcentage du <em>prix de vente</em>. Elle indique combien vous gardez sur chaque vente.</li>
+  <li><strong>La majoration</strong> est le bénéfice en pourcentage du <em>coût</em>. Elle indique combien vous avez ajouté à ce que vous avez payé.</li>
+</ul>
+<div class="formula">Marge = (Prix − Coût) ÷ Prix × 100<br>Majoration = (Prix − Coût) ÷ Coût × 100</div>
+<p>Exemple : vous achetez un article 60 et le vendez 100. Votre bénéfice est de 40 : votre <strong>marge est de 40 %</strong> (40 ÷ 100) mais votre <strong>majoration est de 66,7 %</strong> (40 ÷ 60). Une majoration de 40 % ne donnerait qu'une marge de 28,6 %.</p>
+<p>Attention au vocabulaire : en France, la marge en % du prix de vente s'appelle aussi « taux de marque », et la majoration en % du coût « taux de marge ».</p>
+
+<h2>Comment fixer un prix pour une marge cible</h2>
+<p>Pour obtenir une marge précise, divisez le coût par (1 − marge) :</p>
+<div class="formula">Prix = Coût ÷ (1 − Marge ÷ 100)</div>
+<p>Pour une marge de 40 % sur un article qui coûte 60 : 60 ÷ 0,6 = 100. Ajouter 40 % au coût (60 × 1,4 = 84) ne donnerait qu'une marge de 28,6 %.</p>
+
+<h2>Tableau de conversion rapide</h2>
+<table class="schedule" style="max-width:420px">
+<thead><tr><th>Marge</th><th>Majoration équivalente</th></tr></thead>
+<tbody>
+<tr><td>10 %</td><td>11,1 %</td></tr>
+<tr><td>20 %</td><td>25 %</td></tr>
+<tr><td>25 %</td><td>33,3 %</td></tr>
+<tr><td>30 %</td><td>42,9 %</td></tr>
+<tr><td>40 %</td><td>66,7 %</td></tr>
+<tr><td>50 %</td><td>100 %</td></tr>
+<tr><td>60 %</td><td>150 %</td></tr>
+</tbody>
+</table>
+
+<h2>Conseils pour de meilleures marges</h2>
+<ul>
+  <li><strong>Comptez tous vos coûts.</strong> Incluez le transport, l'emballage, les frais de paiement et les pertes, pas seulement le prix d'achat.</li>
+  <li><strong>Attention à la TVA.</strong> Si vous êtes assujetti, calculez la marge sur les prix <em>hors TVA</em>. Utilisez le <a href="/fr/calculateur-tva/">calculateur de TVA</a> pour la retirer d'abord.</li>
+  <li><strong>Achetez en gros avec prudence.</strong> Un coût unitaire plus bas augmente la marge, mais seulement si le stock se vend.</li>
+</ul>
+
+<h2>Questions fréquentes</h2>
+<details class="faq"><summary>Qu'est-ce qu'une bonne marge ?</summary><div>Cela dépend beaucoup du secteur. L'alimentation et le carburant fonctionnent souvent avec des marges à un chiffre et gagnent grâce au volume, tandis que les services, les logiciels et l'artisanat dépassent souvent 50 %. Comparez-vous à des entreprises similaires.</div></details>
+<details class="faq"><summary>La marge peut-elle dépasser 100 % ?</summary><div>Non. La marge est une part du prix de vente : elle ne peut atteindre 100 % que si le coût est nul. La majoration, elle, n'a pas de limite.</div></details>
+<details class="faq"><summary>S'agit-il de la marge brute ou nette ?</summary><div>Cette calculatrice donne la marge brute par article : le prix moins le coût direct de l'article. La marge nette soustrait aussi les frais généraux comme le loyer, les salaires et le marketing.</div></details>
+
+<div class="related"><h3>Calculatrices associées</h3><ul>
+  <li><a href="/fr/calculateur-tva/">Calculateur de TVA</a> : ajouter ou retirer la TVA de vos prix</li>
+  <li><a href="/fr/calculateur-de-pret/">Calculateur de prêt</a> : vérifier le coût d'un prêt professionnel</li>
+</ul></div>
+</article>

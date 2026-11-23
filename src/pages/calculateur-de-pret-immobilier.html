@@ -1,0 +1,96 @@
+<!--
+title: Calculateur de prêt immobilier – Mensualité avec taxe et assurance | ClearCalc
+description: Estimez votre mensualité de prêt immobilier : capital, intérêts, taxe foncière, assurance et charges. Voyez le montant emprunté, le coût des intérêts et le coût total.
+path: /fr/calculateur-de-pret-immobilier/
+h1: Calculateur de prêt immobilier
+nav: Prêt immobilier
+order: 2
+script: mortgage.js
+lang: fr
+blurb: Votre coût mensuel réel : capital et intérêts, plus taxe foncière, assurance et charges.
+-->
+<p class="lede">Calculez ce qu'un logement vous coûtera vraiment chaque mois : pas seulement la mensualité du prêt, mais aussi la taxe foncière, l'assurance et les charges.</p>
+
+<details class="howto">
+  <summary>Comment utiliser cette calculatrice</summary>
+  <ol><li>Saisissez le <strong>prix du logement</strong> et votre <strong>apport</strong> en pourcentage.</li><li>Saisissez le <strong>taux d'intérêt</strong> et choisissez la <strong>durée</strong> en années.</li><li>Ajoutez la <strong>taxe foncière</strong> et l'<strong>assurance</strong> annuelles, ainsi que les charges mensuelles. Mettez 0 si elles ne s'appliquent pas.</li><li>Lisez votre <strong>paiement mensuel total</strong> et sa répartition à droite.</li></ol>
+  <p class="howto-example"><strong>Exemple :</strong> un logement de 300 000 avec 20 % d'apport à 6,5 % sur 30 ans coûte environ 1 867 par mois, taxe et assurance comprises.</p>
+</details>
+
+{{AD_TOP}}
+
+<section class="calc" id="calc">
+  <div class="panel">
+    <div class="field">
+      <label for="price">Prix du logement</label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="price" inputmode="decimal" value="300000"></div>
+    </div>
+    <div class="field">
+      <label for="down">Apport personnel</label>
+      <div class="input-wrap"><input id="down" inputmode="decimal" value="20"><span class="unit">% du prix</span></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="rate">Taux d'intérêt</label>
+        <div class="input-wrap"><input id="rate" inputmode="decimal" value="6.5"><span class="unit">%</span></div>
+      </div>
+      <div class="field">
+        <label for="years">Durée</label>
+        <div class="input-wrap"><select id="years"><option>30</option><option>25</option><option>20</option><option>15</option><option>10</option></select><span class="unit">ans</span></div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="tax">Taxe foncière <span class="hint">(par an)</span></label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="tax" inputmode="decimal" value="3000"></div>
+    </div>
+    <div class="field">
+      <label for="ins">Assurance habitation <span class="hint">(par an)</span></label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="ins" inputmode="decimal" value="1200"></div>
+    </div>
+    <div class="field">
+      <label for="fees">Charges de copropriété / services <span class="hint">(par mois)</span></label>
+      <div class="input-wrap"><span class="unit pre" data-cur>$</span><input id="fees" inputmode="decimal" value="0"></div>
+    </div>
+    <div class="btn-row"><button class="btn" type="button" id="share">Copier le lien vers ces résultats</button></div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="result-main"><div class="label">Paiement mensuel total</div><div class="value" id="outMonthly">—</div></div>
+    <div class="breakdown" id="bar"></div>
+    <div class="legend" id="barLegend"></div>
+    <div class="stats" style="margin-top:14px">
+      <div class="stat"><div class="label">Montant emprunté</div><div class="value" id="outLoan">—</div></div>
+      <div class="stat"><div class="label">Apport</div><div class="value" id="outDown">—</div></div>
+      <div class="stat"><div class="label">Total des intérêts</div><div class="value" id="outInterest">—</div></div>
+      <div class="stat"><div class="label">Coût total sur la durée</div><div class="value" id="outTotal">—</div></div>
+    </div>
+    <p class="note" id="outNote"></p>
+  </div>
+</section>
+
+{{AD_MID}}
+
+<article class="prose">
+<h2>Ce que comprend un paiement immobilier</h2>
+<p>Le coût mensuel d'un logement ne se limite pas au prêt. Le prêt couvre le capital et les intérêts, mais la taxe foncière et l'assurance sont souvent payées en même temps, et il faut parfois ajouter des charges de copropriété ou de services. Cette calculatrice les additionne tous.</p>
+<ul>
+  <li><strong>Capital et intérêts</strong> : le remboursement du prêt, calculé avec la formule d'amortissement standard.</li>
+  <li><strong>Taxe foncière</strong> : fixée par les autorités locales, généralement un pourcentage de la valeur du bien.</li>
+  <li><strong>Assurance habitation</strong> : couvre le bâtiment contre l'incendie, les tempêtes et autres dommages ; les prêteurs l'exigent souvent.</li>
+  <li><strong>Charges</strong> : copropriété, gestion du domaine ou frais de services.</li>
+</ul>
+
+<h2>Quel logement puis-je me permettre ?</h2>
+<p>Une règle courante consiste à garder le paiement total du logement sous environ <strong>28 % de votre revenu mensuel brut</strong>, et l'ensemble de vos remboursements de dettes sous environ 36 %. Ce sont des repères, pas des limites : les prêteurs de chaque pays utilisent leurs propres ratios, et votre budget compte davantage que n'importe quelle formule.</p>
+<p>Un apport plus important réduit à la fois la mensualité et le total des intérêts. Sur de nombreux marchés, un apport inférieur à 20 % implique aussi une assurance supplémentaire, ce qui augmente encore le coût mensuel.</p>
+
+<h2>Questions fréquentes</h2>
+<details class="faq"><summary>Vaut-il mieux emprunter sur 15 ans ou sur 30 ans ?</summary><div>Sur 15 ans, la mensualité est plus élevée, mais le taux est souvent plus bas et les intérêts totaux bien moindres. Sur 30 ans, les mensualités sont plus faibles et laissent plus de marge dans votre budget. Changez la durée ci-dessus pour comparer le total des intérêts.</div></details>
+<details class="faq"><summary>L'assurance emprunteur est-elle incluse ?</summary><div>Pas automatiquement. Si votre prêteur facture une assurance emprunteur, ajoutez son montant mensuel dans le champ des charges.</div></details>
+<details class="faq"><summary>Est-ce valable hors des États-Unis ?</summary><div>Oui. Choisissez votre devise en haut de la page. Mettez la taxe foncière à zéro, ou à son équivalent local, si elle est calculée autrement chez vous.</div></details>
+
+<div class="related"><h3>Calculatrices associées</h3><ul>
+  <li><a href="/fr/calculateur-de-pret/">Calculateur de prêt</a> : tableau d'amortissement complet et effet des paiements supplémentaires</li>
+  <li><a href="/fr/calculateur-objectif-epargne/">Calculateur d'objectif d'épargne</a> : planifier l'épargne de votre apport</li>
+</ul></div>
+</article>
