@@ -5,8 +5,19 @@ ClearCalc static site generator.
 Usage:  python3 build.py
 Output: ./public  (upload this folder to any static host)
 
-Edit the CONFIG block below, then rebuild. Each page lives in src/pages/*.html
-and starts with a small header block:
+YOUR SETTINGS live in site.json (next to this file), not here, so updating
+build.py can never overwrite them. Example site.json:
+
+    {
+      "site_name": "ClearCalc",
+      "domain": "https://clearcalc-ay2.pages.dev",
+      "contact_email": "you@example.com",
+      "adsense_client": "",
+      "ga4_id": ""
+    }
+
+Pages live in src/pages/*.html (English) and src/pages/fr/*.html (French).
+Each starts with a header block:
 
     <!--
     title: Page title for the <title> tag
@@ -14,11 +25,14 @@ and starts with a small header block:
     path: /loan-calculator/
     h1: Visible page heading
     script: loan.js            (optional, file in src/assets/tools/)
-    nav: Loan                  (optional, label in the tools menu)
+    nav: Loan                  (optional: marks the page as a calculator in menus)
+    lang: fr                   (optional, default en)
     -->
 
-FAQ blocks written as <details class="faq"><summary>Q</summary><div>A</div></details>
-are turned into FAQPage structured data automatically.
+A page and its translation are linked automatically when they use the same
+script (the home pages are linked by path). FAQ blocks written as
+<details class="faq"><summary>Q</summary><div>A</div></details> become
+FAQPage structured data.
 """
 import html
 import json
@@ -27,24 +41,64 @@ import shutil
 from datetime import date
 from pathlib import Path
 
-# ----------------------------------------------------------------- CONFIG ---
-CONFIG = {
-    "site_name": "ClearCalc",
-    "tagline": "Free, private money calculators",
-    # Your real domain, no trailing slash. Used for canonical URLs + sitemap.
-      "domain": "https://clearcalc-ay2.pages.dev",
-      "contact_email": "papynsenga350@gmail.com",
-    # Your AdSense publisher ID, e.g. "ca-pub-1234567890123456".
-    # Leave empty until AdSense approves you: no ad code is output while empty.
-    "adsense_client": "",
-    # Google Analytics 4 measurement ID, e.g. "G-XXXXXXX". Optional.
-    "ga4_id": "",
-}
-# ---------------------------------------------------------------------------
-
 ROOT = Path(__file__).parent
 SRC = ROOT / "src"
 OUT = ROOT / "public"
+
+DEFAULTS = {
+    "site_name": "ClearCalc",
+    "domain": "https://www.example.com",
+    "contact_email": "hello@example.com",
+    "adsense_client": "",
+    "ga4_id": "",
+}
+
+
+def load_config():
+    cfg = dict(DEFAULTS)
+    path = ROOT / "site.json"
+    if path.exists():
+        cfg.update(json.loads(path.read_text(encoding="utf-8")))
+    if "example.com" in cfg["domain"]:
+        raise SystemExit(
+            "site.json is missing or still uses example.com.\n"
+            "Create site.json next to build.py with your real domain and email (see the top of build.py)."
+        )
+    cfg["domain"] = cfg["domain"].rstrip("/")
+    return cfg
+
+
+CONFIG = load_config()
+
+LANGS = ["en", "fr"]
+UI = {
+    "en": {
+        "locale": "en_US",
+        "tagline": "Free, private money calculators",
+        "private": "Every calculation runs in your browser — nothing you type is sent anywhere.",
+        "calculators": "Calculators",
+        "open": "Open calculator →",
+        "site": "Site",
+        "about": "About", "contact": "Contact", "privacy": "Privacy policy", "terms": "Terms of use",
+        "fine": "Results are estimates for information only and are not financial advice.",
+        "currency": "Currency",
+        "switch_label": "Français",
+        "switch_short": "FR",
+    },
+    "fr": {
+        "locale": "fr_FR",
+        "tagline": "Calculatrices financières gratuites et privées",
+        "private": "Tous les calculs se font dans votre navigateur : rien de ce que vous saisissez n'est envoyé.",
+        "calculators": "Calculatrices",
+        "open": "Ouvrir la calculatrice →",
+        "site": "Site",
+        "about": "À propos (EN)", "contact": "Contact (EN)", "privacy": "Confidentialité (EN)", "terms": "Conditions d'utilisation (EN)",
+        "fine": "Les résultats sont des estimations fournies à titre informatif et ne constituent pas un conseil financier.",
+        "currency": "Devise",
+        "switch_label": "English",
+        "switch_short": "EN",
+    },
+}
 
 HEADER_RE = re.compile(r"^\s*<!--(.*?)-->", re.S)
 FAQ_RE = re.compile(
@@ -53,7 +107,7 @@ FAQ_RE = re.compile(
 TAG_RE = re.compile(r"<[^>]+>")
 
 
-def parse_page(path: Path):
+def parse_page(path: Path, default_lang: str):
     text = path.read_text(encoding="utf-8")
     m = HEADER_RE.match(text)
     if not m:
@@ -68,6 +122,8 @@ def parse_page(path: Path):
             raise SystemExit(f"{path}: header missing '{key}'")
     meta["body"] = text[m.end():].strip()
     meta["order"] = int(meta.get("order", 99))
+    meta["lang"] = meta.get("lang", default_lang)
+    meta["key"] = meta.get("key") or meta.get("script") or ("home" if meta["path"] in ("/", "/fr/") else meta["path"])
     return meta
 
 
@@ -78,8 +134,6 @@ def clean(s: str) -> str:
 def ad_slot(name: str) -> str:
     if not CONFIG["adsense_client"]:
         return ""
-    # Auto ads will also place units; these are manual slots you can fill
-    # with a data-ad-slot ID from your AdSense dashboard.
     return (
         f'<div class="ad-slot ad-{name}"><ins class="adsbygoogle" style="display:block" '
         f'data-ad-client="{CONFIG["adsense_client"]}" data-ad-format="auto" '
@@ -105,17 +159,32 @@ def head_extras() -> str:
     return "\n".join(parts)
 
 
-def render(page, tools):
+def render(page, tools, alternates, home_of):
     c = CONFIG
+    lang = page["lang"]
+    t = UI[lang]
     url = c["domain"] + page["path"]
     for k in ("h1", "title", "description"):
         page[k] = page[k].replace("{{SITE_NAME}}", c["site_name"])
+
     current = ' aria-current="page"'
     nav_links = "".join(
-        f'<a href="{t["path"]}"{current if t["path"] == page["path"] else ""}>{t["h1"]}</a>'
-        for t in tools
+        f'<a href="{x["path"]}"{current if x["path"] == page["path"] else ""}>{x["h1"]}</a>'
+        for x in tools
     )
-    footer_tools = "".join(f'<li><a href="{t["path"]}">{t["h1"]}</a></li>' for t in tools)
+    footer_tools = "".join(f'<li><a href="{x["path"]}">{x["h1"]}</a></li>' for x in tools)
+
+    # Language links: the translated version of this page, or the other language's home page.
+    alt = alternates.get(page["key"], {})
+    other = "fr" if lang == "en" else "en"
+    switch_href = alt[other]["path"] if other in alt else home_of[other]
+    hreflang = ""
+    if len(alt) > 1:
+        hreflang = "".join(
+            f'<link rel="alternate" hreflang="{lg}" href="{c["domain"]}{p["path"]}">' for lg, p in alt.items()
+        )
+        if "en" in alt:
+            hreflang += f'<link rel="alternate" hreflang="x-default" href="{c["domain"]}{alt["en"]["path"]}">'
 
     ld = []
     if page.get("script"):
@@ -124,6 +193,7 @@ def render(page, tools):
             "@type": "WebApplication",
             "name": page["h1"],
             "url": url,
+            "inLanguage": lang,
             "applicationCategory": "FinanceApplication",
             "operatingSystem": "Any",
             "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
@@ -134,6 +204,7 @@ def render(page, tools):
         ld.append({
             "@context": "https://schema.org",
             "@type": "FAQPage",
+            "inLanguage": lang,
             "mainEntity": [
                 {"@type": "Question", "name": clean(q),
                  "acceptedAnswer": {"@type": "Answer", "text": clean(a)}}
@@ -148,22 +219,25 @@ def render(page, tools):
     body = body.replace("{{AD_TOP}}", ad_slot("top")).replace("{{AD_MID}}", ad_slot("mid"))
     body = body.replace("{{SITE_NAME}}", c["site_name"]).replace("{{EMAIL}}", c["contact_email"])
     body = body.replace("{{TOOL_CARDS}}", "".join(
-        f'<a class="card" href="{t["path"]}"><h3>{t["h1"]}</h3><p>{t.get("blurb", "")}</p>'
-        f'<span class="card-cta">Open calculator →</span></a>' for t in tools
+        f'<a class="card" href="{x["path"]}"><h3>{x["h1"]}</h3><p>{x.get("blurb", "")}</p>'
+        f'<span class="card-cta">{t["open"]}</span></a>' for x in tools
     ))
     body = body.replace("{{UPDATED}}", date.today().strftime("%B %Y"))
 
     script_tag = f'<script src="/assets/tools/{page["script"]}" defer></script>' if page.get("script") else ""
+    home = home_of[lang]
 
     return f"""<!DOCTYPE html>
-<html lang="en">
+<html lang="{lang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(page["title"])}</title>
 <meta name="description" content="{html.escape(page["description"])}">
 <link rel="canonical" href="{url}">
+{hreflang}
 <meta property="og:type" content="website">
+<meta property="og:locale" content="{t["locale"]}">
 <meta property="og:title" content="{html.escape(page["title"])}">
 <meta property="og:description" content="{html.escape(page["description"])}">
 <meta property="og:url" content="{url}">
@@ -177,14 +251,15 @@ def render(page, tools):
 <body>
 <header class="site-header">
   <div class="wrap header-row">
-    <a class="brand" href="/"><img src="/assets/favicon.svg" alt="" width="28" height="28">{c["site_name"]}</a>
+    <a class="brand" href="{home}" aria-label="{c["site_name"]}"><img src="/assets/favicon.svg" alt="" width="28" height="28">{c["site_name"]}</a>
     <details class="menu">
-      <summary>Calculators <span aria-hidden="true">▾</span></summary>
-      <nav class="menu-panel" aria-label="Calculators">{nav_links}</nav>
+      <summary>{t["calculators"]} <span aria-hidden="true">▾</span></summary>
+      <nav class="menu-panel" aria-label="{t["calculators"]}">{nav_links}</nav>
     </details>
+    <a class="lang-switch" href="{switch_href}" hreflang="{other}" lang="{other}" title="{t["switch_label"]}">{t["switch_short"]}</a>
     <label class="currency-pick">
-      <span class="sr-only">Currency</span>
-      <select id="currency" aria-label="Currency"></select>
+      <span class="sr-only">{t["currency"]}</span>
+      <select id="currency" aria-label="{t["currency"]}"></select>
     </label>
   </div>
 </header>
@@ -195,18 +270,19 @@ def render(page, tools):
 <footer class="site-footer">
   <div class="wrap footer-grid">
     <div>
-      <a class="brand" href="/">{c["site_name"]}</a>
-      <p>{c["tagline"]}. Every calculation runs in your browser — nothing you type is sent anywhere.</p>
+      <a class="brand" href="{home}">{c["site_name"]}</a>
+      <p>{t["tagline"]}. {t["private"]}</p>
     </div>
-    <div><h4>Calculators</h4><ul>{footer_tools}</ul></div>
-    <div><h4>Site</h4><ul>
-      <li><a href="/about/">About</a></li>
-      <li><a href="/contact/">Contact</a></li>
-      <li><a href="/privacy-policy/">Privacy policy</a></li>
-      <li><a href="/terms/">Terms of use</a></li>
+    <div><h4>{t["calculators"]}</h4><ul>{footer_tools}</ul></div>
+    <div><h4>{t["site"]}</h4><ul>
+      <li><a href="/about/">{t["about"]}</a></li>
+      <li><a href="/contact/">{t["contact"]}</a></li>
+      <li><a href="/privacy-policy/">{t["privacy"]}</a></li>
+      <li><a href="/terms/">{t["terms"]}</a></li>
+      <li><a href="{switch_href}" hreflang="{other}" lang="{other}">{t["switch_label"]}</a></li>
     </ul></div>
   </div>
-  <div class="wrap fine">Results are estimates for information only and are not financial advice. © {date.today().year} {c["site_name"]}</div>
+  <div class="wrap fine">{t["fine"]} © {date.today().year} {c["site_name"]}</div>
 </footer>
 <script src="/assets/app.js" defer></script>
 {script_tag}
@@ -219,18 +295,33 @@ def main():
     if OUT.exists():
         shutil.rmtree(OUT)
     shutil.copytree(SRC / "assets", OUT / "assets")
-    for f in (SRC / "static").glob("*"):
-        shutil.copy(f, OUT / f.name)
+    static = SRC / "static"
+    if static.exists():
+        for f in static.glob("*"):
+            shutil.copy(f, OUT / f.name)
 
-    pages = [parse_page(p) for p in sorted((SRC / "pages").glob("*.html"))]
-    tools = sorted([p for p in pages if p.get("nav")], key=lambda p: p["order"])
+    pages = [parse_page(p, "en") for p in sorted((SRC / "pages").glob("*.html"))]
+    fr_dir = SRC / "pages" / "fr"
+    if fr_dir.exists():
+        pages += [parse_page(p, "fr") for p in sorted(fr_dir.glob("*.html"))]
+
+    tools = {lg: sorted([p for p in pages if p.get("nav") and p["lang"] == lg], key=lambda p: p["order"]) for lg in LANGS}
+    alternates = {}
+    for p in pages:
+        alternates.setdefault(p["key"], {})[p["lang"]] = p
+    home_of = {lg: ("/" if lg == "en" else f"/{lg}/") for lg in LANGS}
+    if "fr" not in alternates.get("home", {}):
+        home_of["fr"] = "/"
 
     for page in pages:
-        dest = OUT / page["path"].strip("/") / "index.html" if page["path"] != "/" else OUT / "index.html"
         if page["path"] == "/404/":
             dest = OUT / "404.html"
+        elif page["path"] == "/":
+            dest = OUT / "index.html"
+        else:
+            dest = OUT / page["path"].strip("/") / "index.html"
         dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_text(render(page, tools), encoding="utf-8")
+        dest.write_text(render(page, tools[page["lang"]], alternates, home_of), encoding="utf-8")
 
     today = date.today().isoformat()
     urls = "".join(
